@@ -1,0 +1,91 @@
+workflows:
+  android-workflow:
+    name: Aliee Wellness — Android
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: 3.32.0
+      groups:
+        - aliee_android_keystore   # Codemagic UI'da tanımlanacak (keystore, alias, şifreler)
+      vars:
+        PACKAGE_NAME: "com.spektrum.aliee_wellness"
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+    scripts:
+      - name: Flutter packages
+        script: flutter pub get
+      - name: Generate l10n
+        script: flutter gen-l10n
+      - name: Analyze
+        script: flutter analyze
+      - name: Set up keystore
+        script: |
+          echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.jks
+          cat > "$CM_BUILD_DIR/android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=/tmp/keystore.jks
+          EOF
+      - name: Build AAB
+        script: |
+          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME") + 1))
+          flutter build appbundle --release --build-number=$BUILD_NUMBER
+    artifacts:
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - flutter_drive.log
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
+
+  ios-workflow:
+    name: Aliee Wellness — iOS
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Aliee App Store Connect   # Codemagic UI'da tanımlanacak
+    environment:
+      flutter: 3.32.0
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.spektrum.aliee_wellness
+      vars:
+        APP_STORE_APP_ID: ""   # App Store Connect'te oluşturduktan sonra doldurulacak
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+    scripts:
+      - name: Flutter packages
+        script: flutter pub get
+      - name: Generate l10n
+        script: flutter gen-l10n
+      - name: Pod install
+        script: |
+          find . -name "Podfile" -execdir pod install \;
+      - name: Analyze
+        script: flutter analyze
+      - name: Build IPA
+        script: |
+          BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APP_ID")
+          BUILD_NUMBER=$((BUILD_NUMBER + 1))
+          flutter build ipa --release \
+            --build-number=$BUILD_NUMBER \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

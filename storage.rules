@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Aliee Wellness — Cloud Storage Security Rules
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function role() { return request.auth.token.role; }
+    function isAdmin()  { return isSignedIn() && role() == 'admin'; }
+    function isDoctor() { return isSignedIn() && role() == 'doctor'; }
+    function isGuest()  { return isSignedIn() && role() == 'guest'; }
+
+    // Lab dosyaları — kendi misafiri yükler/okur, doktor + admin okuyabilir
+    match /guests/{guestId}/labs/{fileName} {
+      allow read: if isAdmin() || isDoctor() || (isGuest() && request.auth.uid == guestId);
+      allow write: if isGuest() && request.auth.uid == guestId
+                   && request.resource.size < 20 * 1024 * 1024  // 20 MB limit
+                   && (request.resource.contentType.matches('image/.*')
+                       || request.resource.contentType == 'application/pdf');
+    }
+
+    // Doktor mesajlarındaki ek dosyalar
+    match /questions/{questionId}/attachments/{fileName} {
+      allow read: if isAdmin() || isDoctor() || isGuest();  // detay Firestore tarafında kontrol
+      allow write: if isSignedIn() && request.resource.size < 20 * 1024 * 1024;
+    }
+  }
+}

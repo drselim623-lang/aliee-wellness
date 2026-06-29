@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../core/l10n/app_localizations.dart';
+import '../../core/routing/app_router.dart';
+import '../../core/widgets/feature_card.dart';
+
+class GuestHomeScreen extends StatelessWidget {
+  const GuestHomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
+    return Scaffold(
+      appBar: AppBar(title: Text(l.guestHomeTitle)),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          FeatureCard(
+            icon: Icons.favorite_outline,
+            title: l.discoverHealth,
+            description: l.discoverHealthDesc,
+            onTap: () => context.push(AppRoutes.guestAnamnesis),
+          ),
+          const SizedBox(height: 12),
+          FeatureCard(
+            icon: Icons.grid_view_outlined,
+            title: l.services,
+            description: l.servicesDesc,
+            onTap: () => context.push(AppRoutes.guestServices),
+          ),
+          const SizedBox(height: 12),
+          FeatureCard(
+            icon: Icons.chat_bubble_outline,
+            title: l.askDoctor,
+            description: l.askDoctorDesc,
+            onTap: () {/* TODO: doktora sor */},
+          ),
+          const SizedBox(height: 12),
+          FeatureCard(
+            icon: Icons.event_available_outlined,
+            title: l.planStay,
+            description: l.planStayDesc,
+            onTap: () {/* TODO: konaklama başvurusu */},
+          ),
+        ],
+      ),
+    );
+  }
+}

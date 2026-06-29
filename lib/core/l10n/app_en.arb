@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+  "appName": "Aliee Wellness",
+  "appTagline": "Spektrum Longevity",
+
+  "guestLoginTitle": "Welcome",
+  "guestLoginSubtitle": "Use the credentials provided at hotel check-in",
+  "passportLast6": "Passport (last 6 digits)",
+  "roomNumber": "Room number",
+  "login": "Sign in",
+  "doctorLogin": "Doctor sign-in",
+  "adminLogin": "Admin",
+
+  "guestHomeTitle": "Aliee Wellness",
+  "discoverHealth": "Discover Your Health",
+  "discoverHealthDesc": "Fill the anamnesis, get a personal program",
+  "services": "Services",
+  "servicesDesc": "Tests, panels, IVs and aesthetics",
+  "askDoctor": "Ask My Doctor",
+  "askDoctorDesc": "Get answers from registered doctors",
+  "planStay": "Stay / Wellness",
+  "planStayDesc": "Plan your next stay",
+
+  "doctorHomeTitle": "Doctor Panel",
+  "questionsQueue": "Incoming questions",
+  "noQuestionsYet": "No questions yet",
+
+  "adminHomeTitle": "Admin Panel",
+  "authorizeGuest": "Authorize guest",
+  "activeGuests": "Active guests",
+  "passportFull": "Passport number (full)",
+  "submit": "Save",
+
+  "language": "Language"
+}

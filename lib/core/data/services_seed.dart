@@ -1,0 +1,121 @@
+import '../models/service.dart';
+
+/// Vitrin verisi — brief §3.3'ten birebir.
+/// İlk sürümde local fallback olarak kullanılır; Firestore seed script'i bu listeyi
+/// `services/{id}` dokümanları olarak yükler.
+const kServicesSeed = <WellnessService>[
+  // A) TESTLER & GÖRÜNTÜLEME
+  WellnessService(id: 'test_epigenetic', category: ServiceCategory.tests, nameTr: 'Epigenetik Test', nameEn: 'Epigenetic Test'),
+  WellnessService(id: 'test_microbiota', category: ServiceCategory.tests, nameTr: 'Mikrobiyota (Bağırsak Flora) Testi', nameEn: 'Gut Microbiota Test'),
+  WellnessService(id: 'test_sibo', category: ServiceCategory.tests, nameTr: 'SIBO Testi', nameEn: 'SIBO Test'),
+  WellnessService(id: 'test_food_intolerance', category: ServiceCategory.tests, nameTr: 'Gıda İntolerans Testi', nameEn: 'Food Intolerance Test'),
+  WellnessService(id: 'test_inflammation_markers', category: ServiceCategory.tests, nameTr: 'İnflamasyon Markerları', nameEn: 'Inflammation Markers'),
+  WellnessService(id: 'test_parasite', category: ServiceCategory.tests, nameTr: 'Parazit Analizi', nameEn: 'Parasite Analysis'),
+  WellnessService(id: 'test_candida', category: ServiceCategory.tests, nameTr: 'Candida Testi', nameEn: 'Candida Test'),
+  WellnessService(id: 'test_dna', category: ServiceCategory.tests, nameTr: 'DNA Testi', nameEn: 'DNA Test'),
+  WellnessService(id: 'test_ultrasound', category: ServiceCategory.tests, nameTr: 'Ultrason', nameEn: 'Ultrasound'),
+  WellnessService(id: 'test_ekg', category: ServiceCategory.tests, nameTr: 'EKG', nameEn: 'ECG'),
+  WellnessService(id: 'test_vo2max', category: ServiceCategory.tests, nameTr: 'MAX VO2', nameEn: 'VO2 Max'),
+  WellnessService(id: 'test_thermography', category: ServiceCategory.tests, nameTr: 'Termal Görüntüleme', nameEn: 'Thermography'),
+  WellnessService(id: 'test_sleep', category: ServiceCategory.tests, nameTr: 'Uyku Testi', nameEn: 'Sleep Test'),
+  WellnessService(id: 'test_mri', category: ServiceCategory.tests, nameTr: 'MR', nameEn: 'MRI'),
+  WellnessService(id: 'test_xray', category: ServiceCategory.tests, nameTr: 'Lokal Grafi (X-ray)', nameEn: 'X-ray'),
+  WellnessService(id: 'test_pft', category: ServiceCategory.tests, nameTr: 'Pulmoner Fonksiyon Testleri (PFT)', nameEn: 'Pulmonary Function Tests (PFT)'),
+  WellnessService(id: 'test_cardio_screening', category: ServiceCategory.tests, nameTr: 'Kardiyovasküler Tarama', nameEn: 'Cardiovascular Screening', descriptionTr: 'Yürüyüş / koşu testi', descriptionEn: 'Walking / running test'),
+
+  // B) OM AGE PANELLERİ
+  WellnessService(id: 'panel_standard', category: ServiceCategory.panels, nameTr: 'OM AGE Standart / Kardiyometabolik Panel', nameEn: 'OM AGE Standard / Cardiometabolic Panel'),
+  WellnessService(id: 'panel_cbc_inflammation', category: ServiceCategory.panels, nameTr: 'Tam Kan ve İnflamasyon', nameEn: 'Complete Blood & Inflammation'),
+  WellnessService(id: 'panel_advanced_cardio', category: ServiceCategory.panels, nameTr: 'Gelişmiş Kardiyometabolik Belirteçler', nameEn: 'Advanced Cardiometabolic Markers'),
+  WellnessService(id: 'panel_infection_viral', category: ServiceCategory.panels, nameTr: 'Enfeksiyon ve Viral Bağışıklık', nameEn: 'Infection & Viral Immunity'),
+  WellnessService(id: 'panel_liver_function', category: ServiceCategory.panels, nameTr: 'Karaciğer İşlevleri', nameEn: 'Liver Function'),
+  WellnessService(id: 'panel_micronutrient', category: ServiceCategory.panels, nameTr: 'Mikrobesin Durumu', nameEn: 'Micronutrient Status'),
+  WellnessService(id: 'panel_hormone_aging_axis', category: ServiceCategory.panels, nameTr: 'Hormon ve Yaşlanma Ekseni', nameEn: 'Hormone & Aging Axis'),
+  WellnessService(id: 'panel_kidney_electrolyte', category: ServiceCategory.panels, nameTr: 'Böbrek ve Elektrolit Dengesi', nameEn: 'Kidney & Electrolyte Balance'),
+  WellnessService(id: 'panel_hormone_balance', category: ServiceCategory.panels, nameTr: 'Hormon Dengesi', nameEn: 'Hormone Balance'),
+  WellnessService(id: 'panel_neuro_alzheimer', category: ServiceCategory.panels, nameTr: 'Nörobilişsel Yaş ve Alzheimer Riski', nameEn: 'Neurocognitive Age & Alzheimer Risk'),
+  WellnessService(id: 'panel_liver_metabolic', category: ServiceCategory.panels, nameTr: 'Karaciğer ve Metabolik Yük', nameEn: 'Liver & Metabolic Load'),
+  WellnessService(id: 'panel_toxin_screening', category: ServiceCategory.panels, nameTr: 'Toksin Taraması', nameEn: 'Toxin Screening'),
+  WellnessService(id: 'panel_advanced_inflammation', category: ServiceCategory.panels, nameTr: 'Gelişmiş İnflamasyon Belirteçleri', nameEn: 'Advanced Inflammation Markers'),
+
+  // C) IV & LONGEVITY
+  WellnessService(id: 'iv_citicoline', category: ServiceCategory.iv, nameTr: 'IV Sitikolin', nameEn: 'IV Citicoline'),
+  WellnessService(id: 'iv_glutathione', category: ServiceCategory.iv, nameTr: 'IV Glutatyon', nameEn: 'IV Glutathione'),
+  WellnessService(id: 'iv_nad', category: ServiceCategory.iv, nameTr: 'IV NAD (300mg)', nameEn: 'IV NAD (300mg)'),
+  WellnessService(id: 'iv_myers', category: ServiceCategory.iv, nameTr: 'IV Myers', nameEn: 'IV Myers'),
+  WellnessService(id: 'iv_vitamin_c', category: ServiceCategory.iv, nameTr: 'IV C Vitamini', nameEn: 'IV Vitamin C'),
+  WellnessService(id: 'iv_collagen', category: ServiceCategory.iv, nameTr: 'IV Kolajen', nameEn: 'IV Collagen'),
+  WellnessService(
+    id: 'iv_reform',
+    category: ServiceCategory.iv,
+    nameTr: 'IV Reform',
+    nameEn: 'IV Reform',
+    descriptionTr: 'Arjinin · Karnitin · Taurin · B Complex · C Vitamini · Magnezyum',
+    descriptionEn: 'Arginine · Carnitine · Taurine · B Complex · Vitamin C · Magnesium',
+  ),
+  WellnessService(
+    id: 'iv_longevity',
+    category: ServiceCategory.iv,
+    nameTr: 'IV Longevity',
+    nameEn: 'IV Longevity',
+    descriptionTr: 'Koenzim Q10 · Alfa Lipoik Asit · B Complex · C Vitamini · Antioksidan Karışım · Actovegin',
+    descriptionEn: 'CoQ10 · Alpha Lipoic Acid · B Complex · Vitamin C · Antioxidant Mix · Actovegin',
+  ),
+  WellnessService(
+    id: 'iv_destress',
+    category: ServiceCategory.iv,
+    nameTr: 'IV Destress',
+    nameEn: 'IV Destress',
+    descriptionTr: 'Magnezyum · B6 · C Vitamini · L Teanin / GABA',
+    descriptionEn: 'Magnesium · B6 · Vitamin C · L-Theanine / GABA',
+  ),
+  WellnessService(id: 'iv_antiaging_repair', category: ServiceCategory.iv, nameTr: 'IV Anti Aging Repair Cocktail', nameEn: 'IV Anti-Aging Repair Cocktail'),
+  WellnessService(id: 'iv_beauty', category: ServiceCategory.iv, nameTr: 'IV Beauty Cocktail', nameEn: 'IV Beauty Cocktail'),
+  WellnessService(
+    id: 'iv_detox',
+    category: ServiceCategory.iv,
+    nameTr: 'IV Detox',
+    nameEn: 'IV Detox',
+    descriptionTr: 'ALA · Sitikolin · Myers',
+    descriptionEn: 'ALA · Citicoline · Myers',
+  ),
+  WellnessService(id: 'iv_immune_plus', category: ServiceCategory.iv, nameTr: 'IV Immune Plus Cocktail', nameEn: 'IV Immune Plus Cocktail'),
+  WellnessService(
+    id: 'iv_revive',
+    category: ServiceCategory.iv,
+    nameTr: 'IV Revive',
+    nameEn: 'IV Revive',
+    descriptionTr: 'Infinity · Myers',
+    descriptionEn: 'Infinity · Myers',
+  ),
+  WellnessService(id: 'iv_mood_sleep', category: ServiceCategory.iv, nameTr: 'IV Mood & Sleep', nameEn: 'IV Mood & Sleep'),
+  WellnessService(id: 'iv_power_fitness', category: ServiceCategory.iv, nameTr: 'IV Power Fitness Sport Amino Asit', nameEn: 'IV Power Fitness Sport Amino Acid'),
+  WellnessService(id: 'iv_resveratrol', category: ServiceCategory.iv, nameTr: 'IV Resveratrol', nameEn: 'IV Resveratrol'),
+  WellnessService(id: 'iv_ozone', category: ServiceCategory.iv, nameTr: 'IV Ozon Terapi', nameEn: 'IV Ozone Therapy'),
+  WellnessService(id: 'iv_rectal_ozone', category: ServiceCategory.iv, nameTr: 'Rektal Ozon', nameEn: 'Rectal Ozone'),
+  WellnessService(id: 'iv_mesotherapy', category: ServiceCategory.iv, nameTr: 'Mezoterapi', nameEn: 'Mesotherapy'),
+
+  // D) MEDİKAL ESTETİK — Botoks
+  WellnessService(id: 'aesth_botox_3zone', category: ServiceCategory.aesthetics, nameTr: '3 Bölge Botoks', nameEn: '3-Zone Botox', descriptionTr: 'Kaz ayağı · Glabella · Alın', descriptionEn: 'Crow\'s feet · Glabella · Forehead', tags: ['botoks']),
+  WellnessService(id: 'aesth_botox_masseter', category: ServiceCategory.aesthetics, nameTr: 'Masseter Botoksu', nameEn: 'Masseter Botox', tags: ['botoks']),
+  WellnessService(id: 'aesth_botox_migraine', category: ServiceCategory.aesthetics, nameTr: 'Migren Botoksu', nameEn: 'Migraine Botox', tags: ['botoks']),
+  WellnessService(id: 'aesth_botox_hyperhidrosis', category: ServiceCategory.aesthetics, nameTr: 'Terleme Botoksu', nameEn: 'Hyperhidrosis Botox', tags: ['botoks']),
+
+  // D) MEDİKAL ESTETİK — Dolgu
+  WellnessService(id: 'aesth_filler_lip', category: ServiceCategory.aesthetics, nameTr: 'Dudak Dolgusu', nameEn: 'Lip Filler', tags: ['dolgu']),
+  WellnessService(id: 'aesth_filler_malar', category: ServiceCategory.aesthetics, nameTr: 'Malar Dolgu', nameEn: 'Malar Filler', tags: ['dolgu']),
+  WellnessService(id: 'aesth_filler_zygoma', category: ServiceCategory.aesthetics, nameTr: 'Zygoma Dolgusu', nameEn: 'Zygoma Filler', tags: ['dolgu']),
+  WellnessService(id: 'aesth_filler_nasolabial', category: ServiceCategory.aesthetics, nameTr: 'Nasolabial Dolgu', nameEn: 'Nasolabial Filler', tags: ['dolgu']),
+  WellnessService(id: 'aesth_filler_chin', category: ServiceCategory.aesthetics, nameTr: 'Çene Dolgusu', nameEn: 'Chin Filler', tags: ['dolgu']),
+  WellnessService(id: 'aesth_filler_temporal', category: ServiceCategory.aesthetics, nameTr: 'Temporal Dolgu', nameEn: 'Temporal Filler', tags: ['dolgu']),
+  WellnessService(id: 'aesth_filler_jawline', category: ServiceCategory.aesthetics, nameTr: 'Jawline Dolgusu', nameEn: 'Jawline Filler', tags: ['dolgu']),
+  WellnessService(id: 'aesth_filler_browlift', category: ServiceCategory.aesthetics, nameTr: 'Kaş Kaldırma Dolgusu', nameEn: 'Brow Lift Filler', tags: ['dolgu']),
+
+  // D) MEDİKAL ESTETİK — Diğer
+  WellnessService(id: 'aesth_skin_booster', category: ServiceCategory.aesthetics, nameTr: 'Skin Booster', nameEn: 'Skin Booster'),
+  WellnessService(id: 'aesth_mesotherapy', category: ServiceCategory.aesthetics, nameTr: 'Mezoterapi', nameEn: 'Mesotherapy'),
+  WellnessService(id: 'aesth_liquid_facelift', category: ServiceCategory.aesthetics, nameTr: 'Sıvı Yüz Germe', nameEn: 'Liquid Facelift'),
+  WellnessService(id: 'aesth_collagen_stimulator', category: ServiceCategory.aesthetics, nameTr: 'Kollajen Stimülatörü', nameEn: 'Collagen Stimulator'),
+  WellnessService(id: 'aesth_exosome', category: ServiceCategory.aesthetics, nameTr: 'Exosome Tedavileri', nameEn: 'Exosome Treatments'),
+  WellnessService(id: 'aesth_hair_treatment', category: ServiceCategory.aesthetics, nameTr: 'Saç Tedavileri', nameEn: 'Hair Treatments'),
+];

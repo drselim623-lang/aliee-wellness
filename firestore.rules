@@ -1,0 +1,74 @@
+rules_version = '2';
+
+// Aliee Wellness — Firestore Security Rules
+// İlke: hiçbir veri client tarafından doğrudan yazılamaz; yazma işlemleri Cloud Functions
+// üzerinden geçer. Okuma yetkisi rol (custom claim) bazlı sınırlanır.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function role() {
+      return request.auth.token.role;  // 'guest' | 'doctor' | 'admin'
+    }
+    function isGuest()  { return isSignedIn() && role() == 'guest'; }
+    function isDoctor() { return isSignedIn() && role() == 'doctor'; }
+    function isAdmin()  { return isSignedIn() && role() == 'admin'; }
+
+    // Misafirler — pasaport hash'i ile eşleşen kayıt (uid = passportHash veya custom)
+    match /guests/{guestId} {
+      allow read: if isAdmin() || isDoctor() || (isGuest() && request.auth.uid == guestId);
+      allow write: if false;  // sadece Cloud Functions
+    }
+
+    // Anamnez — misafir kendi cevaplarını görür, doktor soru sorulduğunda görür, admin tümüne erişir
+    match /guests/{guestId}/anamnesis/{docId} {
+      allow read: if isAdmin()
+                  || (isGuest() && request.auth.uid == guestId)
+                  || isDoctor();
+      allow write: if false;
+    }
+
+    // Lab kayıtları — aynı kural
+    match /guests/{guestId}/labs/{docId} {
+      allow read: if isAdmin()
+                  || (isGuest() && request.auth.uid == guestId)
+                  || isDoctor();
+      allow write: if false;
+    }
+
+    // Doktora sor — hasta yazar, doktor cevaplar (her ikisi de Cloud Function üzerinden)
+    match /questions/{questionId} {
+      allow read: if isAdmin()
+                  || (isGuest() && resource.data.guestId == request.auth.uid)
+                  || (isDoctor() && resource.data.doctorId == request.auth.uid);
+      allow write: if false;
+    }
+
+    // Vitrin — hizmet kataloğu, herkes okuyabilir, sadece admin (function üzerinden) yazar
+    match /services/{serviceId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    // Konaklama / wellness başvuruları
+    match /stayApplications/{appId} {
+      allow read: if isAdmin()
+                  || (isGuest() && resource.data.guestId == request.auth.uid);
+      allow write: if false;
+    }
+
+    // Doktorlar (yönetim)
+    match /doctors/{doctorId} {
+      allow read: if isSignedIn();   // hasta seçim ekranında listeler
+      allow write: if false;
+    }
+
+    // Audit log — sadece function yazar, sadece admin okur
+    match /auditLog/{logId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+  }
+}

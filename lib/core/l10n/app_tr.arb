@@ -1,0 +1,35 @@
+{
+  "@@locale": "tr",
+  "appName": "Aliee Wellness",
+  "appTagline": "Spektrum Longevity",
+
+  "guestLoginTitle": "Hoş geldiniz",
+  "guestLoginSubtitle": "Otel girişinde aldığınız bilgileri kullanarak giriş yapın",
+  "passportLast6": "Pasaport (son 6 hane)",
+  "roomNumber": "Oda numarası",
+  "login": "Giriş yap",
+  "doctorLogin": "Doktor girişi",
+  "adminLogin": "Yönetici",
+
+  "guestHomeTitle": "Aliee Wellness",
+  "discoverHealth": "Sağlığını Keşfet",
+  "discoverHealthDesc": "Anamnez doldur, kişiye özel program öner",
+  "services": "Hizmetler",
+  "servicesDesc": "Testler, paneller, IV ve estetik",
+  "askDoctor": "Doktoruma Sor",
+  "askDoctorDesc": "Kayıtlı doktorlardan yanıt al",
+  "planStay": "Konaklama / Wellness",
+  "planStayDesc": "Gelecek konaklamanızı planlayın",
+
+  "doctorHomeTitle": "Doktor Paneli",
+  "questionsQueue": "Gelen sorular",
+  "noQuestionsYet": "Henüz soru yok",
+
+  "adminHomeTitle": "Yönetim Paneli",
+  "authorizeGuest": "Misafir yetkilendir",
+  "activeGuests": "Aktif misafirler",
+  "passportFull": "Pasaport numarası (tam)",
+  "submit": "Kaydet",
+
+  "language": "Dil"
+}
