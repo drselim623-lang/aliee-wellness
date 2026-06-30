@@ -4,6 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "storage": {
+    "bucket": "aliee-wellness.firebasestorage.app",
     "rules": "storage.rules"
   },
   "functions": [
@@ -30,5 +31,25 @@
     "storage": { "port": 9199 },
     "ui": { "enabled": true },
     "singleProjectMode": true
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "aliee-wellness",
+          "appId": "1:636956432386:android:9c9417d83f64a002f06f1b",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "aliee-wellness",
+          "configurations": {
+            "android": "1:636956432386:android:9c9417d83f64a002f06f1b",
+            "ios": "1:636956432386:ios:f37c09d431b27345f06f1b"
+          }
+        }
+      }
+    }
   }
 }

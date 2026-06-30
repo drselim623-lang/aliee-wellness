@@ -1,4 +1,4 @@
-package com.spektrum.aliee_wellness
+package com.spektrum.alieewellness
 
 import io.flutter.embedding.android.FlutterActivity
 

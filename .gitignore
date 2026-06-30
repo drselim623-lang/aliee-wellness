@@ -45,9 +45,8 @@ app.*.map.json
 /android/app/release
 
 # Firebase
-**/google-services.json
-**/GoogleService-Info.plist
-lib/firebase_options.dart
+# Private repo — Firebase client config dosyaları commitlenir (içerikte secret yok,
+# API key'leri Firebase rules ile kısıtlı). Public yapılırsa bunları ignore'a al.
 .firebase/
 firebase-debug.log
 
@@ -58,3 +57,7 @@ firebase-debug.log
 
 # Codemagic local cache
 .codemagic-cache/
+
+# Cloud Functions build output
+functions/lib/
+functions/node_modules/
