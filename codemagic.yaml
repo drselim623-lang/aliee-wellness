@@ -1,20 +1,45 @@
 workflows:
-  android-workflow:
-    name: Aliee Wellness — Android
+  # İLK BUILD — keystore, Play Store, App Store gerek yok.
+  # Sadece debug APK üretir, doğrudan telefona yüklenebilir.
+  first-build-android:
+    name: Aliee Wellness — First Android Build (debug APK)
     max_build_duration: 60
-    instance_type: mac_mini_m2
+    instance_type: linux_x2
     environment:
       flutter: 3.32.0
-      groups:
-        - aliee_android_keystore   # Codemagic UI'da tanımlanacak (keystore, alias, şifreler)
       vars:
-        PACKAGE_NAME: "com.spektrum.aliee_wellness"
+        PACKAGE_NAME: "com.spektrum.alieewellness"
     triggering:
       events:
         - push
       branch_patterns:
         - pattern: 'main'
           include: true
+    scripts:
+      - name: Flutter packages
+        script: flutter pub get
+      - name: Generate l10n
+        script: flutter gen-l10n
+      - name: Analyze
+        script: flutter analyze
+      - name: Build debug APK
+        script: flutter build apk --debug
+    artifacts:
+      - build/**/outputs/**/*.apk
+      - flutter_drive.log
+
+  # PRODUCTION ANDROID — keystore + Play Store yayını hazır olunca.
+  # Tetiklemek için Codemagic UI'dan manuel başlat.
+  android-release:
+    name: Aliee Wellness — Android Release (AAB)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: 3.32.0
+      groups:
+        - aliee_android_keystore   # Codemagic UI: keystore, alias, şifreler (sonra eklenecek)
+      vars:
+        PACKAGE_NAME: "com.spektrum.alieewellness"
     scripts:
       - name: Flutter packages
         script: flutter pub get
@@ -38,15 +63,15 @@ workflows:
     artifacts:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
-      - flutter_drive.log
     publishing:
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: internal
         submit_as_draft: true
 
-  ios-workflow:
-    name: Aliee Wellness — iOS
+  # PRODUCTION iOS — App Store Connect bağlanınca aktif olur.
+  ios-release:
+    name: Aliee Wellness — iOS Release (TestFlight)
     max_build_duration: 60
     instance_type: mac_mini_m2
     integrations:
@@ -55,15 +80,9 @@ workflows:
       flutter: 3.32.0
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.spektrum.aliee_wellness
+        bundle_identifier: com.spektrum.alieewellness
       vars:
-        APP_STORE_APP_ID: ""   # App Store Connect'te oluşturduktan sonra doldurulacak
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: 'main'
-          include: true
+        APP_STORE_APP_ID: ""   # App Store Connect'te app açıldıktan sonra doldurulacak
     scripts:
       - name: Flutter packages
         script: flutter pub get
@@ -84,7 +103,6 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
     publishing:
       app_store_connect:
         auth: integration
