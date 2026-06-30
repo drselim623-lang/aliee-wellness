@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/l10n/app_localizations.dart';
+import '../../core/widgets/botanical_scaffold.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
@@ -10,19 +11,26 @@ class AdminHomeScreen extends StatelessWidget {
     final l = AppL10n.of(context);
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
+      child: BotanicalScaffold(
         appBar: AppBar(
           title: Text(l.adminHomeTitle),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           bottom: TabBar(tabs: [
             Tab(text: l.authorizeGuest),
             Tab(text: l.activeGuests),
           ]),
         ),
-        body: const TabBarView(
-          children: [
-            _AuthorizeGuestTab(),
-            _ActiveGuestsTab(),
-          ],
+        body: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + kToolbarHeight + kTextTabBarHeight,
+          ),
+          child: const TabBarView(
+            children: [
+              _AuthorizeGuestTab(),
+              _ActiveGuestsTab(),
+            ],
+          ),
         ),
       ),
     );

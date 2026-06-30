@@ -4,6 +4,7 @@ import '../../../core/data/services_seed.dart';
 import '../../../core/l10n/app_localizations.dart';
 import '../../../core/models/service.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/botanical_scaffold.dart';
 
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({super.key});
@@ -14,9 +15,11 @@ class ServicesScreen extends StatelessWidget {
     final isTr = Localizations.localeOf(context).languageCode == 'tr';
     return DefaultTabController(
       length: ServiceCategory.values.length,
-      child: Scaffold(
+      child: BotanicalScaffold(
         appBar: AppBar(
           title: Text(l.services),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           bottom: TabBar(
             isScrollable: true,
             tabs: [
@@ -25,10 +28,17 @@ class ServicesScreen extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            for (final c in ServiceCategory.values) _CategoryList(category: c),
-          ],
+        body: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top +
+                kToolbarHeight +
+                kTextTabBarHeight,
+          ),
+          child: TabBarView(
+            children: [
+              for (final c in ServiceCategory.values) _CategoryList(category: c),
+            ],
+          ),
         ),
       ),
     );

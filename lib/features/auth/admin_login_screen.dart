@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/app_localizations.dart';
 import '../../core/routing/app_router.dart';
+import '../../core/widgets/botanical_scaffold.dart';
 
 class AdminLoginScreen extends StatefulWidget {
   const AdminLoginScreen({super.key});
@@ -25,7 +26,6 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
 
   Future<void> _submit() async {
     setState(() => _loading = true);
-    // TODO: Firebase Auth + 'admin' custom claim doğrulaması.
     await Future.delayed(const Duration(milliseconds: 400));
     if (!mounted) return;
     setState(() => _loading = false);
@@ -35,14 +35,22 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
   @override
   Widget build(BuildContext context) {
     final l = AppL10n.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l.adminLogin)),
+    return BotanicalScaffold(
+      appBar: AppBar(
+        title: Text(l.adminLogin),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.fromLTRB(
+          24,
+          MediaQuery.of(context).padding.top + kToolbarHeight + 24,
+          24,
+          24,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 16),
             TextField(
               controller: _email,
               decoration: const InputDecoration(labelText: 'E-posta'),

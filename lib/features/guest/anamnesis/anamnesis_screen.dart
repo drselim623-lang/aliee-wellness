@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/l10n/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/botanical_scaffold.dart';
 
 /// Bölümlü anamnez formu (3 step) — hibrit yaklaşım.
 /// İlk sürüm: UI iskelet + lokal state. Gönderim Cloud Function üzerinden olacak.
@@ -42,10 +43,15 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
       1 => const _LifestyleStep(),
       _ => const _ComplaintGoalStep(),
     };
-    return Scaffold(
-      appBar: AppBar(title: Text(l.discoverHealth)),
+    return BotanicalScaffold(
+      appBar: AppBar(
+        title: Text(l.discoverHealth),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Column(
         children: [
+          SizedBox(height: MediaQuery.of(context).padding.top + kToolbarHeight),
           LinearProgressIndicator(
             value: (_step + 1) / 3,
             backgroundColor: AppColors.line,

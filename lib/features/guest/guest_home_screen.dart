@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/app_localizations.dart';
 import '../../core/routing/app_router.dart';
+import '../../core/widgets/botanical_scaffold.dart';
 import '../../core/widgets/feature_card.dart';
 
 class GuestHomeScreen extends StatelessWidget {
@@ -11,10 +12,19 @@ class GuestHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppL10n.of(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(l.guestHomeTitle)),
+    return BotanicalScaffold(
+      appBar: AppBar(
+        title: Text(l.guestHomeTitle),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: ListView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.fromLTRB(
+          20,
+          MediaQuery.of(context).padding.top + kToolbarHeight + 8,
+          20,
+          20,
+        ),
         children: [
           FeatureCard(
             icon: Icons.favorite_outline,
