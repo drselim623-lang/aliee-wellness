@@ -22,8 +22,10 @@ workflows:
         script: flutter gen-l10n
       - name: Analyze
         script: flutter analyze
-      - name: Build debug APK
-        script: flutter build apk --debug
+      - name: Build release APK (split per ABI)
+        script: |
+          # Debug signing ile release build — App testi için yeterli, store yayını için DEĞİL
+          flutter build apk --release --split-per-abi
     artifacts:
       - build/**/outputs/**/*.apk
       - flutter_drive.log
