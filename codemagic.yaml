@@ -9,12 +9,6 @@ workflows:
       flutter: 3.32.0
       vars:
         PACKAGE_NAME: "com.spektrum.alieewellness"
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: 'main'
-          include: true
     scripts:
       - name: Flutter packages
         script: flutter pub get
@@ -30,8 +24,78 @@ workflows:
       - build/**/outputs/**/*.apk
       - flutter_drive.log
 
+  # PRODUCTION iOS — Nevora team altında, MedPoint ile aynı app_store_credentials.
+  ios-release:
+    name: Aliee Wellness — iOS Release (TestFlight)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+      cancel_previous_builds: true
+    environment:
+      flutter: 3.32.0
+      xcode: latest
+      cocoapods: default
+      groups:
+        - app_store_credentials   # Nevora team-level group (MedPoint ile paylaşımlı)
+      vars:
+        BUNDLE_ID: "com.spektrum.alieewellness"
+        APP_STORE_APP_ID: "6785897743"
+    scripts:
+      - name: Set up code signing
+        script: |
+          keychain initialize
+          echo "$IOS_CERT_PRIVATE_KEY_B64" | base64 -d > /tmp/ios_cert_key.pem
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --platform IOS \
+            --certificate-key=@file:/tmp/ios_cert_key.pem \
+            --create
+          keychain add-certificates
+      - name: Set up code signing settings on Xcode project
+        script: |
+          xcode-project use-profiles
+      - name: Install dependencies
+        script: |
+          flutter packages pub get
+      - name: Generate l10n
+        script: flutter gen-l10n
+      - name: Bump build number from App Store Connect
+        script: |
+          # Auto-bump: TestFlight + App Store + pubspec floor max + 1.
+          set -e
+          LATEST_TF=$(app-store-connect get-latest-testflight-build-number $APP_STORE_APP_ID 2>/dev/null || echo 0)
+          LATEST_AS=$(app-store-connect get-latest-app-store-build-number $APP_STORE_APP_ID 2>/dev/null || echo 0)
+          PUBSPEC_BUILD=$(grep -E '^version:' pubspec.yaml | sed -E 's/.*\+([0-9]+).*/\1/' | head -1)
+          if ! echo "$PUBSPEC_BUILD" | grep -qE '^[0-9]+$'; then PUBSPEC_BUILD=0; fi
+          HIGHEST=$LATEST_TF
+          if [ "$LATEST_AS" -gt "$HIGHEST" ]; then HIGHEST=$LATEST_AS; fi
+          if [ "$PUBSPEC_BUILD" -gt "$HIGHEST" ]; then HIGHEST=$PUBSPEC_BUILD; fi
+          NEW_BUILD_NUMBER=$(( HIGHEST + 1 ))
+          echo "TF=$LATEST_TF App Store=$LATEST_AS Pubspec=$PUBSPEC_BUILD → New=$NEW_BUILD_NUMBER"
+          echo "NEW_BUILD_NUMBER=$NEW_BUILD_NUMBER" >> $CM_ENV
+      - name: Build iOS
+        script: |
+          flutter build ipa --release \
+            --build-number=$NEW_BUILD_NUMBER \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: true
+        submit_to_app_store: false
+
   # PRODUCTION ANDROID — keystore + Play Store yayını hazır olunca.
-  # Tetiklemek için Codemagic UI'dan manuel başlat.
+  # Aliee için ayrı keystore oluşturulup Codemagic'e tanımlanacak.
   android-release:
     name: Aliee Wellness — Android Release (AAB)
     max_build_duration: 60
@@ -39,7 +103,7 @@ workflows:
     environment:
       flutter: 3.32.0
       groups:
-        - aliee_android_keystore   # Codemagic UI: keystore, alias, şifreler (sonra eklenecek)
+        - aliee_android_keystore   # Aliee'ye özel (sonra eklenecek)
       vars:
         PACKAGE_NAME: "com.spektrum.alieewellness"
     scripts:
@@ -65,47 +129,3 @@ workflows:
     artifacts:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
-    publishing:
-      google_play:
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: internal
-        submit_as_draft: true
-
-  # PRODUCTION iOS — App Store Connect bağlanınca aktif olur.
-  ios-release:
-    name: Aliee Wellness — iOS Release (TestFlight)
-    max_build_duration: 60
-    instance_type: mac_mini_m2
-    integrations:
-      app_store_connect: Aliee App Store Connect   # Codemagic UI'da tanımlanacak
-    environment:
-      flutter: 3.32.0
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.spektrum.alieewellness
-      vars:
-        APP_STORE_APP_ID: ""   # App Store Connect'te app açıldıktan sonra doldurulacak
-    scripts:
-      - name: Flutter packages
-        script: flutter pub get
-      - name: Generate l10n
-        script: flutter gen-l10n
-      - name: Pod install
-        script: |
-          find . -name "Podfile" -execdir pod install \;
-      - name: Analyze
-        script: flutter analyze
-      - name: Build IPA
-        script: |
-          BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APP_ID")
-          BUILD_NUMBER=$((BUILD_NUMBER + 1))
-          flutter build ipa --release \
-            --build-number=$BUILD_NUMBER \
-            --export-options-plist=/Users/builder/export_options.plist
-    artifacts:
-      - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-    publishing:
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true
