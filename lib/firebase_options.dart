@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -56,7 +53,6 @@ class DefaultFirebaseOptions {
     projectId: 'aliee-wellness',
     storageBucket: 'aliee-wellness.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBdGnqiSLhQQg8UlDtZEkHVTtKygBBkMI4',
     appId: '1:636956432386:ios:f37c09d431b27345f06f1b',
@@ -64,5 +60,13 @@ class DefaultFirebaseOptions {
     projectId: 'aliee-wellness',
     storageBucket: 'aliee-wellness.firebasestorage.app',
     iosBundleId: 'com.spektrum.alieewellness',
+  );
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyD8RLxkUXA1h6ixOgyH90ei01ZtWp-bPjw',
+    appId: '1:636956432386:web:52fcd0dbe6326a6cf06f1b',
+    messagingSenderId: '636956432386',
+    projectId: 'aliee-wellness',
+    authDomain: 'aliee-wellness.firebaseapp.com',
+    storageBucket: 'aliee-wellness.firebasestorage.app',
   );
 }
