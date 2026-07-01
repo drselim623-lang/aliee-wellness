@@ -22,9 +22,15 @@ service firebase.storage {
     }
 
     // Doktor mesajlarındaki ek dosyalar
+    // Yükleme: sadece o konuşmanın tarafı olabilir (client bunu kendi doğrulamaz;
+    // Firestore rules mesaj metadata'sı client'tan yazılamadığı için asıl güvenlik
+    // sendMessage function'da). Storage tarafında sadece boyut/tip limiti.
     match /questions/{questionId}/attachments/{fileName} {
-      allow read: if isAdmin() || isDoctor() || isGuest();  // detay Firestore tarafında kontrol
-      allow write: if isSignedIn() && request.resource.size < 20 * 1024 * 1024;
+      allow read: if isAdmin() || isDoctor() || isGuest();
+      allow write: if isSignedIn()
+                   && request.resource.size < 20 * 1024 * 1024
+                   && (request.resource.contentType.matches('image/.*')
+                       || request.resource.contentType == 'application/pdf');
     }
   }
 }

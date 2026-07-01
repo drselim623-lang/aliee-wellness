@@ -7,8 +7,11 @@ import '../../features/auth/admin_login_screen.dart';
 import '../../features/guest/guest_home_screen.dart';
 import '../../features/guest/services/services_screen.dart';
 import '../../features/guest/anamnesis/anamnesis_screen.dart';
+import '../../features/guest/ask_doctor/conversations_list_screen.dart';
+import '../../features/guest/ask_doctor/pick_doctor_screen.dart';
 import '../../features/doctor/doctor_home_screen.dart';
 import '../../features/admin/admin_home_screen.dart';
+import '../../features/shared/chat/chat_screen.dart';
 
 class AppRoutes {
   static const root = '/';
@@ -17,7 +20,11 @@ class AppRoutes {
   static const guestHome = '/guest';
   static const guestServices = '/guest/services';
   static const guestAnamnesis = '/guest/anamnesis';
+  static const guestAskDoctor = '/guest/ask-doctor';
+  static const guestPickDoctor = '/guest/ask-doctor/pick';
+  static const guestChat = '/guest/ask-doctor/chat/:questionId';
   static const doctorHome = '/doctor';
+  static const doctorChat = '/doctor/chat/:questionId';
   static const adminHome = '/admin';
 }
 
@@ -49,8 +56,28 @@ final appRouter = GoRouter(
       builder: (_, __) => const AnamnesisScreen(),
     ),
     GoRoute(
+      path: AppRoutes.guestAskDoctor,
+      builder: (_, __) => const ConversationsListScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.guestPickDoctor,
+      builder: (_, __) => const PickDoctorScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.guestChat,
+      builder: (_, state) => ChatScreen(
+        questionIdOrNew: state.pathParameters['questionId']!,
+      ),
+    ),
+    GoRoute(
       path: AppRoutes.doctorHome,
       builder: (_, __) => const DoctorHomeScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.doctorChat,
+      builder: (_, state) => ChatScreen(
+        questionIdOrNew: state.pathParameters['questionId']!,
+      ),
     ),
     GoRoute(
       path: AppRoutes.adminHome,

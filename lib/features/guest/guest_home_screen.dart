@@ -44,7 +44,7 @@ class GuestHomeScreen extends StatelessWidget {
             icon: Icons.chat_bubble_outline,
             title: l.askDoctor,
             description: l.askDoctorDesc,
-            onTap: () {/* TODO: doktora sor */},
+            onTap: () => context.push(AppRoutes.guestAskDoctor),
           ),
           const SizedBox(height: 12),
           FeatureCard(

@@ -16,7 +16,7 @@ class AdminHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppL10n.of(context);
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: BotanicalScaffold(
         appBar: AppBar(
           title: Text(l.adminHomeTitle),
@@ -32,9 +32,10 @@ class AdminHomeScreen extends StatelessWidget {
               icon: const Icon(Icons.logout, color: AppColors.sageDark),
             ),
           ],
-          bottom: TabBar(tabs: [
+          bottom: TabBar(isScrollable: true, tabs: [
             Tab(text: l.authorizeGuest),
             Tab(text: l.activeGuests),
+            const Tab(text: 'Doktorlar'),
           ]),
         ),
         body: Padding(
@@ -47,6 +48,7 @@ class AdminHomeScreen extends StatelessWidget {
             children: [
               _AuthorizeGuestTab(),
               _ActiveGuestsTab(),
+              _DoctorsTab(),
             ],
           ),
         ),
@@ -299,6 +301,261 @@ class _ActiveGuestsTab extends StatelessWidget {
         SnackBar(content: Text('Hata: ${e.message}')),
       );
     }
+  }
+}
+
+class _DoctorsTab extends StatefulWidget {
+  const _DoctorsTab();
+
+  @override
+  State<_DoctorsTab> createState() => _DoctorsTabState();
+}
+
+class _DoctorsTabState extends State<_DoctorsTab> {
+  final _formKey = GlobalKey<FormState>();
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _firstName = TextEditingController();
+  final _lastName = TextEditingController();
+  final _specialty = TextEditingController();
+  final _title = TextEditingController(text: 'Dr.');
+  bool _loading = false;
+  String? _errorMessage;
+  String? _successMessage;
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    _firstName.dispose();
+    _lastName.dispose();
+    _specialty.dispose();
+    _title.dispose();
+    super.dispose();
+  }
+
+  Future<void> _createDoctor() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() {
+      _loading = true;
+      _errorMessage = null;
+      _successMessage = null;
+    });
+    try {
+      await AdminService.instance.createDoctor(
+        email: _email.text,
+        password: _password.text,
+        firstName: _firstName.text,
+        lastName: _lastName.text,
+        specialty: _specialty.text,
+        title: _title.text.trim().isEmpty ? 'Dr.' : _title.text.trim(),
+      );
+      setState(() {
+        _successMessage =
+            'Doktor eklendi. Doktor artık e-posta ve şifreyle giriş yapabilir.';
+        _email.clear();
+        _password.clear();
+        _firstName.clear();
+        _lastName.clear();
+        _specialty.clear();
+      });
+    } on AdminException catch (e) {
+      setState(() => _errorMessage = e.message);
+    } catch (_) {
+      setState(() => _errorMessage = 'Bağlantı hatası.');
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Yeni doktor ekle',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(children: [
+                      SizedBox(
+                        width: 90,
+                        child: TextFormField(
+                          controller: _title,
+                          decoration:
+                              const InputDecoration(labelText: 'Ünvan'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _firstName,
+                          decoration: const InputDecoration(labelText: 'Ad'),
+                          validator: (v) =>
+                              (v == null || v.trim().isEmpty) ? '—' : null,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _lastName,
+                          decoration: const InputDecoration(labelText: 'Soyad'),
+                          validator: (v) =>
+                              (v == null || v.trim().isEmpty) ? '—' : null,
+                        ),
+                      ),
+                    ]),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _specialty,
+                      decoration:
+                          const InputDecoration(labelText: 'Uzmanlık'),
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _email,
+                      decoration: const InputDecoration(labelText: 'E-posta'),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (v) =>
+                          (v == null || !v.contains('@')) ? '—' : null,
+                    ),
+                    const SizedBox(height: 12),
+                    TextFormField(
+                      controller: _password,
+                      decoration:
+                          const InputDecoration(labelText: 'Geçici şifre (min 8 karakter)'),
+                      obscureText: true,
+                      validator: (v) =>
+                          (v == null || v.length < 8) ? 'Çok kısa' : null,
+                    ),
+                    if (_successMessage != null) ...[
+                      const SizedBox(height: 12),
+                      _AlertBanner(message: _successMessage!, isError: false),
+                    ],
+                    if (_errorMessage != null) ...[
+                      const SizedBox(height: 12),
+                      _AlertBanner(message: _errorMessage!, isError: true),
+                    ],
+                    const SizedBox(height: 16),
+                    FilledButton(
+                      onPressed: _loading ? null : _createDoctor,
+                      child: _loading
+                          ? const SizedBox(
+                              height: 22,
+                              width: 22,
+                              child: CircularProgressIndicator(
+                                  strokeWidth: 2, color: Colors.white),
+                            )
+                          : const Text('Doktor Oluştur'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            'Kayıtlı doktorlar',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          StreamBuilder<List<DoctorSummary>>(
+            stream: AdminService.instance.doctorsStream(),
+            builder: (context, snap) {
+              if (snap.hasError) {
+                return Text('Yüklenemedi: ${snap.error}');
+              }
+              if (!snap.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              final docs = snap.data!;
+              if (docs.isEmpty) {
+                return const Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Text('Henüz doktor yok.'),
+                  ),
+                );
+              }
+              return Column(
+                children: docs
+                    .map(
+                      (d) => Card(
+                        child: ListTile(
+                          leading: Icon(
+                            d.active
+                                ? Icons.medical_services_outlined
+                                : Icons.block,
+                            color: d.active
+                                ? AppColors.sageDark
+                                : AppColors.inkSoft,
+                          ),
+                          title: Text(d.displayName),
+                          subtitle: Text(
+                            [
+                              if (d.specialty.isNotEmpty) d.specialty,
+                              d.email,
+                            ].join(' · '),
+                          ),
+                          trailing: d.active
+                              ? IconButton(
+                                  tooltip: 'Erişimi kapat',
+                                  icon: const Icon(Icons.block,
+                                      color: AppColors.terracotta),
+                                  onPressed: () async {
+                                    final ok = await showDialog<bool>(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title: const Text('Erişimi kapat'),
+                                        content: Text(
+                                            '${d.displayName} doktorunun erişimini kapatmak istiyor musun?'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(false),
+                                            child: const Text('Vazgeç'),
+                                          ),
+                                          FilledButton(
+                                            onPressed: () =>
+                                                Navigator.of(context).pop(true),
+                                            child: const Text('Kapat'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                    if (ok == true) {
+                                      await AdminService.instance
+                                          .deactivateDoctor(d.doctorId);
+                                    }
+                                  },
+                                )
+                              : const Text('Pasif',
+                                  style:
+                                      TextStyle(color: AppColors.inkSoft)),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 

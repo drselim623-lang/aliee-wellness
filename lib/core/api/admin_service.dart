@@ -60,6 +60,83 @@ class AdminService {
         .map((snap) =>
             snap.docs.map((d) => GuestSummary.fromDoc(d.id, d.data())).toList());
   }
+
+  Future<Map<String, dynamic>> createDoctor({
+    required String email,
+    required String password,
+    required String firstName,
+    required String lastName,
+    required String specialty,
+    String title = 'Dr.',
+  }) async {
+    try {
+      final result = await _functions.httpsCallable('adminCreateDoctor').call({
+        'email': email,
+        'password': password,
+        'firstName': firstName,
+        'lastName': lastName,
+        'specialty': specialty,
+        'title': title,
+      });
+      return Map<String, dynamic>.from(result.data as Map);
+    } on FirebaseFunctionsException catch (e) {
+      throw AdminException(code: e.code, message: e.message ?? 'Hata');
+    }
+  }
+
+  Stream<List<DoctorSummary>> doctorsStream() {
+    return _db
+        .collection('doctors')
+        .orderBy('createdAt', descending: true)
+        .limit(100)
+        .snapshots()
+        .map((snap) =>
+            snap.docs.map((d) => DoctorSummary.fromDoc(d.id, d.data())).toList());
+  }
+
+  Future<void> deactivateDoctor(String doctorId) async {
+    try {
+      await _functions.httpsCallable('adminDeactivateDoctor').call({
+        'doctorId': doctorId,
+      });
+    } on FirebaseFunctionsException catch (e) {
+      throw AdminException(code: e.code, message: e.message ?? 'Hata');
+    }
+  }
+}
+
+class DoctorSummary {
+  final String doctorId;
+  final String title;
+  final String firstName;
+  final String lastName;
+  final String specialty;
+  final String email;
+  final bool active;
+
+  DoctorSummary({
+    required this.doctorId,
+    required this.title,
+    required this.firstName,
+    required this.lastName,
+    required this.specialty,
+    required this.email,
+    required this.active,
+  });
+
+  String get displayName => '$title $firstName $lastName'.trim();
+
+  factory DoctorSummary.fromDoc(String id, Map<String, dynamic> data) {
+    return DoctorSummary(
+      doctorId: id,
+      title: (data['title'] as String?) ?? 'Dr.',
+      firstName: (data['firstName'] as String?) ?? '',
+      lastName: (data['lastName'] as String?) ?? '',
+      specialty: (data['specialty'] as String?) ?? '',
+      email: (data['email'] as String?) ?? '',
+      active: (data['active'] as bool?) ?? true,
+    );
+  }
 }
 
 class GuestSummary {

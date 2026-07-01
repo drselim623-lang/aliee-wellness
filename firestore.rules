@@ -44,6 +44,16 @@ service cloud.firestore {
                   || (isGuest() && resource.data.guestId == request.auth.uid)
                   || (isDoctor() && resource.data.doctorId == request.auth.uid);
       allow write: if false;
+
+      // Mesajlar — sadece o konuşmanın taraflarına açık
+      match /messages/{msgId} {
+        allow read: if isAdmin()
+                    || (isGuest() &&
+                        get(/databases/$(database)/documents/questions/$(questionId)).data.guestId == request.auth.uid)
+                    || (isDoctor() &&
+                        get(/databases/$(database)/documents/questions/$(questionId)).data.doctorId == request.auth.uid);
+        allow write: if false;
+      }
     }
 
     // Vitrin — hizmet kataloğu, herkes okuyabilir, sadece admin (function üzerinden) yazar
@@ -63,6 +73,17 @@ service cloud.firestore {
     match /doctors/{doctorId} {
       allow read: if isSignedIn();   // hasta seçim ekranında listeler
       allow write: if false;
+    }
+
+    // Admin listesi — sadece admin okur
+    match /admins/{adminId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // System config (bootstrap flag vs.) — kimse okuyamaz
+    match /systemConfig/{doc} {
+      allow read, write: if false;
     }
 
     // Audit log — sadece function yazar, sadece admin okur
