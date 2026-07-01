@@ -8,7 +8,6 @@ import '../../features/guest/guest_home_screen.dart';
 import '../../features/guest/services/services_screen.dart';
 import '../../features/guest/anamnesis/anamnesis_screen.dart';
 import '../../features/guest/ask_doctor/conversations_list_screen.dart';
-import '../../features/guest/ask_doctor/pick_doctor_screen.dart';
 import '../../features/doctor/doctor_home_screen.dart';
 import '../../features/admin/admin_home_screen.dart';
 import '../../features/shared/chat/chat_screen.dart';
@@ -21,7 +20,6 @@ class AppRoutes {
   static const guestServices = '/guest/services';
   static const guestAnamnesis = '/guest/anamnesis';
   static const guestAskDoctor = '/guest/ask-doctor';
-  static const guestPickDoctor = '/guest/ask-doctor/pick';
   static const guestChat = '/guest/ask-doctor/chat/:questionId';
   static const doctorHome = '/doctor';
   static const doctorChat = '/doctor/chat/:questionId';
@@ -58,10 +56,6 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.guestAskDoctor,
       builder: (_, __) => const ConversationsListScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.guestPickDoctor,
-      builder: (_, __) => const PickDoctorScreen(),
     ),
     GoRoute(
       path: AppRoutes.guestChat,

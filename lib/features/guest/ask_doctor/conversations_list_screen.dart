@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +10,9 @@ import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/botanical_scaffold.dart';
 
+/// Doktoruma Sor — üstte doktor listesi (yatay scroll), altta mevcut konuşmalar.
+/// Doktora tıklayınca bu misafirin o doktorla açık konuşması varsa onu açar,
+/// yoksa yeni sohbet başlatır (chat ekranına new_ prefix ile).
 class ConversationsListScreen extends StatelessWidget {
   const ConversationsListScreen({super.key});
 
@@ -19,48 +24,277 @@ class ConversationsListScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push(AppRoutes.guestPickDoctor),
-        icon: const Icon(Icons.chat_bubble_outline),
-        label: const Text('Yeni Soru'),
-        backgroundColor: AppColors.sageDark,
-        foregroundColor: Colors.white,
-      ),
       body: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + kToolbarHeight,
         ),
-        child: StreamBuilder<List<Question>>(
-          stream: ChatService.instance.guestQuestionsStream(),
-          builder: (context, snap) {
-            if (snap.hasError) {
-              return Center(child: Text('Yüklenemedi: ${snap.error}'));
-            }
-            if (!snap.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            final questions = snap.data!;
-            if (questions.isEmpty) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(32),
-                  child: Text(
-                    'Henüz soru sormadın.\nAlttaki butona basarak yeni soru başlatabilirsin.',
-                    textAlign: TextAlign.center,
+        child: CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
+                child: Text(
+                  'Sağlık Ekibimiz',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.ink,
                   ),
                 ),
-              );
-            }
-            return ListView.separated(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-              itemCount: questions.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
-              itemBuilder: (_, i) {
-                final q = questions[i];
-                return _ConversationTile(question: q, isGuest: true);
-              },
-            );
-          },
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: _DoctorsHorizontal(
+                onDoctorTap: (doctor) =>
+                    _openChatWithDoctor(context, doctor),
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 8),
+                child: Text(
+                  'Konuşmalarım',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.ink,
+                  ),
+                ),
+              ),
+            ),
+            const _ConversationsSliver(),
+            const SliverToBoxAdapter(child: SizedBox(height: 40)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _openChatWithDoctor(
+    BuildContext context,
+    Doctor doctor,
+  ) async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+
+    // Bu misafirin bu doktorla açık bir konuşması var mı?
+    final snap = await FirebaseFirestore.instance
+        .collection('questions')
+        .where('guestId', isEqualTo: uid)
+        .where('doctorId', isEqualTo: doctor.id)
+        .limit(1)
+        .get();
+
+    if (!context.mounted) return;
+    if (snap.docs.isNotEmpty) {
+      // Mevcut konuşmayı aç
+      context.push(
+        AppRoutes.guestChat.replaceFirst(':questionId', snap.docs.first.id),
+      );
+    } else {
+      // Yeni sohbet başlat
+      context.push(
+        AppRoutes.guestChat.replaceFirst(':questionId', 'new_${doctor.id}'),
+      );
+    }
+  }
+}
+
+class _DoctorsHorizontal extends StatelessWidget {
+  final void Function(Doctor doctor) onDoctorTap;
+  const _DoctorsHorizontal({required this.onDoctorTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<Doctor>>(
+      stream: ChatService.instance.activeDoctorsStream(),
+      builder: (context, snap) {
+        if (snap.hasError) {
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: Text('Doktorlar yüklenemedi: ${snap.error}'),
+          );
+        }
+        if (!snap.hasData) {
+          return const SizedBox(
+            height: 160,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+        final doctors = snap.data!;
+        if (doctors.isEmpty) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Text(
+              'Henüz kayıtlı doktor yok.',
+              style: TextStyle(color: AppColors.inkSoft),
+            ),
+          );
+        }
+        return SizedBox(
+          height: 172,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            itemCount: doctors.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (_, i) => _DoctorCard(
+              doctor: doctors[i],
+              onTap: () => onDoctorTap(doctors[i]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _DoctorCard extends StatelessWidget {
+  final Doctor doctor;
+  final VoidCallback onTap;
+  const _DoctorCard({required this.doctor, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 140,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: AppColors.sage.withValues(alpha: 0.28),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.sageDark.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      _initials(doctor),
+                      style: const TextStyle(
+                        color: AppColors.sageDark,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  doctor.displayName,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    color: AppColors.ink,
+                    height: 1.15,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                if (doctor.specialty.isNotEmpty)
+                  Text(
+                    doctor.specialty,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: AppColors.inkSoft,
+                      fontSize: 11,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _initials(Doctor d) {
+    final a = d.firstName.isNotEmpty ? d.firstName[0] : '';
+    final b = d.lastName.isNotEmpty ? d.lastName[0] : '';
+    return (a + b).toUpperCase();
+  }
+}
+
+class _ConversationsSliver extends StatelessWidget {
+  const _ConversationsSliver();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<List<Question>>(
+      stream: ChatService.instance.guestQuestionsStream(),
+      builder: (context, snap) {
+        if (snap.hasError) {
+          return SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text('Yüklenemedi: ${snap.error}'),
+            ),
+          );
+        }
+        if (!snap.hasData) {
+          return const SliverToBoxAdapter(
+            child: Center(child: Padding(
+              padding: EdgeInsets.all(20),
+              child: CircularProgressIndicator(),
+            )),
+          );
+        }
+        final questions = snap.data!;
+        if (questions.isEmpty) {
+          return const SliverToBoxAdapter(child: _EmptyHint());
+        }
+        return SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+          sliver: SliverList.separated(
+            itemCount: questions.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            itemBuilder: (_, i) =>
+                _ConversationTile(question: questions[i]),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _EmptyHint extends StatelessWidget {
+  const _EmptyHint();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: AppColors.creamSoft.withValues(alpha: 0.7),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.line),
+        ),
+        child: const Row(
+          children: [
+            Icon(Icons.info_outline, color: AppColors.sageDark),
+            SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Henüz sohbet yok. Yukarıdaki bir doktora dokunarak konuşmayı başlat.',
+                style: TextStyle(color: AppColors.inkSoft),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -69,13 +303,11 @@ class ConversationsListScreen extends StatelessWidget {
 
 class _ConversationTile extends StatelessWidget {
   final Question question;
-  final bool isGuest;
-  const _ConversationTile({required this.question, required this.isGuest});
+  const _ConversationTile({required this.question});
 
   @override
   Widget build(BuildContext context) {
-    final unread = isGuest ? question.unreadForGuest : question.unreadForDoctor;
-    final title = isGuest ? question.doctorName : question.guestName;
+    final unread = question.unreadForGuest;
     final time = question.lastMessageAt;
     return Card(
       child: ListTile(
@@ -83,14 +315,14 @@ class _ConversationTile extends StatelessWidget {
           AppRoutes.guestChat.replaceFirst(':questionId', question.id),
         ),
         leading: CircleAvatar(
-          backgroundColor: AppColors.sage.withValues(alpha: 0.3),
-          child: Icon(
-            isGuest ? Icons.medical_services_outlined : Icons.person_outline,
+          backgroundColor: AppColors.sage.withValues(alpha: 0.28),
+          child: const Icon(
+            Icons.medical_services_outlined,
             color: AppColors.sageDark,
           ),
         ),
         title: Text(
-          title.isEmpty ? '—' : title,
+          question.doctorName.isEmpty ? '—' : question.doctorName,
           style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         subtitle: Text(
