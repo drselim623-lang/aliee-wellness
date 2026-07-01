@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/api/auth_service.dart';
 import '../../core/l10n/app_localizations.dart';
 import '../../core/routing/app_router.dart';
 import '../../core/widgets/botanical_scaffold.dart';
@@ -13,9 +14,11 @@ class DoctorLoginScreen extends StatefulWidget {
 }
 
 class _DoctorLoginScreenState extends State<DoctorLoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final _email = TextEditingController();
   final _password = TextEditingController();
   bool _loading = false;
+  String? _errorMessage;
 
   @override
   void dispose() {
@@ -25,11 +28,28 @@ class _DoctorLoginScreenState extends State<DoctorLoginScreen> {
   }
 
   Future<void> _submit() async {
-    setState(() => _loading = true);
-    await Future.delayed(const Duration(milliseconds: 400));
-    if (!mounted) return;
-    setState(() => _loading = false);
-    context.go(AppRoutes.doctorHome);
+    if (!_formKey.currentState!.validate()) return;
+    setState(() {
+      _loading = true;
+      _errorMessage = null;
+    });
+    try {
+      await AuthService.instance.emailSignIn(
+        email: _email.text,
+        password: _password.text,
+        expectedRole: 'doctor',
+      );
+      if (!mounted) return;
+      context.go(AppRoutes.doctorHome);
+    } on AuthException catch (e) {
+      if (!mounted) return;
+      setState(() => _errorMessage = e.message);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _errorMessage = 'Bağlantı hatası.');
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
   }
 
   @override
@@ -48,28 +68,51 @@ class _DoctorLoginScreenState extends State<DoctorLoginScreen> {
           24,
           24,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _email,
-              decoration: const InputDecoration(labelText: 'E-posta'),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _password,
-              decoration: const InputDecoration(labelText: 'Şifre'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            FilledButton(
-              onPressed: _loading ? null : _submit,
-              child: _loading
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : Text(l.login),
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _email,
+                decoration: const InputDecoration(labelText: 'E-posta'),
+                keyboardType: TextInputType.emailAddress,
+                autofillHints: const [AutofillHints.email],
+                validator: (v) => (v == null || !v.contains('@')) ? '—' : null,
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _password,
+                decoration: const InputDecoration(labelText: 'Şifre'),
+                obscureText: true,
+                autofillHints: const [AutofillHints.password],
+                validator: (v) => (v == null || v.length < 6) ? '—' : null,
+              ),
+              if (_errorMessage != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  _errorMessage!,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                    fontSize: 13,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+              const SizedBox(height: 20),
+              FilledButton(
+                onPressed: _loading ? null : _submit,
+                child: _loading
+                    ? const SizedBox(
+                        height: 22,
+                        width: 22,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
+                      )
+                    : Text(l.login),
+              ),
+            ],
+          ),
         ),
       ),
     );

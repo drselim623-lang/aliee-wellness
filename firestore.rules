@@ -70,5 +70,10 @@ service cloud.firestore {
       allow read: if isAdmin();
       allow write: if false;
     }
+
+    // Rate limit sayaçları — hiç kimse client'tan okuyamaz/yazamaz, sadece function
+    match /rateLimit/{roomId} {
+      allow read, write: if false;
+    }
   }
 }
