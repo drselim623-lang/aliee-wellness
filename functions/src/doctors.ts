@@ -34,10 +34,10 @@ export const adminCreateDoctor = onCall(
       typeof data.specialty === "string" ? data.specialty.trim() : "";
     const title = typeof data.title === "string" ? data.title.trim() : "Dr.";
 
-    if (!email || password.length < 8) {
+    if (!email || password.length < 6) {
       throw new HttpsError(
         "invalid-argument",
-        "email ve şifre (min 8 karakter) zorunlu."
+        "email ve şifre (min 6 karakter) zorunlu."
       );
     }
     if (!firstName || !lastName) {

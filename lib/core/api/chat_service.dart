@@ -23,10 +23,12 @@ class ChatService {
     return _db
         .collection('doctors')
         .where('active', isEqualTo: true)
-        .orderBy('firstName')
         .snapshots()
-        .map((snap) =>
-            snap.docs.map((d) => Doctor.fromDoc(d.id, d.data())).toList());
+        .map((snap) {
+      final list = snap.docs.map((d) => Doctor.fromDoc(d.id, d.data())).toList();
+      list.sort((a, b) => a.firstName.compareTo(b.firstName));
+      return list;
+    });
   }
 
   // ---- Questions ------------------------------------------------------------

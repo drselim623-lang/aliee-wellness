@@ -75,10 +75,13 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
             children: [
               TextFormField(
                 controller: _email,
-                decoration: const InputDecoration(labelText: 'E-posta'),
+                decoration: const InputDecoration(
+                  labelText: 'Kullanıcı adı veya e-posta',
+                  hintText: 'örn: admin',
+                ),
                 keyboardType: TextInputType.emailAddress,
-                autofillHints: const [AutofillHints.email],
-                validator: (v) => (v == null || !v.contains('@')) ? '—' : null,
+                autofillHints: const [AutofillHints.username],
+                validator: (v) => (v == null || v.trim().isEmpty) ? '—' : null,
               ),
               const SizedBox(height: 12),
               TextFormField(

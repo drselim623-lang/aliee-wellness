@@ -49,14 +49,16 @@ class AuthService {
   }
 
   /// Doktor/Admin email + password login. Custom claim'i (`role`) token içinden okunur.
+  /// Kullanıcı sadece "admin" veya "doktor" yazarsa otomatik olarak @aliee.local eklenir.
   Future<User> emailSignIn({
     required String email,
     required String password,
     required String expectedRole,
   }) async {
+    final normalizedEmail = _normalizeEmail(email);
     try {
       final cred = await _auth.signInWithEmailAndPassword(
-        email: email.trim(),
+        email: normalizedEmail,
         password: password,
       );
       final user = cred.user!;
@@ -79,6 +81,15 @@ class AuthService {
   }
 
   Future<void> signOut() => _auth.signOut();
+
+  /// Basit kullanıcı adı → e-posta dönüşümü. "admin" → "admin@aliee.local".
+  /// İçinde @ varsa dokunmaz.
+  String _normalizeEmail(String input) {
+    final trimmed = input.trim().toLowerCase();
+    if (trimmed.contains('@')) return trimmed;
+    if (trimmed.isEmpty) return trimmed;
+    return '$trimmed@aliee.local';
+  }
 
   String _mapFunctionsError(FirebaseFunctionsException e) {
     switch (e.code) {

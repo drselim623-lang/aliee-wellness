@@ -25,3 +25,4 @@ export { guestSignIn, adminAuthorizeGuest, adminDeactivateGuest } from "./guests
 export { adminCreateDoctor, adminDeactivateDoctor } from "./doctors";
 export { startQuestion, sendMessage, markQuestionRead } from "./chat";
 export { bootstrapFirstAdmin } from "./bootstrap";
+export { devResetTestCredentials } from "./devTools";
