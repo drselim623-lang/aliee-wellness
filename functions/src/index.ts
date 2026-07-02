@@ -24,5 +24,6 @@ setGlobalOptions({ region: "europe-west1", maxInstances: 10 });
 export { guestSignIn, adminAuthorizeGuest, adminDeactivateGuest } from "./guests";
 export { adminCreateDoctor, adminDeactivateDoctor } from "./doctors";
 export { startQuestion, sendMessage, markQuestionRead } from "./chat";
+export { submitAnamnesis, saveLabMetadata } from "./anamnesis";
 export { bootstrapFirstAdmin } from "./bootstrap";
 export { devResetTestCredentials } from "./devTools";

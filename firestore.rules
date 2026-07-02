@@ -30,6 +30,22 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Anamnez geçmişi (tüm sürümler)
+    match /guests/{guestId}/anamnesisHistory/{docId} {
+      allow read: if isAdmin()
+                  || (isGuest() && request.auth.uid == guestId)
+                  || isDoctor();
+      allow write: if false;
+    }
+
+    // Program önerisi
+    match /guests/{guestId}/programRecommendation/{docId} {
+      allow read: if isAdmin()
+                  || (isGuest() && request.auth.uid == guestId)
+                  || isDoctor();
+      allow write: if false;
+    }
+
     // Lab kayıtları — aynı kural
     match /guests/{guestId}/labs/{docId} {
       allow read: if isAdmin()
