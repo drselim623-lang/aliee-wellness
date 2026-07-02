@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/data/services_seed.dart';
 import '../../../core/l10n/app_localizations.dart';
 import '../../../core/models/service.dart';
+import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/botanical_scaffold.dart';
 
@@ -62,13 +64,43 @@ class _CategoryList extends StatelessWidget {
         final s = services[i];
         final name = isTr ? s.nameTr : s.nameEn;
         final desc = isTr ? s.descriptionTr : s.descriptionEn;
+        final hasProtocol = s.protocolTr != null && s.protocolTr!.isNotEmpty;
         return Card(
           child: ListTile(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-            title: Text(name,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w600, color: AppColors.ink)),
+            onTap: () => context.push(
+              AppRoutes.guestServiceDetail.replaceFirst(':serviceId', s.id),
+            ),
+            title: Row(
+              children: [
+                Expanded(
+                  child: Text(name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, color: AppColors.ink)),
+                ),
+                if (hasProtocol) ...[
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: AppColors.sage.withValues(alpha: 0.35),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      'Protokol',
+                      style: TextStyle(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.sageDark,
+                        letterSpacing: 0.4,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
             subtitle: desc != null
                 ? Padding(
                     padding: const EdgeInsets.only(top: 4),
@@ -76,6 +108,8 @@ class _CategoryList extends StatelessWidget {
                         style: const TextStyle(color: AppColors.inkSoft)),
                   )
                 : null,
+            trailing: const Icon(Icons.chevron_right,
+                color: AppColors.inkSoft, size: 20),
           ),
         );
       },

@@ -6,6 +6,7 @@ import '../../features/auth/doctor_login_screen.dart';
 import '../../features/auth/admin_login_screen.dart';
 import '../../features/guest/guest_home_screen.dart';
 import '../../features/guest/services/services_screen.dart';
+import '../../features/guest/services/service_detail_screen.dart';
 import '../../features/guest/anamnesis/anamnesis_screen.dart';
 import '../../features/guest/program/program_screen.dart';
 import '../../features/guest/ask_doctor/conversations_list_screen.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const adminLogin = '/admin-login';
   static const guestHome = '/guest';
   static const guestServices = '/guest/services';
+  static const guestServiceDetail = '/guest/services/detail/:serviceId';
   static const guestAnamnesis = '/guest/anamnesis';
   static const guestProgram = '/guest/program';
   static const guestAskDoctor = '/guest/ask-doctor';
@@ -50,6 +52,12 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.guestServices,
       builder: (_, __) => const ServicesScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.guestServiceDetail,
+      builder: (_, state) => ServiceDetailScreen(
+        serviceId: state.pathParameters['serviceId']!,
+      ),
     ),
     GoRoute(
       path: AppRoutes.guestAnamnesis,

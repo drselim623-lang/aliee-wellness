@@ -22,6 +22,10 @@ class WellnessService {
   final String? descriptionEn;
   final List<String> tags;
 
+  /// Uzun Türkçe protokol açıklaması (Popüler Longevity Protokolleri kaynaklı).
+  /// Detay ekranında gösterilir. Bilgilendirme amaçlıdır.
+  final String? protocolTr;
+
   const WellnessService({
     required this.id,
     required this.category,
@@ -30,6 +34,7 @@ class WellnessService {
     this.descriptionTr,
     this.descriptionEn,
     this.tags = const [],
+    this.protocolTr,
   });
 
   factory WellnessService.fromMap(String id, Map<String, dynamic> m) {
@@ -41,6 +46,7 @@ class WellnessService {
       descriptionTr: m['descriptionTr'] as String?,
       descriptionEn: m['descriptionEn'] as String?,
       tags: (m['tags'] as List?)?.cast<String>() ?? const [],
+      protocolTr: m['protocolTr'] as String?,
     );
   }
 
@@ -51,5 +57,6 @@ class WellnessService {
         if (descriptionTr != null) 'descriptionTr': descriptionTr,
         if (descriptionEn != null) 'descriptionEn': descriptionEn,
         'tags': tags,
+        if (protocolTr != null) 'protocolTr': protocolTr,
       };
 }
