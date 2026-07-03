@@ -5,6 +5,8 @@ import '../../core/l10n/app_localizations.dart';
 import '../../core/routing/app_router.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/widgets/botanical_scaffold.dart';
+import '../../core/widgets/install_pwa_banner.dart';
+import '../../core/widgets/language_switcher.dart';
 import 'guest_login_form.dart';
 
 class RoleSelectionScreen extends StatefulWidget {
@@ -116,17 +118,34 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
             ),
           ),
 
-          // Doktor girişi — sağ üst köşe
+          // PWA install banner (web-only, kapatılabilir) — üstte
           Positioned(
-            right: 8,
+            top: MediaQuery.of(context).padding.top + 52,
+            left: 0,
+            right: 0,
+            child: FadeTransition(
+              opacity: _fade,
+              child: const InstallPwaBanner(),
+            ),
+          ),
+
+          // Sağ üst köşe: dil değiştirici + doktor girişi
+          Positioned(
+            right: 4,
             top: MediaQuery.of(context).padding.top + 4,
             child: FadeTransition(
               opacity: _fade,
-              child: IconButton(
-                tooltip: l.doctorLogin,
-                onPressed: () => context.push(AppRoutes.doctorLogin),
-                icon: const Icon(Icons.medical_services_outlined,
-                    color: AppColors.sageDark),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const LanguageSwitcherButton(),
+                  IconButton(
+                    tooltip: l.doctorLogin,
+                    onPressed: () => context.push(AppRoutes.doctorLogin),
+                    icon: const Icon(Icons.medical_services_outlined,
+                        color: AppColors.sageDark),
+                  ),
+                ],
               ),
             ),
           ),

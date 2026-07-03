@@ -19,7 +19,7 @@ class AppL10nTr extends AppL10n {
 
   @override
   String get guestLoginSubtitle =>
-      'Otel girişinde aldığınız bilgileri kullanarak giriş yapın';
+      'Otel girişinde aldığınız bilgilerle giriş yapın';
 
   @override
   String get passportLast6 => 'Pasaport (son 6 hane)';
@@ -64,6 +64,12 @@ class AppL10nTr extends AppL10n {
   String get planStayDesc => 'Gelecek konaklamanızı planlayın';
 
   @override
+  String get myProgram => 'Programım';
+
+  @override
+  String get myProgramDesc => 'Size özel hizmet önerilerinizi görün';
+
+  @override
   String get doctorHomeTitle => 'Doktor Paneli';
 
   @override
@@ -82,6 +88,9 @@ class AppL10nTr extends AppL10n {
   String get activeGuests => 'Aktif misafirler';
 
   @override
+  String get doctors => 'Doktorlar';
+
+  @override
   String get passportFull => 'Pasaport numarası (tam)';
 
   @override
@@ -89,4 +98,327 @@ class AppL10nTr extends AppL10n {
 
   @override
   String get language => 'Dil';
+
+  @override
+  String get back => 'Geri';
+
+  @override
+  String get next => 'İleri';
+
+  @override
+  String get cancel => 'Vazgeç';
+
+  @override
+  String get save => 'Kaydet';
+
+  @override
+  String get signOut => 'Çıkış';
+
+  @override
+  String get error => 'Hata';
+
+  @override
+  String get loading => 'Yükleniyor…';
+
+  @override
+  String get servicesTitle => 'Hizmetler';
+
+  @override
+  String get categoryTests => 'Testler & Görüntüleme';
+
+  @override
+  String get categoryPanels => 'OM AGE Panelleri';
+
+  @override
+  String get categoryIV => 'IV & Longevity';
+
+  @override
+  String get categoryAesthetics => 'Medikal Estetik';
+
+  @override
+  String get protocolBadge => 'Protokol';
+
+  @override
+  String get protocolHeading => 'Protokol';
+
+  @override
+  String get protocolDisclaimer =>
+      'Bu ekrandaki tüm bilgiler yalnızca bilgilendirme amaçlıdır. Uygulama ve doz kararı, otelin wellness katında Spektrum ekibi ve doktor değerlendirmesi ile verilir.';
+
+  @override
+  String get noProtocolYet =>
+      'Bu hizmet için ayrıntılı protokol bilgisi henüz eklenmedi. Detaylar için Spektrum ekibi ile görüşebilirsiniz.';
+
+  @override
+  String get programTitle => 'Programınız';
+
+  @override
+  String get programSubtitle =>
+      'Anamnez cevaplarınıza göre hazırlandı. Otel wellness katında Spektrum ekibi ile birlikte planlanır.';
+
+  @override
+  String get whyRecommended => 'Neden önerildi';
+
+  @override
+  String get updateAnamnesis => 'Anamnezi güncelle';
+
+  @override
+  String get programEmptyText =>
+      'Henüz bir öneri hazırlanmadı.\nAnamnez formunu doldurun.';
+
+  @override
+  String get anamnesisStep1Title => 'Genel sağlık öyküsü';
+
+  @override
+  String get anamnesisStep1Desc =>
+      'Bilinen hastalıklar, kullandığınız ilaçlar, alerjiler ve aile öyküsü. Birden fazlaysa virgülle ayırın.';
+
+  @override
+  String get fieldChronic => 'Bilinen kronik hastalıklar';
+
+  @override
+  String get fieldChronicHint => 'örn. hipertansiyon, diyabet, tiroit';
+
+  @override
+  String get fieldMedications => 'Kullandığınız ilaçlar';
+
+  @override
+  String get fieldMedicationsHint => 'örn. metformin, tiroit ilacı';
+
+  @override
+  String get fieldAllergies => 'Bilinen alerjiler';
+
+  @override
+  String get fieldAllergiesHint => 'örn. penisilin, fıstık, polen';
+
+  @override
+  String get fieldFamilyHistory => 'Aile öyküsü (kalp, kanser, diyabet vb.)';
+
+  @override
+  String get fieldFamilyHistoryHint => 'örn. anne — meme kanseri, baba — kalp';
+
+  @override
+  String get fieldSurgeries => 'Geçirilmiş ameliyatlar';
+
+  @override
+  String get fieldSurgeriesHint => 'örn. safra kesesi ameliyatı, dolgu vb.';
+
+  @override
+  String get labUploadCta =>
+      'Geçmiş laboratuvar sonuçlarınız varsa yükleyin (foto).';
+
+  @override
+  String get labUploadButton => 'Yükle';
+
+  @override
+  String get anamnesisStep2Title => 'Yaşam tarzı';
+
+  @override
+  String get anamnesisStep2Desc =>
+      'Uyku, beslenme, egzersiz ve stres alışkanlıklarınız.';
+
+  @override
+  String get sleepHoursAvg => 'Ortalama uyku saati';
+
+  @override
+  String get sleepQuality => 'Uyku kaliteniz';
+
+  @override
+  String get sleepQualityPoor => 'Kötü';
+
+  @override
+  String get sleepQualityFair => 'Orta';
+
+  @override
+  String get sleepQualityGood => 'İyi';
+
+  @override
+  String get dietType => 'Beslenme tipi';
+
+  @override
+  String get dietOmnivore => 'Omnivor';
+
+  @override
+  String get dietVegetarian => 'Vejetaryen';
+
+  @override
+  String get dietVegan => 'Vegan';
+
+  @override
+  String get dietKeto => 'Keto';
+
+  @override
+  String get dietOther => 'Diğer';
+
+  @override
+  String get exerciseDaysPerWeek => 'Haftada egzersiz günü';
+
+  @override
+  String get iSmoke => 'Sigara kullanıyorum';
+
+  @override
+  String get alcoholFrequency => 'Alkol sıklığı';
+
+  @override
+  String get alcoholNone => 'Yok';
+
+  @override
+  String get alcoholRarely => 'Nadiren';
+
+  @override
+  String get alcoholWeekly => 'Haftalık';
+
+  @override
+  String get alcoholDaily => 'Günlük';
+
+  @override
+  String get perceivedStress => 'Algıladığınız stres (1-10)';
+
+  @override
+  String get anamnesisStep3Title => 'Şikayet ve hedef';
+
+  @override
+  String get anamnesisStep3Desc =>
+      'Şu anki yakınmalarınız ve longevity programından beklentiniz. Birden fazlaysa virgülle ayırın.';
+
+  @override
+  String get fieldComplaints => 'Mevcut şikayetleriniz';
+
+  @override
+  String get fieldComplaintsHint =>
+      'örn. yorgunluk, uyku problemi, cilt sorunu';
+
+  @override
+  String get fieldGoals => 'Hedefleriniz';
+
+  @override
+  String get fieldGoalsHint => 'örn. anti-aging, enerji, cilt, kilo, uyku';
+
+  @override
+  String get fieldFreeText => 'Eklemek istediğiniz başka bir şey';
+
+  @override
+  String get submitAndGetProgram => 'Gönder ve öneri al';
+
+  @override
+  String get uploadError => 'Yükleme hatası';
+
+  @override
+  String get submitError => 'Gönderilemedi';
+
+  @override
+  String get askDoctorTitle => 'Doktoruma Sor';
+
+  @override
+  String get ourMedicalTeam => 'Sağlık Ekibimiz';
+
+  @override
+  String get myConversations => 'Konuşmalarım';
+
+  @override
+  String get noConversationsHint =>
+      'Henüz sohbet yok. Yukarıdaki bir doktora dokunarak konuşmayı başlat.';
+
+  @override
+  String get newConversation => 'Yeni Soru';
+
+  @override
+  String get typeMessage => 'Mesaj yaz…';
+
+  @override
+  String get chooseFromGallery => 'Galeriden seç';
+
+  @override
+  String get camera => 'Kamera';
+
+  @override
+  String get sendPhoto => 'Fotoğraf gönder';
+
+  @override
+  String get chatEmpty =>
+      'Sohbet burada başlayacak.\nİlk mesajını yaz veya fotoğraf gönder.';
+
+  @override
+  String get sendFailed => 'Gönderilemedi';
+
+  @override
+  String get addToHomeTitle => 'Ana Ekrana Ekle';
+
+  @override
+  String get addToHomeDesc =>
+      'Aliee Wellness\'ı cihazınıza kurun; uygulama gibi hızlı bir deneyim yaşayın.';
+
+  @override
+  String get addToHomeIOS => 'iOS (Safari)';
+
+  @override
+  String get addToHomeIOSStep1 =>
+      'Safari\'nin alt tarafındaki Paylaş butonuna dokunun.';
+
+  @override
+  String get addToHomeIOSStep2 => 'Aşağı kaydırıp \"Ana Ekrana Ekle\"yi seçin.';
+
+  @override
+  String get addToHomeIOSStep3 => 'İsmi onaylayıp \"Ekle\"ye dokunun.';
+
+  @override
+  String get addToHomeAndroid => 'Android (Chrome)';
+
+  @override
+  String get addToHomeAndroidStep1 => 'Sağ üst köşedeki ⋮ menüsüne dokunun.';
+
+  @override
+  String get addToHomeAndroidStep2 =>
+      '\"Uygulamayı yükle\" veya \"Ana ekrana ekle\"yi seçin.';
+
+  @override
+  String get addToHomeAndroidStep3 => 'Kurulumu onaylayın.';
+
+  @override
+  String get addToHomeDesktop => 'Bilgisayar (Chrome / Edge)';
+
+  @override
+  String get addToHomeDesktopStep1 =>
+      'URL çubuğundaki kurulum ikonuna tıklayın (küçük monitör ikonu).';
+
+  @override
+  String get addToHomeDesktopStep2 => 'Kurulumu onaylayın.';
+
+  @override
+  String get addToHomeButton => 'Kur';
+
+  @override
+  String get close => 'Kapat';
+
+  @override
+  String get authorized => 'Yetkili';
+
+  @override
+  String get guestFirstName => 'Ad';
+
+  @override
+  String get guestLastName => 'Soyad';
+
+  @override
+  String get optional => 'opsiyonel';
+
+  @override
+  String get nationality => 'Uyruk';
+
+  @override
+  String get email => 'E-posta';
+
+  @override
+  String get phone => 'Telefon';
+
+  @override
+  String get guestAuthorizedSuccess =>
+      'Misafir başarıyla yetkilendirildi. Pasaport son 6 hanesi ve oda no ile giriş yapabilir.';
+
+  @override
+  String get guestUpdatedSuccess =>
+      'Misafir bilgileri güncellendi ve erişim 1 yıl uzatıldı.';
+
+  @override
+  String get connectionError => 'Bağlantı hatası.';
 }
