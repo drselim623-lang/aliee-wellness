@@ -86,16 +86,16 @@ export const startQuestion = onCall(
     if (!text && !attachmentUrl) {
       throw new HttpsError(
         "invalid-argument",
-        "İlk mesajda metin veya dosya olmalı."
+        "The first message must contain text or a file."
       );
     }
     if (text.length > MAX_TEXT_LEN) {
-      throw new HttpsError("invalid-argument", "Mesaj çok uzun.");
+      throw new HttpsError("invalid-argument", "Message too long.");
     }
 
     const doctor = await getDoctorSummary(doctorId);
     if (!doctor.active) {
-      throw new HttpsError("not-found", "Doktor bulunamadı veya aktif değil.");
+      throw new HttpsError("not-found", "Doctor not found or not active.");
     }
     const guestName = await getGuestName(uid);
 
@@ -105,7 +105,7 @@ export const startQuestion = onCall(
     const now = admin.firestore.FieldValue.serverTimestamp();
     const preview = text.length > 0
       ? text.slice(0, 100)
-      : "📎 Dosya paylaşıldı";
+      : "📎 File shared";
 
     const batch = db.batch();
     batch.set(qRef, {
@@ -170,17 +170,17 @@ export const sendMessage = onCall(
       throw new HttpsError("invalid-argument", "questionId zorunlu.");
     }
     if (!text && !attachmentUrl) {
-      throw new HttpsError("invalid-argument", "Metin veya dosya olmalı.");
+      throw new HttpsError("invalid-argument", "Text or file required.");
     }
     if (text.length > MAX_TEXT_LEN) {
-      throw new HttpsError("invalid-argument", "Mesaj çok uzun.");
+      throw new HttpsError("invalid-argument", "Message too long.");
     }
 
     const db = admin.firestore();
     const qRef = db.collection("questions").doc(questionId);
     const qSnap = await qRef.get();
     if (!qSnap.exists) {
-      throw new HttpsError("not-found", "Konuşma bulunamadı.");
+      throw new HttpsError("not-found", "Conversation not found.");
     }
     const q = qSnap.data() as {
       guestId?: string;
@@ -188,15 +188,15 @@ export const sendMessage = onCall(
     };
     // Yetki: sadece konuşmanın tarafları mesaj gönderebilir
     if (role === "guest" && q.guestId !== uid) {
-      throw new HttpsError("permission-denied", "Bu konuşmanın tarafı değilsin.");
+      throw new HttpsError("permission-denied", "You are not a participant in this conversation.");
     }
     if (role === "doctor" && q.doctorId !== uid) {
-      throw new HttpsError("permission-denied", "Bu konuşmanın tarafı değilsin.");
+      throw new HttpsError("permission-denied", "You are not a participant in this conversation.");
     }
 
     const preview = text.length > 0
       ? text.slice(0, 100)
-      : "📎 Dosya paylaşıldı";
+      : "📎 File shared";
     const unreadField =
       role === "guest" ? "unreadForDoctor" : "unreadForGuest";
     const otherUnreadField =
@@ -243,7 +243,7 @@ export const markQuestionRead = onCall(
     const qRef = db.collection("questions").doc(questionId);
     const qSnap = await qRef.get();
     if (!qSnap.exists) {
-      throw new HttpsError("not-found", "Konuşma bulunamadı.");
+      throw new HttpsError("not-found", "Conversation not found.");
     }
     const q = qSnap.data() as { guestId?: string; doctorId?: string };
     if (role === "guest" && q.guestId !== uid) {

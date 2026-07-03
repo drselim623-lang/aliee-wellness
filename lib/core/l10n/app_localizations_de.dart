@@ -222,6 +222,12 @@ class AppL10nDe extends AppL10n {
   String get sleepHoursAvg => 'Durchschnittliche Schlafstunden';
 
   @override
+  String get hoursSuffix => 'Stunden';
+
+  @override
+  String get daysSuffix => 'Tage';
+
+  @override
   String get sleepQuality => 'Schlafqualität';
 
   @override
@@ -476,7 +482,7 @@ class AppL10nDe extends AppL10n {
   String get specialty => 'Fachgebiet';
 
   @override
-  String get temporaryPassword => 'Temporäres Passwort (min. 6 Zeichen)';
+  String get temporaryPassword => 'Temporäres Passwort (min. 8 Zeichen)';
 
   @override
   String get doctorAddedSuccess =>
@@ -499,4 +505,52 @@ class AppL10nDe extends AppL10n {
 
   @override
   String get step => 'Schritt';
+
+  @override
+  String get requiredField => 'Erforderlich';
+
+  @override
+  String get noActiveGuests => 'Keine aktiven Gäste';
+
+  @override
+  String get revoke => 'Deaktivieren';
+
+  @override
+  String get addNewDoctor => 'Neuen Arzt hinzufügen';
+
+  @override
+  String get inactive => 'Inaktiv';
+
+  @override
+  String get authErrorSignInFailed =>
+      'Anmeldung fehlgeschlagen, bitte erneut versuchen.';
+
+  @override
+  String get authErrorWrongRole =>
+      'Sie sind für diesen Bereich nicht berechtigt.';
+
+  @override
+  String get authErrorGuestNotFound =>
+      'Pass- oder Zimmernummer konnte nicht verifiziert werden.';
+
+  @override
+  String get authErrorTooManyAttempts =>
+      'Zu viele Fehlversuche. Bitte warten Sie.';
+
+  @override
+  String get authErrorInvalidInput =>
+      'Die eingegebenen Daten sind unvollständig oder fehlerhaft.';
+
+  @override
+  String get authErrorNoPermission =>
+      'Sie sind für diese Aktion nicht berechtigt.';
+
+  @override
+  String get authErrorUnexpected => 'Ein unerwarteter Fehler ist aufgetreten.';
+
+  @override
+  String get authErrorWrongCredentials => 'E-Mail oder Passwort ist falsch.';
+
+  @override
+  String get authErrorUserDisabled => 'Ihr Konto wurde deaktiviert.';
 }

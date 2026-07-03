@@ -24,7 +24,7 @@ class AdminHomeScreen extends StatelessWidget {
           elevation: 0,
           actions: [
             IconButton(
-              tooltip: 'Çıkış',
+              tooltip: l.signOut,
               onPressed: () async {
                 await AuthService.instance.signOut();
                 if (context.mounted) context.go(AppRoutes.root);
@@ -35,7 +35,7 @@ class AdminHomeScreen extends StatelessWidget {
           bottom: TabBar(isScrollable: true, tabs: [
             Tab(text: l.authorizeGuest),
             Tab(text: l.activeGuests),
-            const Tab(text: 'Doktorlar'),
+            Tab(text: l.doctors),
           ]),
         ),
         body: Padding(
@@ -106,11 +106,12 @@ class _AuthorizeGuestTabState extends State<_AuthorizeGuestTab> {
         email: _email.text.trim(),
         phone: _phone.text.trim(),
       );
+      if (!mounted) return;
+      final l = AppL10n.of(context);
       final wasUpdated = result['updated'] == true;
       setState(() {
-        _successMessage = wasUpdated
-            ? 'Misafir bilgileri güncellendi ve erişim 1 yıl uzatıldı.'
-            : 'Misafir başarıyla yetkilendirildi. Misafir uygulamaya pasaport son 6 hanesi + oda no ile giriş yapabilir.';
+        _successMessage =
+            wasUpdated ? l.guestUpdatedSuccess : l.guestAuthorizedSuccess;
         _passport.clear();
         _room.clear();
         _firstName.clear();
@@ -122,7 +123,9 @@ class _AuthorizeGuestTabState extends State<_AuthorizeGuestTab> {
     } on AdminException catch (e) {
       setState(() => _errorMessage = e.message);
     } catch (_) {
-      setState(() => _errorMessage = 'Bağlantı hatası.');
+      if (mounted) {
+        setState(() => _errorMessage = AppL10n.of(context).connectionError);
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -143,7 +146,7 @@ class _AuthorizeGuestTabState extends State<_AuthorizeGuestTab> {
               decoration: InputDecoration(labelText: l.passportFull),
               textCapitalization: TextCapitalization.characters,
               validator: (v) =>
-                  (v == null || v.trim().length < 6) ? 'Zorunlu' : null,
+                  (v == null || v.trim().length < 6) ? l.requiredField : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
@@ -151,44 +154,46 @@ class _AuthorizeGuestTabState extends State<_AuthorizeGuestTab> {
               decoration: InputDecoration(labelText: l.roomNumber),
               keyboardType: TextInputType.number,
               validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? 'Zorunlu' : null,
+                  (v == null || v.trim().isEmpty) ? l.requiredField : null,
             ),
             const SizedBox(height: 12),
             Row(children: [
               Expanded(
                 child: TextFormField(
                   controller: _firstName,
-                  decoration: const InputDecoration(labelText: 'Ad'),
+                  decoration: InputDecoration(labelText: l.guestFirstName),
                   validator: (v) =>
-                      (v == null || v.trim().isEmpty) ? 'Zorunlu' : null,
+                      (v == null || v.trim().isEmpty) ? l.requiredField : null,
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: TextFormField(
                   controller: _lastName,
-                  decoration: const InputDecoration(labelText: 'Soyad'),
+                  decoration: InputDecoration(labelText: l.guestLastName),
                   validator: (v) =>
-                      (v == null || v.trim().isEmpty) ? 'Zorunlu' : null,
+                      (v == null || v.trim().isEmpty) ? l.requiredField : null,
                 ),
               ),
             ]),
             const SizedBox(height: 12),
             TextFormField(
               controller: _nationality,
-              decoration:
-                  const InputDecoration(labelText: 'Uyruk (opsiyonel)'),
+              decoration: InputDecoration(
+                  labelText: '${l.nationality} (${l.optional})'),
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _email,
-              decoration: const InputDecoration(labelText: 'E-posta (opsiyonel)'),
+              decoration:
+                  InputDecoration(labelText: '${l.email} (${l.optional})'),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _phone,
-              decoration: const InputDecoration(labelText: 'Telefon (opsiyonel)'),
+              decoration:
+                  InputDecoration(labelText: '${l.phone} (${l.optional})'),
               keyboardType: TextInputType.phone,
             ),
             if (_successMessage != null) ...[
@@ -223,6 +228,7 @@ class _ActiveGuestsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
     final dateFmt = DateFormat('dd.MM.yyyy');
     return StreamBuilder<List<GuestSummary>>(
       stream: AdminService.instance.activeGuestsStream(),
@@ -231,7 +237,7 @@ class _ActiveGuestsTab extends StatelessWidget {
           return Center(
             child: Padding(
               padding: const EdgeInsets.all(24),
-              child: Text('Liste yüklenemedi: ${snap.error}'),
+              child: Text('${l.loadFailed}: ${snap.error}'),
             ),
           );
         }
@@ -240,7 +246,7 @@ class _ActiveGuestsTab extends StatelessWidget {
         }
         final guests = snap.data!;
         if (guests.isEmpty) {
-          return const Center(child: Text('Aktif misafir yok'));
+          return Center(child: Text(l.noActiveGuests));
         }
         return ListView.separated(
           padding: const EdgeInsets.all(16),
@@ -252,11 +258,11 @@ class _ActiveGuestsTab extends StatelessWidget {
               child: ListTile(
                 title: Text(g.fullName.isEmpty ? '—' : g.fullName),
                 subtitle: Text(
-                  'Oda ${g.roomNumber}'
-                  '${g.expiresAt != null ? " · bitiş: ${dateFmt.format(g.expiresAt!)}" : ""}',
+                  '${l.roomLabel} ${g.roomNumber}'
+                  '${g.expiresAt != null ? " · ${l.expiresLabel}: ${dateFmt.format(g.expiresAt!)}" : ""}',
                 ),
                 trailing: IconButton(
-                  tooltip: 'Erişimi kapat',
+                  tooltip: l.revokeAccess,
                   icon: const Icon(Icons.block, color: AppColors.terracotta),
                   onPressed: () => _confirmDeactivate(context, g),
                 ),
@@ -270,20 +276,21 @@ class _ActiveGuestsTab extends StatelessWidget {
 
   Future<void> _confirmDeactivate(
       BuildContext context, GuestSummary g) async {
+    final l = AppL10n.of(context);
     final ok = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Erişimi kapat'),
+        title: Text(l.revokeAccess),
         content: Text(
-            '${g.fullName} (Oda ${g.roomNumber}) misafirinin erişimini kapatmak istiyor musun?'),
+            '${g.fullName} · ${l.roomLabel} ${g.roomNumber}\n${l.revokeAccessConfirm}'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Kapat'),
+            child: Text(l.revoke),
           ),
         ],
       ),
@@ -293,12 +300,12 @@ class _ActiveGuestsTab extends StatelessWidget {
       await AdminService.instance.deactivateGuest(g.guestId);
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${g.fullName} erişimi kapatıldı.')),
+        SnackBar(content: Text('${g.fullName} — ${l.accessRevoked}')),
       );
     } on AdminException catch (e) {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hata: ${e.message}')),
+        SnackBar(content: Text('${l.error}: ${e.message}')),
       );
     }
   }
@@ -350,9 +357,9 @@ class _DoctorsTabState extends State<_DoctorsTab> {
         specialty: _specialty.text,
         title: _title.text.trim().isEmpty ? 'Dr.' : _title.text.trim(),
       );
+      if (!mounted) return;
       setState(() {
-        _successMessage =
-            'Doktor eklendi. Doktor artık e-posta ve şifreyle giriş yapabilir.';
+        _successMessage = AppL10n.of(context).doctorAddedSuccess;
         _email.clear();
         _password.clear();
         _firstName.clear();
@@ -362,7 +369,9 @@ class _DoctorsTabState extends State<_DoctorsTab> {
     } on AdminException catch (e) {
       setState(() => _errorMessage = e.message);
     } catch (_) {
-      setState(() => _errorMessage = 'Bağlantı hatası.');
+      if (mounted) {
+        setState(() => _errorMessage = AppL10n.of(context).connectionError);
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -370,6 +379,7 @@ class _DoctorsTabState extends State<_DoctorsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -383,9 +393,9 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
-                      'Yeni doktor ekle',
-                      style: TextStyle(
+                    Text(
+                      l.addNewDoctor,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                       ),
@@ -397,14 +407,15 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                         child: TextFormField(
                           controller: _title,
                           decoration:
-                              const InputDecoration(labelText: 'Ünvan'),
+                              InputDecoration(labelText: l.titleField),
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: TextFormField(
                           controller: _firstName,
-                          decoration: const InputDecoration(labelText: 'Ad'),
+                          decoration:
+                              InputDecoration(labelText: l.firstName),
                           validator: (v) =>
                               (v == null || v.trim().isEmpty) ? '—' : null,
                         ),
@@ -413,7 +424,7 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                       Expanded(
                         child: TextFormField(
                           controller: _lastName,
-                          decoration: const InputDecoration(labelText: 'Soyad'),
+                          decoration: InputDecoration(labelText: l.lastName),
                           validator: (v) =>
                               (v == null || v.trim().isEmpty) ? '—' : null,
                         ),
@@ -422,13 +433,12 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _specialty,
-                      decoration:
-                          const InputDecoration(labelText: 'Uzmanlık'),
+                      decoration: InputDecoration(labelText: l.specialty),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _email,
-                      decoration: const InputDecoration(labelText: 'E-posta'),
+                      decoration: InputDecoration(labelText: l.email),
                       keyboardType: TextInputType.emailAddress,
                       validator: (v) =>
                           (v == null || !v.contains('@')) ? '—' : null,
@@ -437,10 +447,10 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                     TextFormField(
                       controller: _password,
                       decoration:
-                          const InputDecoration(labelText: 'Geçici şifre (min 8 karakter)'),
+                          InputDecoration(labelText: l.temporaryPassword),
                       obscureText: true,
                       validator: (v) =>
-                          (v == null || v.length < 8) ? 'Çok kısa' : null,
+                          (v == null || v.length < 8) ? l.passwordTooShort : null,
                     ),
                     if (_successMessage != null) ...[
                       const SizedBox(height: 12),
@@ -460,7 +470,7 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                               child: CircularProgressIndicator(
                                   strokeWidth: 2, color: Colors.white),
                             )
-                          : const Text('Doktor Oluştur'),
+                          : Text(l.createDoctor),
                     ),
                   ],
                 ),
@@ -468,26 +478,26 @@ class _DoctorsTabState extends State<_DoctorsTab> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Kayıtlı doktorlar',
-            style: TextStyle(fontWeight: FontWeight.w600),
+          Text(
+            l.registeredDoctors,
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
           StreamBuilder<List<DoctorSummary>>(
             stream: AdminService.instance.doctorsStream(),
             builder: (context, snap) {
               if (snap.hasError) {
-                return Text('Yüklenemedi: ${snap.error}');
+                return Text('${l.loadFailed}: ${snap.error}');
               }
               if (!snap.hasData) {
                 return const Center(child: CircularProgressIndicator());
               }
               final docs = snap.data!;
               if (docs.isEmpty) {
-                return const Card(
+                return Card(
                   child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Text('Henüz doktor yok.'),
+                    padding: const EdgeInsets.all(16),
+                    child: Text(l.noDoctorsYet),
                   ),
                 );
               }
@@ -513,26 +523,26 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                           ),
                           trailing: d.active
                               ? IconButton(
-                                  tooltip: 'Erişimi kapat',
+                                  tooltip: l.revokeAccess,
                                   icon: const Icon(Icons.block,
                                       color: AppColors.terracotta),
                                   onPressed: () async {
                                     final ok = await showDialog<bool>(
                                       context: context,
                                       builder: (_) => AlertDialog(
-                                        title: const Text('Erişimi kapat'),
+                                        title: Text(l.revokeAccess),
                                         content: Text(
-                                            '${d.displayName} doktorunun erişimini kapatmak istiyor musun?'),
+                                            '${d.displayName}\n${l.revokeAccessConfirm}'),
                                         actions: [
                                           TextButton(
                                             onPressed: () =>
                                                 Navigator.of(context).pop(false),
-                                            child: const Text('Vazgeç'),
+                                            child: Text(l.cancel),
                                           ),
                                           FilledButton(
                                             onPressed: () =>
                                                 Navigator.of(context).pop(true),
-                                            child: const Text('Kapat'),
+                                            child: Text(l.revoke),
                                           ),
                                         ],
                                       ),
@@ -543,9 +553,9 @@ class _DoctorsTabState extends State<_DoctorsTab> {
                                     }
                                   },
                                 )
-                              : const Text('Pasif',
-                                  style:
-                                      TextStyle(color: AppColors.inkSoft)),
+                              : Text(l.inactive,
+                                  style: const TextStyle(
+                                      color: AppColors.inkSoft)),
                         ),
                       ),
                     )

@@ -68,164 +68,167 @@ export function recommendProgram(
   const familyHx = a.familyHistory ?? [];
 
   // -------------------- ŞİKAYET / HEDEF EŞLEŞTİRMELERİ --------------------
+  // Anahtar kelimeler TR + EN birlikte tutulur; reason metinleri EN'dir
+  // (uygulamanın varsayılan dili İngilizce, form ipuçları da İngilizce).
 
   // Uyku problemleri
   if (
-    anyMatch(["uyku", "insomnia", "uyuyamıyor"], complaints) ||
-    anyMatch(["uyku", "dinlenme"], goals) ||
+    anyMatch(["uyku", "insomnia", "uyuyamıyor", "sleep"], complaints) ||
+    anyMatch(["uyku", "dinlenme", "sleep", "rest"], goals) ||
     (a.sleepHoursAvg < 6 && a.sleepQuality === "poor")
   ) {
-    add("iv_destress", "Uyku ve gevşeme desteği", 3);
-    add("iv_mood_sleep", "Uyku kalitesi için özel formül", 3);
-    add("test_sleep", "Uyku Testi ile altta yatan nedenlerin taranması", 2);
-    add("panel_hormone_balance", "Uyku düzenini etkileyen hormon dengesi", 1);
+    add("iv_destress", "Sleep and relaxation support", 3);
+    add("iv_mood_sleep", "Special formula for sleep quality", 3);
+    add("test_sleep", "Sleep Test to screen underlying causes", 2);
+    add("panel_hormone_balance", "Hormone balance affecting sleep patterns", 1);
   }
 
   // Yorgunluk / enerji
   if (
     anyMatch(
-      ["yorgunluk", "halsiz", "enerji", "bitkin"],
+      ["yorgunluk", "halsiz", "enerji", "bitkin", "fatigue", "tired", "energy", "exhaust"],
       complaints
     ) ||
-    anyMatch(["enerji", "canlılık"], goals)
+    anyMatch(["enerji", "canlılık", "energy", "vitality"], goals)
   ) {
-    add("iv_reform", "Enerji ve toparlanma için amino asit + B kompleks", 3);
-    add("iv_myers", "Klasik enerji IV karışımı", 2);
-    add("iv_longevity", "Uzun vadeli enerji ve hücresel destek", 2);
-    add("panel_micronutrient", "Mikrobesin eksiklikleri taraması", 2);
-    add("test_vo2max", "MAX VO2 ile aerobik kapasite ölçümü", 1);
+    add("iv_reform", "Amino acids + B complex for energy and recovery", 3);
+    add("iv_myers", "Classic energy IV blend", 2);
+    add("iv_longevity", "Long-term energy and cellular support", 2);
+    add("panel_micronutrient", "Screening for micronutrient deficiencies", 2);
+    add("test_vo2max", "Aerobic capacity measurement with VO2 Max", 1);
   }
 
   // Stres / anksiyete
   if (
     a.perceivedStress >= 7 ||
-    anyMatch(["stres", "kaygı", "anksiyete"], complaints) ||
-    anyMatch(["stres", "sakinleşme", "denge"], goals)
+    anyMatch(["stres", "kaygı", "anksiyete", "stress", "anxiety"], complaints) ||
+    anyMatch(["stres", "sakinleşme", "denge", "stress", "calm", "balance"], goals)
   ) {
-    add("iv_destress", "Yüksek stres için magnezyum + B6 + GABA", 3);
-    add("iv_mood_sleep", "Ruh hali ve sakinlik desteği", 2);
-    add("panel_hormone_aging_axis", "Kortizol ve yaşlanma aksı incelemesi", 2);
+    add("iv_destress", "Magnesium + B6 + GABA for high stress", 3);
+    add("iv_mood_sleep", "Mood and calmness support", 2);
+    add("panel_hormone_aging_axis", "Cortisol and aging-axis review", 2);
   }
 
   // Anti-aging / longevity odağı
   if (
     anyMatch(
-      ["anti", "gençleş", "longevity", "yaşlanma", "cilt"],
+      ["anti", "gençleş", "longevity", "yaşlanma", "cilt", "aging", "skin", "rejuvenat"],
       goals
     )
   ) {
-    add("iv_longevity", "Longevity için Q10 + ALA + antioksidan karışım", 3);
-    add("iv_nad", "Hücresel enerji ve DNA onarımı", 3);
-    add("iv_antiaging_repair", "Anti-aging IV kompleksi", 3);
-    add("test_epigenetic", "Epigenetik yaş testi", 2);
-    add("test_dna", "DNA ile kişisel risk analizi", 2);
-    add("panel_neuro_alzheimer", "Nörobilişsel yaşın taranması", 1);
+    add("iv_longevity", "Q10 + ALA + antioxidant blend for longevity", 3);
+    add("iv_nad", "Cellular energy and DNA repair", 3);
+    add("iv_antiaging_repair", "Anti-aging IV complex", 3);
+    add("test_epigenetic", "Epigenetic age test", 2);
+    add("test_dna", "Personal risk analysis with DNA", 2);
+    add("panel_neuro_alzheimer", "Neurocognitive age screening", 1);
   }
 
   // Cilt / güzellik
   if (
-    anyMatch(["cilt", "güzellik", "parlaklık", "kolajen"], goals) ||
-    anyMatch(["cilt problemi", "sivilce", "kırışıklık"], complaints)
+    anyMatch(["cilt", "güzellik", "parlaklık", "kolajen", "skin", "beauty", "glow", "collagen"], goals) ||
+    anyMatch(["cilt problemi", "sivilce", "kırışıklık", "skin", "acne", "wrinkle"], complaints)
   ) {
-    add("iv_collagen", "IV Kolajen desteği", 3);
+    add("iv_collagen", "IV Collagen support", 3);
     add("iv_beauty", "Beauty cocktail", 3);
-    add("iv_glutathione", "Cilt aydınlatma", 2);
-    add("aesth_skin_booster", "Skin booster mezoterapi", 2);
-    add("aesth_mesotherapy", "Mezoterapi", 1);
+    add("iv_glutathione", "Skin brightening", 2);
+    add("aesth_skin_booster", "Skin booster mesotherapy", 2);
+    add("aesth_mesotherapy", "Mesotherapy", 1);
   }
 
   // Kilo yönetimi / metabolizma
   if (
-    anyMatch(["kilo", "metabolizma", "form"], goals) ||
-    anyMatch(["kilo", "şişmanlık", "obezite"], complaints)
+    anyMatch(["kilo", "metabolizma", "form", "weight", "metabolism", "fit"], goals) ||
+    anyMatch(["kilo", "şişmanlık", "obezite", "weight", "obesity"], complaints)
   ) {
-    add("panel_advanced_cardio", "Kardiyometabolik ileri belirteçler", 2);
-    add("panel_liver_metabolic", "Karaciğer ve metabolik yük", 2);
-    add("iv_power_fitness", "Egzersiz + amino asit desteği", 1);
+    add("panel_advanced_cardio", "Advanced cardiometabolic markers", 2);
+    add("panel_liver_metabolic", "Liver and metabolic load", 2);
+    add("iv_power_fitness", "Exercise + amino acid support", 1);
   }
 
   // Sindirim / bağırsak
   if (
     anyMatch(
-      ["sindirim", "şişkinlik", "bağırsak", "kabız", "ishal", "reflü"],
+      ["sindirim", "şişkinlik", "bağırsak", "kabız", "ishal", "reflü",
+        "digest", "bloat", "gut", "constipat", "diarrhea", "reflux", "stomach"],
       complaints
     )
   ) {
-    add("test_microbiota", "Bağırsak flora testi", 3);
-    add("test_sibo", "SIBO testi", 3);
-    add("test_food_intolerance", "Gıda intolerans testi", 2);
-    add("test_candida", "Candida testi", 2);
-    add("test_parasite", "Parazit analizi", 1);
+    add("test_microbiota", "Gut microbiota test", 3);
+    add("test_sibo", "SIBO test", 3);
+    add("test_food_intolerance", "Food intolerance test", 2);
+    add("test_candida", "Candida test", 2);
+    add("test_parasite", "Parasite analysis", 1);
   }
 
   // Detoks / toksik yük
   if (
-    anyMatch(["detoks", "arınma", "toksin"], goals) ||
-    anyMatch(["ağır metaller"], complaints)
+    anyMatch(["detoks", "arınma", "toksin", "detox", "cleanse", "toxin"], goals) ||
+    anyMatch(["ağır metaller", "heavy metal"], complaints)
   ) {
-    add("iv_detox", "Detoks IV karışımı", 3);
-    add("iv_glutathione", "Glutatyon detoks desteği", 2);
-    add("panel_toxin_screening", "Toksin taraması", 2);
+    add("iv_detox", "Detox IV blend", 3);
+    add("iv_glutathione", "Glutathione detox support", 2);
+    add("panel_toxin_screening", "Toxin screening", 2);
   }
 
   // İnflamasyon
   if (
-    anyMatch(["ağrı", "eklem", "iltihap", "enflamasyon"], complaints) ||
+    anyMatch(["ağrı", "eklem", "iltihap", "enflamasyon", "pain", "joint", "inflammation"], complaints) ||
     familyHx.length > 0
   ) {
-    add("panel_advanced_inflammation", "Gelişmiş inflamasyon belirteçleri", 2);
-    add("test_inflammation_markers", "İnflamasyon markerları", 2);
-    add("iv_ozone", "Ozon terapi", 1);
+    add("panel_advanced_inflammation", "Advanced inflammation markers", 2);
+    add("test_inflammation_markers", "Inflammation markers", 2);
+    add("iv_ozone", "Ozone therapy", 1);
   }
 
   // Bağışıklık
   if (
-    anyMatch(["bağışık", "sık hasta", "grip"], complaints) ||
-    anyMatch(["bağışık", "immünite"], goals)
+    anyMatch(["bağışık", "sık hasta", "grip", "immun", "immune", "flu", "sick often"], complaints) ||
+    anyMatch(["bağışık", "immünite", "immun", "immune"], goals)
   ) {
-    add("iv_immune_plus", "Bağışıklık destek IV", 3);
+    add("iv_immune_plus", "Immune support IV", 3);
     add("iv_vitamin_c", "IV Vitamin C", 2);
-    add("panel_infection_viral", "Enfeksiyon + viral bağışıklık paneli", 2);
+    add("panel_infection_viral", "Infection + viral immunity panel", 2);
   }
 
   // -------------------- YAŞAM TARZI FAKTÖRLERİ --------------------
 
   if (a.smokes) {
-    add("iv_glutathione", "Sigara antioksidan yükü için", 2);
-    add("panel_liver_function", "Karaciğer taraması", 1);
-    add("test_pft", "Solunum fonksiyon testi (PFT)", 1);
+    add("iv_glutathione", "For the antioxidant load of smoking", 2);
+    add("panel_liver_function", "Liver screening", 1);
+    add("test_pft", "Pulmonary function test (PFT)", 1);
   }
 
   if (a.alcoholFrequency === "daily" || a.alcoholFrequency === "weekly") {
-    add("panel_liver_function", "Alkol tüketimine göre karaciğer taraması", 2);
-    add("iv_detox", "Karaciğer destekleyici detoks", 1);
+    add("panel_liver_function", "Liver screening based on alcohol intake", 2);
+    add("iv_detox", "Liver-supporting detox", 1);
   }
 
   if (a.exerciseDaysPerWeek === 0) {
-    add("test_cardio_screening", "Kardiyovasküler tarama", 1);
-    add("test_vo2max", "Egzersize başlamadan önce MAX VO2", 1);
+    add("test_cardio_screening", "Cardiovascular screening", 1);
+    add("test_vo2max", "VO2 Max before starting exercise", 1);
   } else if (a.exerciseDaysPerWeek >= 5) {
-    add("iv_power_fitness", "Performans/toparlanma amino asit desteği", 2);
-    add("iv_reform", "Reform IV — sporcu enerjisi", 1);
+    add("iv_power_fitness", "Amino acid support for performance/recovery", 2);
+    add("iv_reform", "Reform IV — athlete energy", 1);
   }
 
   // -------------------- GENEL SAĞLIK ÖYKÜSÜ --------------------
 
   if (conditions.length > 0) {
-    add("panel_standard", "Kronik durum takibi için Standart Panel", 2);
-    add("panel_cbc_inflammation", "Tam kan + inflamasyon paneli", 1);
+    add("panel_standard", "Standard Panel for chronic condition follow-up", 2);
+    add("panel_cbc_inflammation", "Complete blood + inflammation panel", 1);
   }
 
   if (familyHx.length > 0) {
-    add("test_dna", "Ailesel risk için DNA testi", 1);
-    add("panel_neuro_alzheimer", "Nörobilişsel yaş / Alzheimer riski", 1);
+    add("test_dna", "DNA test for familial risk", 1);
+    add("panel_neuro_alzheimer", "Neurocognitive age / Alzheimer risk", 1);
   }
 
   // Boş çıktı ise minimal bir 'başlangıç paketi' öner
   if (scores.size === 0) {
-    add("panel_standard", "Genel sağlık taraması için Standart Panel", 1);
-    add("panel_micronutrient", "Mikrobesin durumu", 1);
-    add("iv_myers", "Genel enerji desteği", 1);
+    add("panel_standard", "Standard Panel for general health screening", 1);
+    add("panel_micronutrient", "Micronutrient status", 1);
+    add("iv_myers", "General energy support", 1);
   }
 
   // Sonucu score'a göre sırala (yüksekten düşüğe), maksimum 12 öneri

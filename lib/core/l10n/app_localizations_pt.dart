@@ -224,6 +224,12 @@ class AppL10nPt extends AppL10n {
   String get sleepHoursAvg => 'Média de horas de sono';
 
   @override
+  String get hoursSuffix => 'horas';
+
+  @override
+  String get daysSuffix => 'dias';
+
+  @override
   String get sleepQuality => 'Qualidade do sono';
 
   @override
@@ -475,7 +481,7 @@ class AppL10nPt extends AppL10n {
   String get specialty => 'Especialidade';
 
   @override
-  String get temporaryPassword => 'Senha temporária (mín. 6 caracteres)';
+  String get temporaryPassword => 'Senha temporária (mín. 8 caracteres)';
 
   @override
   String get doctorAddedSuccess =>
@@ -498,4 +504,50 @@ class AppL10nPt extends AppL10n {
 
   @override
   String get step => 'Etapa';
+
+  @override
+  String get requiredField => 'Obrigatório';
+
+  @override
+  String get noActiveGuests => 'Nenhum hóspede ativo';
+
+  @override
+  String get revoke => 'Desativar';
+
+  @override
+  String get addNewDoctor => 'Adicionar novo médico';
+
+  @override
+  String get inactive => 'Inativo';
+
+  @override
+  String get authErrorSignInFailed =>
+      'Não foi possível entrar, tente novamente.';
+
+  @override
+  String get authErrorWrongRole => 'Você não tem autorização para esta tela.';
+
+  @override
+  String get authErrorGuestNotFound =>
+      'O passaporte ou o número do quarto não pôde ser verificado.';
+
+  @override
+  String get authErrorTooManyAttempts => 'Muitas tentativas falhadas. Aguarde.';
+
+  @override
+  String get authErrorInvalidInput =>
+      'As informações inseridas estão incompletas ou incorretas.';
+
+  @override
+  String get authErrorNoPermission =>
+      'Você não tem autorização para esta ação.';
+
+  @override
+  String get authErrorUnexpected => 'Ocorreu um erro inesperado.';
+
+  @override
+  String get authErrorWrongCredentials => 'E-mail ou senha incorretos.';
+
+  @override
+  String get authErrorUserDisabled => 'Sua conta foi desativada.';
 }

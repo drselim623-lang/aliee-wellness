@@ -21,7 +21,7 @@ export const devResetTestCredentials = onCall(
     if (flagSnap.exists && flagSnap.data()?.done === true) {
       throw new HttpsError(
         "already-exists",
-        "devResetTestCredentials zaten çalıştırılmış."
+        "devResetTestCredentials has already been run."
       );
     }
 

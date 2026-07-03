@@ -70,6 +70,7 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
   }
 
   Future<void> _pickAndUploadLab() async {
+    final l = AppL10n.of(context);
     final picker = ImagePicker();
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
@@ -79,12 +80,12 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
           children: [
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
-              title: const Text('Galeriden seç'),
+              title: Text(l.chooseFromGallery),
               onTap: () => Navigator.of(context).pop(ImageSource.gallery),
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt_outlined),
-              title: const Text('Kamera'),
+              title: Text(l.camera),
               onTap: () => Navigator.of(context).pop(ImageSource.camera),
             ),
           ],
@@ -109,7 +110,7 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Yükleme hatası: $e')),
+        SnackBar(content: Text('${AppL10n.of(context).uploadError}: $e')),
       );
     } finally {
       if (mounted) setState(() => _uploadingLab = false);
@@ -143,7 +144,7 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gönderilemedi: $e')),
+        SnackBar(content: Text('${AppL10n.of(context).submitError}: $e')),
       );
     } finally {
       if (mounted) setState(() => _submitting = false);
@@ -189,7 +190,7 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
                         onPressed: _submitting
                             ? null
                             : () => setState(() => _step--),
-                        child: const Text('Geri'),
+                        child: Text(l.back),
                       ),
                     ),
                   if (_step > 0) const SizedBox(width: 12),
@@ -211,7 +212,7 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
                               child: CircularProgressIndicator(
                                   strokeWidth: 2, color: Colors.white),
                             )
-                          : Text(_step < 2 ? 'İleri' : 'Gönder ve öneri al'),
+                          : Text(_step < 2 ? l.next : l.submitAndGetProgram),
                     ),
                   ),
                 ],
@@ -227,39 +228,39 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
   //   STEP 1 — Genel öykü
   // -----------------------------------------------------------------
   Widget _generalHistoryStep() {
+    final l = AppL10n.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Genel sağlık öyküsü',
+        Text(l.anamnesisStep1Title,
             style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 8),
-        const Text(
-            'Bilinen hastalıklar, kullandığınız ilaçlar, alerjiler ve aile öyküsü. Birden fazlaysa virgülle ayırın.'),
+        Text(l.anamnesisStep1Desc),
         const SizedBox(height: 20),
         _multiField(
           controller: _chronic,
-          label: 'Bilinen kronik hastalıklar',
-          hint: 'örn. hipertansiyon, diyabet, tiroit',
+          label: l.fieldChronic,
+          hint: l.fieldChronicHint,
         ),
         _multiField(
           controller: _meds,
-          label: 'Kullandığınız ilaçlar',
-          hint: 'örn. metformin, tiroit ilacı',
+          label: l.fieldMedications,
+          hint: l.fieldMedicationsHint,
         ),
         _multiField(
           controller: _allergies,
-          label: 'Bilinen alerjiler',
-          hint: 'örn. penisilin, fıstık, polen',
+          label: l.fieldAllergies,
+          hint: l.fieldAllergiesHint,
         ),
         _multiField(
           controller: _family,
-          label: 'Aile öyküsü (kalp, kanser, diyabet vb.)',
-          hint: 'örn. anne — meme kanseri, baba — kalp',
+          label: l.fieldFamilyHistory,
+          hint: l.fieldFamilyHistoryHint,
         ),
         _multiField(
           controller: _surgeries,
-          label: 'Geçirilmiş ameliyatlar',
-          hint: 'örn. safra kesesi ameliyatı, dolgu vb.',
+          label: l.fieldSurgeries,
+          hint: l.fieldSurgeriesHint,
         ),
         const SizedBox(height: 16),
         _labUploadCard(),
@@ -287,6 +288,7 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
   }
 
   Widget _labUploadCard() {
+    final l10n = AppL10n.of(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -298,10 +300,8 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
                 const Icon(Icons.upload_file_outlined,
                     color: AppColors.sageDark),
                 const SizedBox(width: 12),
-                const Expanded(
-                  child: Text(
-                    'Geçmiş laboratuvar sonuçlarınız varsa yükleyin (foto).',
-                  ),
+                Expanded(
+                  child: Text(l10n.labUploadCta),
                 ),
                 FilledButton.tonal(
                   onPressed: _uploadingLab ? null : _pickAndUploadLab,
@@ -311,7 +311,7 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
                           width: 20,
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
-                      : const Text('Yükle'),
+                      : Text(l10n.labUploadButton),
                 ),
               ],
             ),
@@ -342,74 +342,75 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
   //   STEP 2 — Yaşam tarzı
   // -----------------------------------------------------------------
   Widget _lifestyleStep() {
+    final l = AppL10n.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Yaşam tarzı',
+        Text(l.anamnesisStep2Title,
             style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 8),
-        const Text('Uyku, beslenme, egzersiz ve stres alışkanlıklarınız.'),
+        Text(l.anamnesisStep2Desc),
         const SizedBox(height: 20),
 
         _sliderRow(
-          label: 'Ortalama uyku saati',
+          label: l.sleepHoursAvg,
           value: _sleepHours,
           min: 3,
           max: 12,
           divisions: 9,
           onChanged: (v) => setState(() => _sleepHours = v),
-          valueDisplay: '${_sleepHours.round()} saat',
+          valueDisplay: '${_sleepHours.round()} ${l.hoursSuffix}',
         ),
         _choiceRow(
-          label: 'Uyku kaliteniz',
-          options: const {
-            'poor': 'Kötü',
-            'fair': 'Orta',
-            'good': 'İyi',
+          label: l.sleepQuality,
+          options: {
+            'poor': l.sleepQualityPoor,
+            'fair': l.sleepQualityFair,
+            'good': l.sleepQualityGood,
           },
           value: _sleepQuality,
           onChanged: (v) => setState(() => _sleepQuality = v),
         ),
         _choiceRow(
-          label: 'Beslenme tipi',
-          options: const {
-            'omnivore': 'Omnivor',
-            'vegetarian': 'Vejetaryen',
-            'vegan': 'Vegan',
-            'keto': 'Keto',
-            'other': 'Diğer',
+          label: l.dietType,
+          options: {
+            'omnivore': l.dietOmnivore,
+            'vegetarian': l.dietVegetarian,
+            'vegan': l.dietVegan,
+            'keto': l.dietKeto,
+            'other': l.dietOther,
           },
           value: _dietType,
           onChanged: (v) => setState(() => _dietType = v),
         ),
         _sliderRow(
-          label: 'Haftada egzersiz günü',
+          label: l.exerciseDaysPerWeek,
           value: _exerciseDays.toDouble(),
           min: 0,
           max: 7,
           divisions: 7,
           onChanged: (v) => setState(() => _exerciseDays = v.round()),
-          valueDisplay: '$_exerciseDays gün',
+          valueDisplay: '$_exerciseDays ${l.daysSuffix}',
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Sigara kullanıyorum'),
+          title: Text(l.iSmoke),
           value: _smokes,
           onChanged: (v) => setState(() => _smokes = v),
         ),
         _choiceRow(
-          label: 'Alkol sıklığı',
-          options: const {
-            'none': 'Yok',
-            'rarely': 'Nadiren',
-            'weekly': 'Haftalık',
-            'daily': 'Günlük',
+          label: l.alcoholFrequency,
+          options: {
+            'none': l.alcoholNone,
+            'rarely': l.alcoholRarely,
+            'weekly': l.alcoholWeekly,
+            'daily': l.alcoholDaily,
           },
           value: _alcoholFreq,
           onChanged: (v) => setState(() => _alcoholFreq = v),
         ),
         _sliderRow(
-          label: 'Algıladığınız stres (1-10)',
+          label: l.perceivedStress,
           value: _stressLevel,
           min: 1,
           max: 10,
@@ -493,24 +494,24 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
   //   STEP 3 — Şikayet / hedef
   // -----------------------------------------------------------------
   Widget _complaintGoalStep() {
+    final l = AppL10n.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Şikayet ve hedef',
+        Text(l.anamnesisStep3Title,
             style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 8),
-        const Text(
-            'Şu anki yakınmalarınız ve longevity programından beklentiniz. Birden fazlaysa virgülle ayırın.'),
+        Text(l.anamnesisStep3Desc),
         const SizedBox(height: 20),
         _multiField(
           controller: _complaints,
-          label: 'Mevcut şikayetleriniz',
-          hint: 'örn. yorgunluk, uyku problemi, cilt sorunu',
+          label: l.fieldComplaints,
+          hint: l.fieldComplaintsHint,
         ),
         _multiField(
           controller: _goals,
-          label: 'Hedefleriniz',
-          hint: 'örn. anti-aging, enerji, cilt, kilo, uyku',
+          label: l.fieldGoals,
+          hint: l.fieldGoalsHint,
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 12),
@@ -518,8 +519,8 @@ class _AnamnesisScreenState extends State<AnamnesisScreen> {
             controller: _freeText,
             minLines: 3,
             maxLines: 6,
-            decoration: const InputDecoration(
-              labelText: 'Eklemek istediğiniz başka bir şey',
+            decoration: InputDecoration(
+              labelText: l.fieldFreeText,
             ),
           ),
         ),

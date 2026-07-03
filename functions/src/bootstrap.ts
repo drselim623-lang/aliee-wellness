@@ -28,7 +28,7 @@ export const bootstrapFirstAdmin = onCall(
     if (flagSnap.exists && flagSnap.data()?.done === true) {
       throw new HttpsError(
         "already-exists",
-        "Bootstrap admin zaten oluşturulmuş. Bu fonksiyon devre dışı."
+        "Bootstrap admin already created. This function is disabled."
       );
     }
 
@@ -47,7 +47,7 @@ export const bootstrapFirstAdmin = onCall(
     if (!email || password.length < 8) {
       throw new HttpsError(
         "invalid-argument",
-        "email ve şifre (min 8 karakter) zorunlu."
+        "Email and password (min 8 characters) are required."
       );
     }
 
@@ -96,7 +96,7 @@ export const bootstrapFirstAdmin = onCall(
     return {
       uid: userRecord.uid,
       email,
-      message: "İlk admin oluşturuldu. Şimdi email + şifre ile giriş yapabilirsin.",
+      message: "First admin created. You can now sign in with email + password.",
     };
   }
 );

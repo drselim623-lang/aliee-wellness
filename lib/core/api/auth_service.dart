@@ -31,7 +31,7 @@ class AuthService {
       if (user == null) {
         throw AuthException(
           code: 'unknown',
-          message: 'Giriş yapılamadı, tekrar deneyin.',
+          message: 'Sign-in failed, please retry.',
         );
       }
       return user;
@@ -43,7 +43,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       throw AuthException(
         code: e.code,
-        message: e.message ?? 'Kimlik doğrulama hatası.',
+        message: e.message ?? 'Authentication error.',
       );
     }
   }
@@ -68,7 +68,7 @@ class AuthService {
         await _auth.signOut();
         throw AuthException(
           code: 'wrong-role',
-          message: 'Bu ekran için yetkiniz yok.',
+          message: 'Not authorized for this screen.',
         );
       }
       return user;
@@ -91,18 +91,20 @@ class AuthService {
     return '$trimmed@aliee.local';
   }
 
+  // Mesajlar log/fallback içindir; UI, AuthException.code'u
+  // auth_error_l10n.dart üzerinden kullanıcının diline çevirir.
   String _mapFunctionsError(FirebaseFunctionsException e) {
     switch (e.code) {
       case 'not-found':
-        return 'Pasaport veya oda numarası doğrulanamadı.';
+        return 'Passport or room number could not be verified.';
       case 'resource-exhausted':
-        return e.message ?? 'Çok fazla hatalı deneme. Lütfen bekleyin.';
+        return e.message ?? 'Too many failed attempts. Please wait.';
       case 'invalid-argument':
-        return 'Girilen bilgiler eksik veya hatalı.';
+        return 'The information entered is missing or incorrect.';
       case 'permission-denied':
-        return 'Bu işlem için yetkiniz yok.';
+        return 'Not authorized for this action.';
       default:
-        return e.message ?? 'Beklenmeyen bir hata oluştu.';
+        return e.message ?? 'An unexpected error occurred.';
     }
   }
 
@@ -111,13 +113,13 @@ class AuthService {
       case 'user-not-found':
       case 'wrong-password':
       case 'invalid-credential':
-        return 'E-posta veya şifre hatalı.';
+        return 'Incorrect e-mail or password.';
       case 'too-many-requests':
-        return 'Çok fazla deneme yaptınız. Lütfen bekleyin.';
+        return 'Too many attempts. Please wait.';
       case 'user-disabled':
-        return 'Hesabınız devre dışı bırakılmış.';
+        return 'Account disabled.';
       default:
-        return e.message ?? 'Giriş yapılamadı.';
+        return e.message ?? 'Sign-in failed.';
     }
   }
 }

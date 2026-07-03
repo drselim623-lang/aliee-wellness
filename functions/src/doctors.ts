@@ -12,7 +12,7 @@ export const adminCreateDoctor = onCall(
     if (!req.auth || authRole !== "admin") {
       throw new HttpsError(
         "permission-denied",
-        "Bu işlem için admin yetkisi gerekli."
+        "Admin privileges required for this action."
       );
     }
 
@@ -37,7 +37,7 @@ export const adminCreateDoctor = onCall(
     if (!email || password.length < 6) {
       throw new HttpsError(
         "invalid-argument",
-        "email ve şifre (min 6 karakter) zorunlu."
+        "Email and password (min 6 characters) are required."
       );
     }
     if (!firstName || !lastName) {
@@ -49,7 +49,7 @@ export const adminCreateDoctor = onCall(
       await admin.auth().getUserByEmail(email);
       throw new HttpsError(
         "already-exists",
-        "Bu e-posta zaten kayıtlı."
+        "This email is already registered."
       );
     } catch (e) {
       if (
@@ -58,7 +58,7 @@ export const adminCreateDoctor = onCall(
       ) {
         if (e instanceof HttpsError) throw e;
         // getUserByEmail dışı hatalar için genel hata
-        throw new HttpsError("internal", "Kullanıcı kontrolü başarısız.");
+        throw new HttpsError("internal", "User lookup failed.");
       }
     }
 
@@ -104,7 +104,7 @@ export const adminDeactivateDoctor = onCall(
     if (!req.auth || authRole !== "admin") {
       throw new HttpsError(
         "permission-denied",
-        "Bu işlem için admin yetkisi gerekli."
+        "Admin privileges required for this action."
       );
     }
     const data = req.data as { doctorId?: unknown };

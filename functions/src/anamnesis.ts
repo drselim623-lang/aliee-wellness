@@ -15,7 +15,7 @@ export const submitAnamnesis = onCall(
   async (req: CallableRequest) => {
     const role = req.auth?.token?.role as string | undefined;
     if (!req.auth || role !== "guest") {
-      throw new HttpsError("permission-denied", "Misafir girişi gerekli.");
+      throw new HttpsError("permission-denied", "Guest sign-in required.");
     }
     const uid = req.auth.uid;
 
@@ -91,7 +91,7 @@ export const saveLabMetadata = onCall(
   async (req: CallableRequest) => {
     const role = req.auth?.token?.role as string | undefined;
     if (!req.auth || role !== "guest") {
-      throw new HttpsError("permission-denied", "Misafir girişi gerekli.");
+      throw new HttpsError("permission-denied", "Guest sign-in required.");
     }
     const uid = req.auth.uid;
 
@@ -121,7 +121,7 @@ export const saveLabMetadata = onCall(
     if (!storagePath.startsWith(`guests/${uid}/labs/`)) {
       throw new HttpsError(
         "permission-denied",
-        "Sadece kendi klasörüne dosya yükleyebilirsin."
+        "You can only upload files to your own folder."
       );
     }
 

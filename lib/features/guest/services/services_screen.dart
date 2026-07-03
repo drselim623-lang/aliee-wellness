@@ -64,7 +64,8 @@ class _CategoryList extends StatelessWidget {
         final s = services[i];
         final name = isTr ? s.nameTr : s.nameEn;
         final desc = isTr ? s.descriptionTr : s.descriptionEn;
-        final hasProtocol = s.protocolTr != null && s.protocolTr!.isNotEmpty;
+        final hasProtocol = (s.protocolTr != null && s.protocolTr!.isNotEmpty) ||
+            (s.protocolEn != null && s.protocolEn!.isNotEmpty);
         return Card(
           child: ListTile(
             contentPadding:

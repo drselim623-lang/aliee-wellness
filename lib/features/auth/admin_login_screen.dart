@@ -5,6 +5,7 @@ import '../../core/api/auth_service.dart';
 import '../../core/l10n/app_localizations.dart';
 import '../../core/routing/app_router.dart';
 import '../../core/widgets/botanical_scaffold.dart';
+import 'auth_error_l10n.dart';
 
 class AdminLoginScreen extends StatefulWidget {
   const AdminLoginScreen({super.key});
@@ -43,7 +44,8 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
       context.go(AppRoutes.adminHome);
     } on AuthException catch (e) {
       if (!mounted) return;
-      setState(() => _errorMessage = e.message);
+      setState(() =>
+          _errorMessage = localizedAuthError(AppL10n.of(context), e));
     } catch (_) {
       if (!mounted) return;
       setState(() => _errorMessage = AppL10n.of(context).connectionError);

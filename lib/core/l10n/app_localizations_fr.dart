@@ -223,6 +223,12 @@ class AppL10nFr extends AppL10n {
   String get sleepHoursAvg => 'Heures de sommeil moyennes';
 
   @override
+  String get hoursSuffix => 'heures';
+
+  @override
+  String get daysSuffix => 'jours';
+
+  @override
   String get sleepQuality => 'Qualité du sommeil';
 
   @override
@@ -425,76 +431,123 @@ class AppL10nFr extends AppL10n {
   String get connectionError => 'Erreur de connexion.';
 
   @override
-  String get connectionErrorRetry => 'Connection error. Please try again.';
+  String get connectionErrorRetry => 'Erreur de connexion. Veuillez réessayer.';
 
   @override
-  String get revokeAccess => 'Revoke access';
+  String get revokeAccess => 'Révoquer l\'accès';
 
   @override
   String get revokeAccessConfirm =>
-      'Do you want to revoke access for this user?';
+      'Voulez-vous révoquer l\'accès de cet utilisateur ?';
 
   @override
-  String get accessRevoked => 'Access revoked.';
+  String get accessRevoked => 'Accès révoqué.';
 
   @override
-  String get usernameOrEmail => 'Username or e-mail';
+  String get usernameOrEmail => 'Nom d\'utilisateur ou e-mail';
 
   @override
-  String get hintAdmin => 'e.g. admin';
+  String get hintAdmin => 'ex. admin';
 
   @override
-  String get hintDoctor => 'e.g. doctor';
+  String get hintDoctor => 'ex. doctor';
 
   @override
-  String get password => 'Password';
+  String get password => 'Mot de passe';
 
   @override
-  String get passwordTooShort => 'Too short';
+  String get passwordTooShort => 'Trop court';
 
   @override
-  String get createDoctor => 'Create Doctor';
+  String get createDoctor => 'Créer un médecin';
 
   @override
-  String get registeredDoctors => 'Registered doctors';
+  String get registeredDoctors => 'Médecins enregistrés';
 
   @override
-  String get noDoctorsYet => 'No doctors yet.';
+  String get noDoctorsYet => 'Aucun médecin pour le moment.';
 
   @override
-  String get titleField => 'Title';
+  String get titleField => 'Titre';
 
   @override
-  String get firstName => 'First name';
+  String get firstName => 'Prénom';
 
   @override
-  String get lastName => 'Last name';
+  String get lastName => 'Nom';
 
   @override
-  String get specialty => 'Specialty';
+  String get specialty => 'Spécialité';
 
   @override
-  String get temporaryPassword => 'Temporary password (min 6 chars)';
+  String get temporaryPassword => 'Mot de passe temporaire (min 8 caractères)';
 
   @override
   String get doctorAddedSuccess =>
-      'Doctor created. They can now sign in with e-mail and password.';
+      'Médecin créé. Il peut désormais se connecter avec e-mail et mot de passe.';
 
   @override
-  String get loadFailed => 'Failed to load';
+  String get loadFailed => 'Échec du chargement';
 
   @override
-  String get expiresLabel => 'expires';
+  String get expiresLabel => 'expire';
 
   @override
-  String get roomLabel => 'Room';
+  String get roomLabel => 'Chambre';
 
   @override
-  String get next3 => 'Next';
+  String get next3 => 'Suivant';
 
   @override
-  String get submitFinal => 'Submit and get recommendation';
+  String get submitFinal => 'Envoyer et obtenir une recommandation';
 
   @override
-  String get step => 'Step';
+  String get step => 'Étape';
+
+  @override
+  String get requiredField => 'Obligatoire';
+
+  @override
+  String get noActiveGuests => 'Aucun invité actif';
+
+  @override
+  String get revoke => 'Désactiver';
+
+  @override
+  String get addNewDoctor => 'Ajouter un nouveau médecin';
+
+  @override
+  String get inactive => 'Inactif';
+
+  @override
+  String get authErrorSignInFailed =>
+      'Connexion impossible, veuillez réessayer.';
+
+  @override
+  String get authErrorWrongRole => 'Vous n\'êtes pas autorisé pour cet écran.';
+
+  @override
+  String get authErrorGuestNotFound =>
+      'Le passeport ou le numéro de chambre n\'a pas pu être vérifié.';
+
+  @override
+  String get authErrorTooManyAttempts =>
+      'Trop de tentatives échouées. Veuillez patienter.';
+
+  @override
+  String get authErrorInvalidInput =>
+      'Les informations saisies sont incomplètes ou incorrectes.';
+
+  @override
+  String get authErrorNoPermission =>
+      'Vous n\'êtes pas autorisé pour cette action.';
+
+  @override
+  String get authErrorUnexpected => 'Une erreur inattendue s\'est produite.';
+
+  @override
+  String get authErrorWrongCredentials => 'E-mail ou mot de passe incorrect.';
+
+  @override
+  String get authErrorUserDisabled => 'Votre compte a été désactivé.';
 }

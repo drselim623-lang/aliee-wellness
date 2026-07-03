@@ -31,7 +31,7 @@ export const guestSignIn = onCall(
       throw new HttpsError("invalid-argument", "Pasaport son 6 hanesi eksik.");
     }
     if (!roomNumber) {
-      throw new HttpsError("invalid-argument", "Oda numarası eksik.");
+      throw new HttpsError("invalid-argument", "Room number is missing.");
     }
 
     const db = admin.firestore();
@@ -96,7 +96,7 @@ export const guestSignIn = onCall(
       });
       throw new HttpsError(
         "not-found",
-        "Pasaport veya oda numarası doğrulanamadı."
+        "Passport or room number could not be verified."
       );
     }
 
@@ -183,7 +183,7 @@ export const adminAuthorizeGuest = onCall(
     if (!req.auth || authRole !== "admin") {
       throw new HttpsError(
         "permission-denied",
-        "Bu işlem için admin yetkisi gerekli."
+        "Admin privileges required for this action."
       );
     }
 
@@ -212,11 +212,11 @@ export const adminAuthorizeGuest = onCall(
     if (fullPassportNorm.length < 6) {
       throw new HttpsError(
         "invalid-argument",
-        "Pasaport numarası en az 6 karakter olmalı."
+        "Passport number must be at least 6 characters."
       );
     }
     if (!roomNumber) {
-      throw new HttpsError("invalid-argument", "Oda numarası eksik.");
+      throw new HttpsError("invalid-argument", "Room number is missing.");
     }
     if (!firstName || !lastName) {
       throw new HttpsError("invalid-argument", "Ad ve soyad zorunlu.");
@@ -319,7 +319,7 @@ export const adminDeactivateGuest = onCall(
     if (!req.auth || authRole !== "admin") {
       throw new HttpsError(
         "permission-denied",
-        "Bu işlem için admin yetkisi gerekli."
+        "Admin privileges required for this action."
       );
     }
     const data = req.data as { guestId?: unknown };

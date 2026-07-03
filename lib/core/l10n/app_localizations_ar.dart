@@ -220,6 +220,12 @@ class AppL10nAr extends AppL10n {
   String get sleepHoursAvg => 'متوسط ساعات النوم';
 
   @override
+  String get hoursSuffix => 'ساعات';
+
+  @override
+  String get daysSuffix => 'أيام';
+
+  @override
   String get sleepQuality => 'جودة النوم';
 
   @override
@@ -422,76 +428,119 @@ class AppL10nAr extends AppL10n {
   String get connectionError => 'خطأ في الاتصال.';
 
   @override
-  String get connectionErrorRetry => 'Connection error. Please try again.';
+  String get connectionErrorRetry => 'خطأ في الاتصال. يرجى المحاولة مرة أخرى.';
 
   @override
-  String get revokeAccess => 'Revoke access';
+  String get revokeAccess => 'إلغاء الوصول';
 
   @override
-  String get revokeAccessConfirm =>
-      'Do you want to revoke access for this user?';
+  String get revokeAccessConfirm => 'هل تريد إلغاء وصول هذا المستخدم؟';
 
   @override
-  String get accessRevoked => 'Access revoked.';
+  String get accessRevoked => 'تم إلغاء الوصول.';
 
   @override
-  String get usernameOrEmail => 'Username or e-mail';
+  String get usernameOrEmail => 'اسم المستخدم أو البريد الإلكتروني';
 
   @override
-  String get hintAdmin => 'e.g. admin';
+  String get hintAdmin => 'مثال: admin';
 
   @override
-  String get hintDoctor => 'e.g. doctor';
+  String get hintDoctor => 'مثال: doctor';
 
   @override
-  String get password => 'Password';
+  String get password => 'كلمة المرور';
 
   @override
-  String get passwordTooShort => 'Too short';
+  String get passwordTooShort => 'قصيرة جداً';
 
   @override
-  String get createDoctor => 'Create Doctor';
+  String get createDoctor => 'إنشاء طبيب';
 
   @override
-  String get registeredDoctors => 'Registered doctors';
+  String get registeredDoctors => 'الأطباء المسجلون';
 
   @override
-  String get noDoctorsYet => 'No doctors yet.';
+  String get noDoctorsYet => 'لا يوجد أطباء بعد.';
 
   @override
-  String get titleField => 'Title';
+  String get titleField => 'اللقب';
 
   @override
-  String get firstName => 'First name';
+  String get firstName => 'الاسم الأول';
 
   @override
-  String get lastName => 'Last name';
+  String get lastName => 'اسم العائلة';
 
   @override
-  String get specialty => 'Specialty';
+  String get specialty => 'التخصص';
 
   @override
-  String get temporaryPassword => 'Temporary password (min 6 chars)';
+  String get temporaryPassword => 'كلمة مرور مؤقتة (8 أحرف على الأقل)';
 
   @override
   String get doctorAddedSuccess =>
-      'Doctor created. They can now sign in with e-mail and password.';
+      'تم إنشاء الطبيب. يمكنه الآن تسجيل الدخول بالبريد الإلكتروني وكلمة المرور.';
 
   @override
-  String get loadFailed => 'Failed to load';
+  String get loadFailed => 'فشل التحميل';
 
   @override
-  String get expiresLabel => 'expires';
+  String get expiresLabel => 'ينتهي';
 
   @override
-  String get roomLabel => 'Room';
+  String get roomLabel => 'الغرفة';
 
   @override
-  String get next3 => 'Next';
+  String get next3 => 'التالي';
 
   @override
-  String get submitFinal => 'Submit and get recommendation';
+  String get submitFinal => 'إرسال والحصول على التوصية';
 
   @override
-  String get step => 'Step';
+  String get step => 'الخطوة';
+
+  @override
+  String get requiredField => 'إلزامي';
+
+  @override
+  String get noActiveGuests => 'لا يوجد ضيوف نشطون';
+
+  @override
+  String get revoke => 'إلغاء';
+
+  @override
+  String get addNewDoctor => 'إضافة طبيب جديد';
+
+  @override
+  String get inactive => 'غير نشط';
+
+  @override
+  String get authErrorSignInFailed => 'تعذر تسجيل الدخول، حاول مرة أخرى.';
+
+  @override
+  String get authErrorWrongRole => 'ليست لديك صلاحية لهذه الشاشة.';
+
+  @override
+  String get authErrorGuestNotFound =>
+      'تعذر التحقق من جواز السفر أو رقم الغرفة.';
+
+  @override
+  String get authErrorTooManyAttempts => 'محاولات فاشلة كثيرة. يرجى الانتظار.';
+
+  @override
+  String get authErrorInvalidInput => 'المعلومات المدخلة ناقصة أو غير صحيحة.';
+
+  @override
+  String get authErrorNoPermission => 'ليست لديك صلاحية لهذا الإجراء.';
+
+  @override
+  String get authErrorUnexpected => 'حدث خطأ غير متوقع.';
+
+  @override
+  String get authErrorWrongCredentials =>
+      'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+
+  @override
+  String get authErrorUserDisabled => 'تم تعطيل حسابك.';
 }

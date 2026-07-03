@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/api/auth_service.dart';
 import '../../core/l10n/app_localizations.dart';
 import '../../core/routing/app_router.dart';
+import 'auth_error_l10n.dart';
 
 class GuestLoginForm extends StatefulWidget {
   const GuestLoginForm({super.key});
@@ -43,7 +44,7 @@ class _GuestLoginFormState extends State<GuestLoginForm> {
     } on AuthException catch (e) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = e.message;
+        _errorMessage = localizedAuthError(AppL10n.of(context), e);
       });
     } catch (_) {
       if (!mounted) return;

@@ -223,6 +223,12 @@ class AppL10nEn extends AppL10n {
   String get sleepHoursAvg => 'Average sleep hours';
 
   @override
+  String get hoursSuffix => 'hours';
+
+  @override
+  String get daysSuffix => 'days';
+
+  @override
   String get sleepQuality => 'Sleep quality';
 
   @override
@@ -473,7 +479,7 @@ class AppL10nEn extends AppL10n {
   String get specialty => 'Specialty';
 
   @override
-  String get temporaryPassword => 'Temporary password (min 6 chars)';
+  String get temporaryPassword => 'Temporary password (min 8 chars)';
 
   @override
   String get doctorAddedSuccess =>
@@ -496,4 +502,49 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get step => 'Step';
+
+  @override
+  String get requiredField => 'Required';
+
+  @override
+  String get noActiveGuests => 'No active guests';
+
+  @override
+  String get revoke => 'Revoke';
+
+  @override
+  String get addNewDoctor => 'Add new doctor';
+
+  @override
+  String get inactive => 'Inactive';
+
+  @override
+  String get authErrorSignInFailed => 'Could not sign in, please try again.';
+
+  @override
+  String get authErrorWrongRole => 'You are not authorized for this screen.';
+
+  @override
+  String get authErrorGuestNotFound =>
+      'Passport or room number could not be verified.';
+
+  @override
+  String get authErrorTooManyAttempts =>
+      'Too many failed attempts. Please wait.';
+
+  @override
+  String get authErrorInvalidInput =>
+      'The information entered is missing or incorrect.';
+
+  @override
+  String get authErrorNoPermission => 'You are not authorized for this action.';
+
+  @override
+  String get authErrorUnexpected => 'An unexpected error occurred.';
+
+  @override
+  String get authErrorWrongCredentials => 'Incorrect e-mail or password.';
+
+  @override
+  String get authErrorUserDisabled => 'Your account has been disabled.';
 }

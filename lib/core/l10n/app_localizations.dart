@@ -513,6 +513,18 @@ abstract class AppL10n {
   /// **'Average sleep hours'**
   String get sleepHoursAvg;
 
+  /// No description provided for @hoursSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'hours'**
+  String get hoursSuffix;
+
+  /// No description provided for @daysSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get daysSuffix;
+
   /// No description provided for @sleepQuality.
   ///
   /// In en, this message translates to:
@@ -996,7 +1008,7 @@ abstract class AppL10n {
   /// No description provided for @temporaryPassword.
   ///
   /// In en, this message translates to:
-  /// **'Temporary password (min 6 chars)'**
+  /// **'Temporary password (min 8 chars)'**
   String get temporaryPassword;
 
   /// No description provided for @doctorAddedSuccess.
@@ -1040,6 +1052,90 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Step'**
   String get step;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get requiredField;
+
+  /// No description provided for @noActiveGuests.
+  ///
+  /// In en, this message translates to:
+  /// **'No active guests'**
+  String get noActiveGuests;
+
+  /// No description provided for @revoke.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke'**
+  String get revoke;
+
+  /// No description provided for @addNewDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new doctor'**
+  String get addNewDoctor;
+
+  /// No description provided for @inactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get inactive;
+
+  /// No description provided for @authErrorSignInFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not sign in, please try again.'**
+  String get authErrorSignInFailed;
+
+  /// No description provided for @authErrorWrongRole.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not authorized for this screen.'**
+  String get authErrorWrongRole;
+
+  /// No description provided for @authErrorGuestNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport or room number could not be verified.'**
+  String get authErrorGuestNotFound;
+
+  /// No description provided for @authErrorTooManyAttempts.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many failed attempts. Please wait.'**
+  String get authErrorTooManyAttempts;
+
+  /// No description provided for @authErrorInvalidInput.
+  ///
+  /// In en, this message translates to:
+  /// **'The information entered is missing or incorrect.'**
+  String get authErrorInvalidInput;
+
+  /// No description provided for @authErrorNoPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'You are not authorized for this action.'**
+  String get authErrorNoPermission;
+
+  /// No description provided for @authErrorUnexpected.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred.'**
+  String get authErrorUnexpected;
+
+  /// No description provided for @authErrorWrongCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect e-mail or password.'**
+  String get authErrorWrongCredentials;
+
+  /// No description provided for @authErrorUserDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been disabled.'**
+  String get authErrorUserDisabled;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

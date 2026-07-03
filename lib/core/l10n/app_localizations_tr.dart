@@ -221,6 +221,12 @@ class AppL10nTr extends AppL10n {
   String get sleepHoursAvg => 'Ortalama uyku saati';
 
   @override
+  String get hoursSuffix => 'saat';
+
+  @override
+  String get daysSuffix => 'gün';
+
+  @override
   String get sleepQuality => 'Uyku kaliteniz';
 
   @override
@@ -472,7 +478,7 @@ class AppL10nTr extends AppL10n {
   String get specialty => 'Uzmanlık';
 
   @override
-  String get temporaryPassword => 'Geçici şifre (min 6 karakter)';
+  String get temporaryPassword => 'Geçici şifre (min 8 karakter)';
 
   @override
   String get doctorAddedSuccess =>
@@ -495,4 +501,48 @@ class AppL10nTr extends AppL10n {
 
   @override
   String get step => 'Adım';
+
+  @override
+  String get requiredField => 'Zorunlu';
+
+  @override
+  String get noActiveGuests => 'Aktif misafir yok';
+
+  @override
+  String get revoke => 'Kapat';
+
+  @override
+  String get addNewDoctor => 'Yeni doktor ekle';
+
+  @override
+  String get inactive => 'Pasif';
+
+  @override
+  String get authErrorSignInFailed => 'Giriş yapılamadı, tekrar deneyin.';
+
+  @override
+  String get authErrorWrongRole => 'Bu ekran için yetkiniz yok.';
+
+  @override
+  String get authErrorGuestNotFound =>
+      'Pasaport veya oda numarası doğrulanamadı.';
+
+  @override
+  String get authErrorTooManyAttempts =>
+      'Çok fazla hatalı deneme. Lütfen bekleyin.';
+
+  @override
+  String get authErrorInvalidInput => 'Girilen bilgiler eksik veya hatalı.';
+
+  @override
+  String get authErrorNoPermission => 'Bu işlem için yetkiniz yok.';
+
+  @override
+  String get authErrorUnexpected => 'Beklenmeyen bir hata oluştu.';
+
+  @override
+  String get authErrorWrongCredentials => 'E-posta veya şifre hatalı.';
+
+  @override
+  String get authErrorUserDisabled => 'Hesabınız devre dışı bırakılmış.';
 }

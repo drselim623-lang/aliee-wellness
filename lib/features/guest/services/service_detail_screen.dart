@@ -7,7 +7,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/botanical_scaffold.dart';
 
 /// Bir hizmetin (test / panel / IV / estetik) detay ekranı.
-/// `protocolTr` alanı doluysa Spektrum Popüler Longevity Protokolleri metnini gösterir.
+/// Protokol metni uygulama diline göre seçilir (TR ise protocolTr, değilse protocolEn).
 class ServiceDetailScreen extends StatelessWidget {
   final String serviceId;
   const ServiceDetailScreen({super.key, required this.serviceId});
@@ -40,7 +40,9 @@ class ServiceDetailScreen extends StatelessWidget {
     final name = isTr ? service.nameTr : service.nameEn;
     final shortDesc = isTr ? service.descriptionTr : service.descriptionEn;
     final category = isTr ? service.category.trLabel : service.category.enLabel;
-    final protocol = service.protocolTr;
+    final protocol = isTr
+        ? (service.protocolTr ?? service.protocolEn)
+        : (service.protocolEn ?? service.protocolTr);
 
     return BotanicalScaffold(
       appBar: AppBar(

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Uygulama içi dil seçimi. Kullanıcı seçimi SharedPreferences'ta saklanır.
-/// Varsayılan dil İngilizce'dir. Seçim yoksa cihaz diline bakılır ve
-/// desteklenen listede varsa onu kullanır, yoksa EN'ye düşer.
+/// Uygulama içi dil seçimi. Varsayılan İngilizce.
+/// Kullanıcı bir dil seçtiyse tercihi SharedPreferences'ta saklanır ve
+/// bir sonraki açılışta kullanılır. Cihaz dili **yok sayılır** —
+/// kullanıcı açıkça seçmeden farklı bir dile geçilmez.
 
 const List<Locale> kSupportedLocales = [
   Locale('en'), // default
@@ -15,7 +16,6 @@ const List<Locale> kSupportedLocales = [
   Locale('ar'),
 ];
 
-/// (dilKodu → görünen ad) haritası. Kullanıcıya kendi dilinde gösterilir.
 const Map<String, String> kLanguageNames = {
   'en': 'English',
   'tr': 'Türkçe',
@@ -35,16 +35,11 @@ class LocaleNotifier extends StateNotifier<Locale> {
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final saved = prefs.getString(_prefsKey);
-    if (saved != null && kSupportedLocales.any((l) => l.languageCode == saved)) {
+    if (saved != null &&
+        kSupportedLocales.any((l) => l.languageCode == saved)) {
       state = Locale(saved);
-      return;
     }
-    // Cihaz diline bak; desteklenen listede varsa uygula
-    final device =
-        WidgetsBinding.instance.platformDispatcher.locale.languageCode;
-    if (kSupportedLocales.any((l) => l.languageCode == device)) {
-      state = Locale(device);
-    }
+    // Aksi halde İngilizce kalır — cihaz dili bilinçli olarak KULLANILMIYOR.
   }
 
   Future<void> set(Locale locale) async {

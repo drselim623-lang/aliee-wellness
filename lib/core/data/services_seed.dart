@@ -63,6 +63,27 @@ Kullanılabilecek diğer durumlar:
 • Glokom, beyin sisi, homosistein yüksekliği
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Citicoline 1000 mg.
+
+Administration: Outside of therapeutic indications, 1000 mg citicoline is administered once a week as a slow infusion over 45–50 minutes in a minimum of 250 cc normal saline. Use for at least 6 weeks is recommended. The maximum tolerable dose is 2000 mg per day.
+
+Therapeutic indications:
+• Acute phase of ischemic stroke
+• Recovery phases of ischemic and hemorrhagic stroke
+• As an adjunct to primary treatments in the acute and recovery phases of traumatic brain injury
+
+Other conditions it may be used for:
+• Attention and concentration deficit
+• Memory impairment
+• Lack of focus, decline in learning performance
+• Decline in processing performance
+• Underperformance at work and school
+• Depression
+• Adjunct therapy in Parkinson's disease
+• Early-stage Alzheimer's disease
+• Glaucoma, brain fog, elevated homocysteine
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_glutathione',
@@ -81,6 +102,18 @@ Olası faydalar:
 • Koroner arter hastalığı çalışmasında oral N-asetilsisteine kıyasla oksidatif strese karşı daha fazla koruma sağlamıştır.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Glutathione 600 mg.
+
+Administration: 5–10 sessions at 3–7 day intervals are recommended. May be repeated once a month as a booster dose.
+
+Possible benefits:
+• Involved in free radical neutralization, detoxification, cysteine transport and storage, cellular redox, and the regeneration of ascorbic acid and vitamin E.
+• Plays a role in iron metabolism and in preserving the integrity of the blood–brain barrier.
+• Supports the innate and adaptive immune systems, including T-lymphocyte proliferation, neutrophil phagocytic activity, and antigen presentation.
+• In community-based studies of elderly patients, higher glutathione levels have been associated with better overall health, less illness, lower cholesterol, lower body mass index, and lower blood pressure.
+• In a coronary artery disease study, it provided greater protection against oxidative stress compared with oral N-acetylcysteine.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_nad',
@@ -102,6 +135,21 @@ Olası faydalar:
 • Koenzim Q1 olarak da görev alır; Q10'dan 10 kat daha etkili olabilir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: NAD⁺ (Nicotinamide Adenine Dinucleotide) 50 mg / 300 mg (multi dose).
+
+Administration: 4–5 sessions at 7-day intervals are recommended.
+
+Possible benefits:
+• Intracellular mitochondrial anti-aging effect
+• Acts as a coenzyme in oxidation-reduction reactions
+• Substrate in the transfer of ATP-ribose units to proteins
+• Support in the treatment of neurological diseases
+• Cell renewal, increased energy
+• Repair and improvement of cognitive functions
+• Support in treating focus problems, mental fatigue, early depression, and addiction
+• Also functions as Coenzyme Q1; may be 10 times more effective than Q10.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_myers',
@@ -121,6 +169,19 @@ Olası faydalar:
 • Alkolizm ve bağımlılık tedavisinde NAD⁺ ile birlikte etkin rol oynar.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Sodium Ascorbate 7500 mg, Magnesium Chloride 380 mg, Nicotinamide 100 mg, Dexpanthenol 100 mg, Pyridoxine 100 mg, Thiamine 100 mg, Riboflavin 10 mg, Methylcobalamin 1 mg.
+
+Administration: 3–6 sessions at 7–10 day intervals are recommended.
+
+Possible benefits:
+• Energizes the body with vitamin and mineral support.
+• Effective in relieving chronic fatigue, general listlessness, and coordination problems.
+• Counteracts the negative effects of acute and chronic stress on the body.
+• Helps relieve migraines and body aches.
+• Helps reverse the deterioration caused by mental health conditions such as anxiety and depression.
+• Plays an active role, together with NAD⁺, in the treatment of alcoholism and addiction.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_vitamin_c',
@@ -139,6 +200,18 @@ Olası faydalar:
 • Kronik yorgunluğun giderilmesine katkı sağlar.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Sodium Ascorbate 7,500 mg / 25,000 mg (multi dose).
+
+Administration: 4–6 sessions at 3–7 day intervals are recommended.
+
+Possible benefits:
+• High-dose intravenous vitamin C can accumulate in tumor tissue and act as an oxidant, potentially causing tumor cell death. For this effect, blood vitamin C levels must reach a certain threshold.
+• When administered alongside chemotherapy and radiotherapy, high-dose vitamin C may both reduce side effects and enhance treatment efficacy.
+• Supports wound healing and collagen production.
+• Strengthens the immune system.
+• Helps relieve chronic fatigue.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(id: 'iv_collagen', category: ServiceCategory.iv, nameTr: 'IV Kolajen', nameEn: 'IV Collagen'),
   WellnessService(
@@ -168,6 +241,18 @@ Olası faydalar:
 • Randomize plasebo kontrollü pilot çalışmada omega 3 + Lipoik asit kombinasyonu, hafif–orta Alzheimer hastalarında 12 ay boyunca bilişsel ve işlevsel düşüşü yavaşlatmıştır.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Alpha Lipoic Acid 600 mg + Coenzyme Q10 + B Complex + Vitamin C + antioxidant mix + Actovegin.
+
+Administration: 4–6 sessions at 5–7 day intervals are recommended.
+
+Possible benefits:
+• A powerful antioxidant; can recycle other antioxidants such as vitamins C and E and glutathione.
+• Has anti-inflammatory properties; dose-dependently reduces NF-KB activity in vitro in TNF-stimulated cells.
+• Improves neuropathic pain, paresthesia, numbness, sensory deficits, and muscle strength.
+• In the meta-analysis by Ziegler et al., treatment with 600 mg/day IV alpha lipoic acid for 3 weeks was found safe and effective in patients with diabetic polyneuropathy.
+• In a randomized placebo-controlled pilot study, the combination of omega-3 + lipoic acid slowed cognitive and functional decline over 12 months in patients with mild-to-moderate Alzheimer's disease.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_destress',
@@ -195,6 +280,19 @@ Olası faydalar:
 • Vücudun ihtiyaç duyduğu vitamin ve mineralleri sağlar.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: L-Lysine 300 mg · N-Acetyl Cysteine 300 mg · Thiamine HCl 100 mg · L-Proline 500 mg · Magnesium Chloride 400 mg · Pyridoxine HCl 100 mg · L-Arginine 500 mg · Selenium 50 µg · Niacinamide 100 mg · Carnosine 200 mg · Vitamin C 1000 mg · Dexpanthenol 100 mg.
+
+Administration: 3–6 sessions at 7–10 day intervals, tailored to individual needs.
+
+Possible benefits:
+• Helps improve the appearance of skin and hair through its amino acids, minerals, and vitamins.
+• Supports a good mood, cleansing, and an overall sense of well-being.
+• Collagen production is supported through various mechanisms and pathways.
+• Aids body detoxification and liver regeneration.
+• Influences anti-aging mechanisms through carnosine.
+• Provides the vitamins and minerals the body needs.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_beauty',
@@ -216,6 +314,21 @@ Olası faydalar:
 • Cildin serbest radikallere karşı savunma mekanizmasını harekete geçirir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Methionine 750 mg · Taurine 1000 mg · Proline 3000 mg · Lysine 1000 mg · Arginine 2000 mg · Glycine 1000 mg · Biotin 5 mg.
+
+Administration: 3–6 sessions at 7–10 day intervals are recommended.
+
+Possible benefits:
+• Supports skin firmness and smoothness.
+• Increases the skin's moisture capacity.
+• Enhances the effectiveness of facial mesotherapy by raising blood amino acid levels.
+• Use before or after facial mesotherapy sessions increases treatment effectiveness.
+• Reduces the harmful effects of sun exposure and smoking on the skin.
+• Supports collagen formation through its amino acid content.
+• Increases skin elasticity.
+• Activates the skin's defense mechanism against free radicals.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_detox',
@@ -241,6 +354,17 @@ Olası faydalar:
 • Enzimlerin çalışmasında aktif rol alır.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Vitamin C 5000 mg · Zinc 30 mg · Magnesium 400 mg.
+
+Administration: 4–6 sessions at 3–7 day intervals are recommended.
+
+Possible benefits:
+• Plays an important role in energy metabolism.
+• Supports the immune system.
+• Plays an important role in increasing bone mineral density and antioxidant capacity.
+• Takes an active role in enzyme function.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_revive',
@@ -261,6 +385,18 @@ Olası faydalar:
 • Metilglioksal gibi toksik glikolizasyon ajanlarının olumsuz etkilerini ortadan kaldırma, reaktif oksijen türevlerinin süpürülmesi ve oksidatif hasarın azaltılmasına yardımcı.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content (To Infinity): NAD⁺ 50 mg · Carnosine 100 mg · Sodium Ascorbate 1000 mg · Riboflavin-5-Phosphate 10 mg.
+
+Administration: 4–6 sessions at 7–10 day intervals are recommended.
+
+Possible benefits:
+• Effective in intracellular mitochondrial renewal, cell regeneration, and oxidation-reduction reactions.
+• Effective in the repair and improvement of cognitive functions.
+• Significant support in treating focus problems, mental fatigue, chronic fatigue, mild and acute depression, and addiction.
+• Carnosine may delay aging in cultured human fibroblasts; as a muscle- and brain-related dipeptide, it acts as a buffer.
+• Helps eliminate the harmful effects of toxic glycation agents such as methylglyoxal, scavenge reactive oxygen species, and reduce oxidative damage.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_mood_sleep',
@@ -279,6 +415,18 @@ Olası faydalar:
 • Piridoksin (B6); aminoasitler, nörotransmitter (serotonin, norepinefrin), sfingolipitler ve aminolevulinik asit sentezi için önemli koenzim; GABA sentezine katılır.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: L-Tryptophan 250 mg · Glycine 500 mg · Magnesium Chloride 400 mg · Pyridoxine 100 mg · Zinc 30 mg.
+
+Administration: 4–6 sessions at 3–7 day intervals are recommended.
+
+Possible benefits:
+• Tryptophan plays a critical role in the production of proteins, enzymes, and muscle tissue. It is the precursor of serotonin (5-HT) and melatonin. It may reduce anxiety and depression; studies have shown it reduces the intensity of migraine headaches.
+• Glycine is effective in cardiovascular diseases, inflammatory diseases, obesity, and diabetic metabolic disorders. It improves sleep quality and neurological functions.
+• Zinc plays an important role in energy metabolism.
+• Magnesium is important in glycolysis, oxidative phosphorylation, osteogenesis, and DNA and RNA synthesis. It is integral to the regulation of intracellular/extracellular Na+/K+ ATPase.
+• Pyridoxine (B6) is an important coenzyme for the synthesis of amino acids, neurotransmitters (serotonin, norepinephrine), sphingolipids, and aminolevulinic acid; it participates in GABA synthesis.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_power_fitness',
@@ -298,6 +446,19 @@ Olası faydalar:
 • Kolay yorulma ve güçsüzlük tedavisinde B-Complex ile birlikte etkilidir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Glutamine 1000 mg · Arginine 1000 mg · Ornithine 1000 mg · Methionine 500 mg · Glycine 1000 mg.
+
+Administration: 4–6 sessions at 7-day intervals are recommended.
+
+Possible benefits:
+• Also known as the super amino acid cocktail.
+• Supportive in the treatment of sexual dysfunction in women and men.
+• Increases the rate of muscle growth and relieves muscle pain.
+• Increases nitric oxide levels in the body.
+• Supports the formation of stronger muscle cells.
+• Effective together with B-Complex in treating easy fatigue and weakness.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_resveratrol',
@@ -316,6 +477,18 @@ Olası faydalar:
 • Diyabetik yara iyileşmesinde anjiyogenez yoluyla destek sağlayabilir; kolajen birikimi, enflamasyon baskılama, skar önleme ve endotelyal koruyucu etki gösterilmiştir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Resveratrol 100 mg / 250 mg.
+
+Administration: 1–2 sessions at 7–10 day intervals are recommended.
+
+Possible benefits:
+• One of the most important phytochemicals due to its anti-inflammatory, anti-tumor, antiviral, anti-diabetic, atheroprotective, cardioprotective, eye-protective, phytoestrogenic, and life-extending effects.
+• Has been observed to suppress serum triglyceride, VLDL, LDL, and cholesterol levels in a dose-dependent manner.
+• Effective at the initiation, proliferation, and metastasis stages of carcinogenesis by arresting the cell cycle and inducing apoptosis. Shown to inhibit growth in vitro in colon, prostate, breast, lymphoma, and leukemia cancer cells.
+• May be effective in ocular microcirculation; may help prevent age-related macular degeneration, diabetic retinopathy, and glaucoma.
+• May support diabetic wound healing through angiogenesis; collagen deposition, inflammation suppression, scar prevention, and endothelial protective effects have been demonstrated.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(id: 'iv_ozone', category: ServiceCategory.iv, nameTr: 'IV Ozon Terapi', nameEn: 'IV Ozone Therapy'),
   WellnessService(id: 'iv_rectal_ozone', category: ServiceCategory.iv, nameTr: 'Rektal Ozon', nameEn: 'Rectal Ozone'),
@@ -340,6 +513,19 @@ Olası faydalar:
 • Saç ekim tedavilerinde uygulama sonrası saç köklerini besler; şok dökülmelerin önüne geçer.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Dexpanthenol 100 mg · Pyridoxine 100 mg · Zinc 70 mg · Biotin 5 mg.
+
+Administration: 4–6 sessions at 7-day intervals are recommended.
+
+Possible benefits:
+• Strengthens hair and nails.
+• Important in fatty acid synthesis; active in propionate oxidation.
+• Prevents hair loss and supports hair growth.
+• Improves hair and nail quality.
+• Plays an active role in psoriasis and eczema treatments.
+• Nourishes hair follicles after hair transplant procedures; prevents shock loss.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_fat_burning_slim',
@@ -358,6 +544,18 @@ Olası faydalar:
 • Organların temizlenmesinde etkin rol oynar.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: L-Carnitine 1000 mg · Zinc 30 mg.
+
+Administration: 4–6 sessions at 3–7 day intervals are recommended.
+
+Possible benefits:
+• Supports weight loss; increases fat burning by accelerating metabolism.
+• Balances appetite.
+• L-Carnitine breaks down long- and medium-chain fatty acids and enables them to enter the mitochondria, thereby supporting fat burning.
+• Helps regulate blood sugar and cholesterol levels.
+• Plays an active role in cleansing the organs.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_b_complex',
@@ -376,6 +574,18 @@ Olası faydalar:
 • Yorgunluk ve bitkinliğin azalmasına katkıda bulunur.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Thiamine 100 mg · Riboflavin 25 mg · Nicotinamide 200 mg · Pyridoxine 50 mg.
+
+Administration: 4–6 sessions at 7-day intervals are recommended.
+
+Possible benefits:
+• Acts as a coenzyme in most enzymatic reactions and metabolic processes in the body.
+• Contributes to bone development and blood formation.
+• Effective in treating weakness, muscle cramps, and sleep disorders.
+• Protects the health of brain and nerve cells.
+• Helps reduce fatigue and exhaustion.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_biotin',
@@ -393,6 +603,17 @@ Olası faydalar:
 • Biotin eksikliği saç dökülmesi ve kas ağrısıyla kendini gösterir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Biotin 10 mg.
+
+Administration: 4–6 sessions at 3–7 day intervals are recommended.
+
+Possible benefits:
+• Maintains blood cells and nerve tissue.
+• Shows a protective effect against heart disease by raising HDL cholesterol.
+• Involved in the production of keratin, the essential protein for hair, skin, and nail formation.
+• Biotin deficiency manifests as hair loss and muscle pain.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_zinc',
@@ -411,6 +632,18 @@ Olası faydalar:
 • Vücutta 300 farklı enzimin çalışmasında aktif rol oynar.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Zinc 30 mg / 150 mg (multi dose).
+
+Administration: 4–6 sessions at 3–7 day intervals are recommended.
+
+Possible benefits:
+• Supportive role in the fight against cancer.
+• Important in energy metabolism.
+• Strengthens the immune system; supports the health of hair, nails, and skin.
+• Important in increasing bone mineral density and antioxidant capacity.
+• Plays an active role in the function of 300 different enzymes in the body.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_selenium',
@@ -428,6 +661,17 @@ Olası faydalar:
 • Oksidatif stresle mücadele eder.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Selenium 50 µg / 250 µg (multi dose).
+
+Administration: 4–6 sessions at 3–7 day intervals are recommended.
+
+Possible benefits:
+• An important mineral for healthy DNA function and thyroid gland activity.
+• Selenium deficiency can weaken the immune system and contribute to the development of chronic diseases.
+• Used in relation to the aging process, free radical damage, and thyroid disorders.
+• Fights oxidative stress.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_methyl_plus',
@@ -448,6 +692,20 @@ Olası faydalar:
 • B12; hematopoez, nöral metabolizma, büyüme, hücre çoğalması, DNA/RNA üretimi, nükleoprotein, miyelin sentezi, karbonhidrat, yağ ve protein metabolizması için gereklidir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Folic Acid 5 mg · Methylcobalamin 10 mg.
+
+Administration: 4–6 sessions at 5–7 day intervals are recommended.
+
+Possible benefits:
+• For the prevention of folic acid and vitamin B12 deficiencies, and for the treatment and prophylaxis of their complications.
+• Folic acid can correct the hematological signs of pernicious anemia caused by B12 deficiency while masking its neurological complications; for this reason it is combined with high-dose methylcobalamin.
+• Adequate folic acid intake, starting before pregnancy and continuing throughout, can significantly reduce the risk of congenital neural tube defects.
+• Folic acid plays an important role in the formation of methionine from homocysteine, using B12 as a cofactor.
+• May normalize elevated homocysteine levels.
+• Methylcobalamin is the active form of B12 that can cross the blood-brain barrier without biotransformation.
+• B12 is essential for hematopoiesis, neural metabolism, growth, cell proliferation, DNA/RNA production, nucleoprotein and myelin synthesis, and carbohydrate, fat, and protein metabolism.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_curcumin',
@@ -467,6 +725,19 @@ Olası faydalar:
 • Anti-oksidatif kapasite gösterir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Curcumin 50 mg / 300 mg.
+
+Administration: On the first day, an IV test dose of 1–10 mg/kg. If tolerated two to three times a week, subsequent doses may increase to 40 mg/kg. Much higher doses are required for advanced cancer. As a primary treatment, if there is a tumor response, 5–10 mg/kg is tested and may then be increased (upper doses 30–40 mg/kg).
+
+Possible benefits:
+• Various mechanisms of action; may exhibit anti-inflammatory, antioxidant, anti-diabetic, and anti-cancer properties by altering the activity of enzymes, receptors, and transcription factors.
+• Significant reductions in TNF-α and IL-6 have been demonstrated in studies of T2DM (type 2 diabetes) patients.
+• Reductions in proteinuria, systolic blood pressure, and hematuria have been reported.
+• Tetrahydrocurcumin reduces HMG CoA reductase activity; lowers serum and liver cholesterol, triglycerides, free fatty acids, VLDL, and LDL.
+• May inhibit histone acetyltransferase; may limit the aggregation of amyloid-forming peptides in neurodegenerative diseases such as Alzheimer's.
+• Exhibits anti-oxidative capacity.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
   WellnessService(
     id: 'iv_methylcobalamin',
@@ -487,6 +758,20 @@ Olası faydalar:
 • Büyüme faktörünü düzenler, makrofajların ve pıhtılaşma sisteminin normal işlevine yardımcı olabilir.
 
 Bilgilendirme amaçlıdır. Kaynak: Popüler Longevity Protokolleri — Spektrum v2.''',
+    protocolEn: '''Content: Methylcobalamin 5 mg.
+
+Administration: 4–6 sessions at 7-day intervals are recommended.
+
+Possible benefits:
+• The active form of B12 that can cross the blood-brain barrier without biotransformation.
+• For the treatment and prophylaxis of anemia caused by B12 malabsorption and deficiency.
+• Essential for hematopoiesis, neural metabolism, DNA and RNA production, and carbohydrate/fat/protein metabolism.
+• Improves iron function and aids folic acid synthesis.
+• Necessary for growth, cell proliferation, and nucleoprotein and myelin synthesis.
+• Essential for rapidly dividing cells (epithelial cells, bone marrow, myeloid cells).
+• Regulates growth factor and may support the normal function of macrophages and the coagulation system.
+
+For informational purposes only. Source: Popular Longevity Protocols — Spektrum v2.''',
   ),
 
   // D) MEDİKAL ESTETİK — Botoks
