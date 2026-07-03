@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/data/services_seed.dart';
+import '../../../core/l10n/app_localizations.dart';
 import '../../../core/models/service.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/botanical_scaffold.dart';
@@ -13,13 +14,14 @@ class ServiceDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
     final service = _findService(serviceId);
     final isTr = Localizations.localeOf(context).languageCode == 'tr';
 
     if (service == null) {
       return BotanicalScaffold(
         appBar: AppBar(
-          title: const Text('Hizmet'),
+          title: Text(l.services),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
@@ -27,7 +29,7 @@ class ServiceDetailScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Text(
-              'Hizmet bulunamadı: $serviceId',
+              '${l.error}: $serviceId',
               style: const TextStyle(color: AppColors.inkSoft),
             ),
           ),
@@ -98,9 +100,9 @@ class ServiceDetailScreen extends StatelessWidget {
 
             // Protokol
             if (protocol != null && protocol.isNotEmpty)
-              _ProtocolCard(text: protocol)
+              _ProtocolCard(text: protocol, heading: l.protocolHeading)
             else
-              _NoProtocolCard(),
+              _NoProtocolCard(text: l.noProtocolYet),
 
             const SizedBox(height: 20),
             // Bilgi kutusu
@@ -112,16 +114,16 @@ class ServiceDetailScreen extends StatelessWidget {
                 border: Border.all(
                     color: AppColors.terracotta.withValues(alpha: 0.35)),
               ),
-              child: const Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.info_outline,
+                  const Icon(Icons.info_outline,
                       size: 18, color: AppColors.terracotta),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      'Bu ekrandaki tüm bilgiler yalnızca bilgilendirme amaçlıdır. Uygulama ve doz kararı, otelin wellness katında Spektrum ekibi ve doktor değerlendirmesi ile verilir.',
-                      style: TextStyle(
+                      l.protocolDisclaimer,
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.ink,
                         height: 1.4,
@@ -148,7 +150,8 @@ class ServiceDetailScreen extends StatelessWidget {
 
 class _ProtocolCard extends StatelessWidget {
   final String text;
-  const _ProtocolCard({required this.text});
+  final String heading;
+  const _ProtocolCard({required this.text, required this.heading});
 
   @override
   Widget build(BuildContext context) {
@@ -159,14 +162,14 @@ class _ProtocolCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.description_outlined,
+                const Icon(Icons.description_outlined,
                     color: AppColors.sageDark, size: 20),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
-                  'Protokol',
-                  style: TextStyle(
+                  heading,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     color: AppColors.ink,
@@ -275,7 +278,8 @@ class _ProtocolCard extends StatelessWidget {
 }
 
 class _NoProtocolCard extends StatelessWidget {
-  const _NoProtocolCard();
+  final String text;
+  const _NoProtocolCard({required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -284,13 +288,13 @@ class _NoProtocolCard extends StatelessWidget {
         padding: const EdgeInsets.all(18),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Icon(Icons.info_outline, color: AppColors.sageDark),
-            SizedBox(width: 12),
+          children: [
+            const Icon(Icons.info_outline, color: AppColors.sageDark),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
-                'Bu hizmet için ayrıntılı protokol bilgisi henüz eklenmedi. Detaylar için Spektrum ekibi ile görüşebilirsiniz.',
-                style: TextStyle(color: AppColors.inkSoft, height: 1.4),
+                text,
+                style: const TextStyle(color: AppColors.inkSoft, height: 1.4),
               ),
             ),
           ],

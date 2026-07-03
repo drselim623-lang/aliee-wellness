@@ -48,7 +48,7 @@ class _GuestLoginFormState extends State<GuestLoginForm> {
     } catch (_) {
       if (!mounted) return;
       setState(() {
-        _errorMessage = 'Bağlantı hatası. Lütfen tekrar deneyin.';
+        _errorMessage = AppL10n.of(context).connectionErrorRetry;
       });
     } finally {
       if (mounted) {

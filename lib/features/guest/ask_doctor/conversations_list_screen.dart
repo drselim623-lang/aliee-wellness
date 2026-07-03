@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/api/chat_service.dart';
+import '../../../core/l10n/app_localizations.dart';
 import '../../../core/models/chat.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_theme.dart';
@@ -18,9 +19,10 @@ class ConversationsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
     return BotanicalScaffold(
       appBar: AppBar(
-        title: const Text('Doktoruma Sor'),
+        title: Text(l.askDoctorTitle),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -30,12 +32,12 @@ class ConversationsListScreen extends StatelessWidget {
         ),
         child: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 16, 20, 8),
+                padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
                 child: Text(
-                  'Sağlık Ekibimiz',
-                  style: TextStyle(
+                  l.ourMedicalTeam,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.ink,
@@ -49,12 +51,12 @@ class ConversationsListScreen extends StatelessWidget {
                     _openChatWithDoctor(context, doctor),
               ),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 20, 20, 8),
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
                 child: Text(
-                  'Konuşmalarım',
-                  style: TextStyle(
+                  l.myConversations,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppColors.ink,
@@ -109,10 +111,11 @@ class _DoctorsHorizontal extends StatelessWidget {
     return StreamBuilder<List<Doctor>>(
       stream: ChatService.instance.activeDoctorsStream(),
       builder: (context, snap) {
+        final l = AppL10n.of(context);
         if (snap.hasError) {
           return Padding(
             padding: const EdgeInsets.all(20),
-            child: Text('Doktorlar yüklenemedi: ${snap.error}'),
+            child: Text('${l.error}: ${snap.error}'),
           );
         }
         if (!snap.hasData) {
@@ -123,11 +126,11 @@ class _DoctorsHorizontal extends StatelessWidget {
         }
         final doctors = snap.data!;
         if (doctors.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             child: Text(
-              'Henüz kayıtlı doktor yok.',
-              style: TextStyle(color: AppColors.inkSoft),
+              l.noConversationsHint,
+              style: const TextStyle(color: AppColors.inkSoft),
             ),
           );
         }
@@ -236,11 +239,12 @@ class _ConversationsSliver extends StatelessWidget {
     return StreamBuilder<List<Question>>(
       stream: ChatService.instance.guestQuestionsStream(),
       builder: (context, snap) {
+        final l = AppL10n.of(context);
         if (snap.hasError) {
           return SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Text('Yüklenemedi: ${snap.error}'),
+              child: Text('${l.error}: ${snap.error}'),
             ),
           );
         }
@@ -275,6 +279,7 @@ class _EmptyHint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
       child: Container(
@@ -284,14 +289,14 @@ class _EmptyHint extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.line),
         ),
-        child: const Row(
+        child: Row(
           children: [
-            Icon(Icons.info_outline, color: AppColors.sageDark),
-            SizedBox(width: 12),
+            const Icon(Icons.info_outline, color: AppColors.sageDark),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(
-                'Henüz sohbet yok. Yukarıdaki bir doktora dokunarak konuşmayı başlat.',
-                style: TextStyle(color: AppColors.inkSoft),
+                l.noConversationsHint,
+                style: const TextStyle(color: AppColors.inkSoft),
               ),
             ),
           ],

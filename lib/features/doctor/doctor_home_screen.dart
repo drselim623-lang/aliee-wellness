@@ -23,7 +23,7 @@ class DoctorHomeScreen extends StatelessWidget {
         elevation: 0,
         actions: [
           IconButton(
-            tooltip: 'Çıkış',
+            tooltip: l.signOut,
             onPressed: () async {
               await AuthService.instance.signOut();
               if (context.mounted) context.go(AppRoutes.root);
@@ -40,7 +40,7 @@ class DoctorHomeScreen extends StatelessWidget {
           stream: ChatService.instance.doctorQuestionsStream(),
           builder: (context, snap) {
             if (snap.hasError) {
-              return Center(child: Text('Yüklenemedi: ${snap.error}'));
+              return Center(child: Text('${l.loadFailed}: ${snap.error}'));
             }
             if (!snap.hasData) {
               return const Center(child: CircularProgressIndicator());

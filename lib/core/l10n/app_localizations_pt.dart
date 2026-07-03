@@ -417,13 +417,85 @@ class AppL10nPt extends AppL10n {
   String get phone => 'Telefone';
 
   @override
-  String get guestAuthorizedSuccess =>
-      'Hóspede autorizado com sucesso. Ele pode entrar com os últimos 6 caracteres do passaporte e o número do quarto.';
+  String get guestAuthorizedSuccess => 'Hóspede autorizado com sucesso.';
 
   @override
   String get guestUpdatedSuccess =>
-      'Detalhes do hóspede atualizados e acesso estendido por 1 ano.';
+      'Dados do hóspede atualizados e acesso estendido por 1 ano.';
 
   @override
   String get connectionError => 'Erro de conexão.';
+
+  @override
+  String get connectionErrorRetry => 'Erro de conexão. Tente novamente.';
+
+  @override
+  String get revokeAccess => 'Revogar acesso';
+
+  @override
+  String get revokeAccessConfirm => 'Deseja revogar o acesso deste usuário?';
+
+  @override
+  String get accessRevoked => 'Acesso revogado.';
+
+  @override
+  String get usernameOrEmail => 'Usuário ou e-mail';
+
+  @override
+  String get hintAdmin => 'ex.: admin';
+
+  @override
+  String get hintDoctor => 'ex.: médico';
+
+  @override
+  String get password => 'Senha';
+
+  @override
+  String get passwordTooShort => 'Muito curta';
+
+  @override
+  String get createDoctor => 'Criar Médico';
+
+  @override
+  String get registeredDoctors => 'Médicos registrados';
+
+  @override
+  String get noDoctorsYet => 'Sem médicos ainda.';
+
+  @override
+  String get titleField => 'Título';
+
+  @override
+  String get firstName => 'Nome';
+
+  @override
+  String get lastName => 'Sobrenome';
+
+  @override
+  String get specialty => 'Especialidade';
+
+  @override
+  String get temporaryPassword => 'Senha temporária (mín. 6 caracteres)';
+
+  @override
+  String get doctorAddedSuccess =>
+      'Médico criado. Pode entrar com e-mail e senha.';
+
+  @override
+  String get loadFailed => 'Falha ao carregar';
+
+  @override
+  String get expiresLabel => 'expira';
+
+  @override
+  String get roomLabel => 'Quarto';
+
+  @override
+  String get next3 => 'Próximo';
+
+  @override
+  String get submitFinal => 'Enviar e obter recomendação';
+
+  @override
+  String get step => 'Etapa';
 }

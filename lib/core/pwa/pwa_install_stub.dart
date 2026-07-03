@@ -7,4 +7,6 @@ class PwaInstall {
   static bool get isStandalone => false;
   static PwaPlatform get platform => PwaPlatform.unknown;
   static Future<bool> promptNativeInstall() async => false;
+  static void addInstalledListener(void Function() cb) {}
+  static void removeInstalledListener(void Function() cb) {}
 }

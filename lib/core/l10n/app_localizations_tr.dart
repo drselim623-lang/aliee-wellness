@@ -421,4 +421,78 @@ class AppL10nTr extends AppL10n {
 
   @override
   String get connectionError => 'Bağlantı hatası.';
+
+  @override
+  String get connectionErrorRetry => 'Bağlantı hatası. Lütfen tekrar deneyin.';
+
+  @override
+  String get revokeAccess => 'Erişimi kapat';
+
+  @override
+  String get revokeAccessConfirm =>
+      'Bu kullanıcının erişimini kapatmak istiyor musunuz?';
+
+  @override
+  String get accessRevoked => 'Erişim kapatıldı.';
+
+  @override
+  String get usernameOrEmail => 'Kullanıcı adı veya e-posta';
+
+  @override
+  String get hintAdmin => 'örn: admin';
+
+  @override
+  String get hintDoctor => 'örn: doktor';
+
+  @override
+  String get password => 'Şifre';
+
+  @override
+  String get passwordTooShort => 'Çok kısa';
+
+  @override
+  String get createDoctor => 'Doktor Oluştur';
+
+  @override
+  String get registeredDoctors => 'Kayıtlı doktorlar';
+
+  @override
+  String get noDoctorsYet => 'Henüz doktor yok.';
+
+  @override
+  String get titleField => 'Ünvan';
+
+  @override
+  String get firstName => 'Ad';
+
+  @override
+  String get lastName => 'Soyad';
+
+  @override
+  String get specialty => 'Uzmanlık';
+
+  @override
+  String get temporaryPassword => 'Geçici şifre (min 6 karakter)';
+
+  @override
+  String get doctorAddedSuccess =>
+      'Doktor eklendi. E-posta ve şifreyle giriş yapabilir.';
+
+  @override
+  String get loadFailed => 'Yüklenemedi';
+
+  @override
+  String get expiresLabel => 'bitiş';
+
+  @override
+  String get roomLabel => 'Oda';
+
+  @override
+  String get next3 => 'İleri';
+
+  @override
+  String get submitFinal => 'Gönder ve öneri al';
+
+  @override
+  String get step => 'Adım';
 }

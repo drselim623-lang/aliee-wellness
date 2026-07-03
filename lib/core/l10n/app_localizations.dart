@@ -896,6 +896,150 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Connection error.'**
   String get connectionError;
+
+  /// No description provided for @connectionErrorRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection error. Please try again.'**
+  String get connectionErrorRetry;
+
+  /// No description provided for @revokeAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke access'**
+  String get revokeAccess;
+
+  /// No description provided for @revokeAccessConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to revoke access for this user?'**
+  String get revokeAccessConfirm;
+
+  /// No description provided for @accessRevoked.
+  ///
+  /// In en, this message translates to:
+  /// **'Access revoked.'**
+  String get accessRevoked;
+
+  /// No description provided for @usernameOrEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Username or e-mail'**
+  String get usernameOrEmail;
+
+  /// No description provided for @hintAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. admin'**
+  String get hintAdmin;
+
+  /// No description provided for @hintDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. doctor'**
+  String get hintDoctor;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @passwordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Too short'**
+  String get passwordTooShort;
+
+  /// No description provided for @createDoctor.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Doctor'**
+  String get createDoctor;
+
+  /// No description provided for @registeredDoctors.
+  ///
+  /// In en, this message translates to:
+  /// **'Registered doctors'**
+  String get registeredDoctors;
+
+  /// No description provided for @noDoctorsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No doctors yet.'**
+  String get noDoctorsYet;
+
+  /// No description provided for @titleField.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get titleField;
+
+  /// No description provided for @firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get firstName;
+
+  /// No description provided for @lastName.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name'**
+  String get lastName;
+
+  /// No description provided for @specialty.
+  ///
+  /// In en, this message translates to:
+  /// **'Specialty'**
+  String get specialty;
+
+  /// No description provided for @temporaryPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Temporary password (min 6 chars)'**
+  String get temporaryPassword;
+
+  /// No description provided for @doctorAddedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctor created. They can now sign in with e-mail and password.'**
+  String get doctorAddedSuccess;
+
+  /// No description provided for @loadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load'**
+  String get loadFailed;
+
+  /// No description provided for @expiresLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'expires'**
+  String get expiresLabel;
+
+  /// No description provided for @roomLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Room'**
+  String get roomLabel;
+
+  /// No description provided for @next3.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next3;
+
+  /// No description provided for @submitFinal.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit and get recommendation'**
+  String get submitFinal;
+
+  /// No description provided for @step.
+  ///
+  /// In en, this message translates to:
+  /// **'Step'**
+  String get step;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

@@ -423,4 +423,78 @@ class AppL10nFr extends AppL10n {
 
   @override
   String get connectionError => 'Erreur de connexion.';
+
+  @override
+  String get connectionErrorRetry => 'Connection error. Please try again.';
+
+  @override
+  String get revokeAccess => 'Revoke access';
+
+  @override
+  String get revokeAccessConfirm =>
+      'Do you want to revoke access for this user?';
+
+  @override
+  String get accessRevoked => 'Access revoked.';
+
+  @override
+  String get usernameOrEmail => 'Username or e-mail';
+
+  @override
+  String get hintAdmin => 'e.g. admin';
+
+  @override
+  String get hintDoctor => 'e.g. doctor';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get passwordTooShort => 'Too short';
+
+  @override
+  String get createDoctor => 'Create Doctor';
+
+  @override
+  String get registeredDoctors => 'Registered doctors';
+
+  @override
+  String get noDoctorsYet => 'No doctors yet.';
+
+  @override
+  String get titleField => 'Title';
+
+  @override
+  String get firstName => 'First name';
+
+  @override
+  String get lastName => 'Last name';
+
+  @override
+  String get specialty => 'Specialty';
+
+  @override
+  String get temporaryPassword => 'Temporary password (min 6 chars)';
+
+  @override
+  String get doctorAddedSuccess =>
+      'Doctor created. They can now sign in with e-mail and password.';
+
+  @override
+  String get loadFailed => 'Failed to load';
+
+  @override
+  String get expiresLabel => 'expires';
+
+  @override
+  String get roomLabel => 'Room';
+
+  @override
+  String get next3 => 'Next';
+
+  @override
+  String get submitFinal => 'Submit and get recommendation';
+
+  @override
+  String get step => 'Step';
 }

@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/api/chat_service.dart';
+import '../../../core/l10n/app_localizations.dart';
 import '../../../core/models/chat.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/botanical_scaffold.dart';
@@ -61,6 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> _pickAndSendAttachment() async {
+    final l = AppL10n.of(context);
     final source = await showModalBottomSheet<ImageSource>(
       context: context,
       builder: (_) => SafeArea(
@@ -69,12 +71,12 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
-              title: const Text('Galeriden seç'),
+              title: Text(l.chooseFromGallery),
               onTap: () => Navigator.of(context).pop(ImageSource.gallery),
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt_outlined),
-              title: const Text('Kamera'),
+              title: Text(l.camera),
               onTap: () => Navigator.of(context).pop(ImageSource.camera),
             ),
           ],
@@ -125,7 +127,7 @@ class _ChatScreenState extends State<ChatScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Yükleme hatası: $e')),
+        SnackBar(content: Text('${AppL10n.of(context).uploadError}: $e')),
       );
     } finally {
       if (mounted) setState(() => _sending = false);
@@ -155,7 +157,7 @@ class _ChatScreenState extends State<ChatScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gönderilemedi: $e')),
+        SnackBar(content: Text('${AppL10n.of(context).sendFailed}: $e')),
       );
     } finally {
       if (mounted) setState(() => _sending = false);
@@ -164,10 +166,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
     final me = FirebaseAuth.instance.currentUser?.uid ?? '';
     return BotanicalScaffold(
       appBar: AppBar(
-        title: Text(_headerName ?? (_isNew ? 'Yeni Soru' : 'Konuşma')),
+        title:
+            Text(_headerName ?? (_isNew ? l.newConversation : l.askDoctorTitle)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -185,7 +189,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       builder: (context, snap) {
                         if (snap.hasError) {
                           return Center(
-                              child: Text('Yüklenemedi: ${snap.error}'));
+                              child: Text('${l.error}: ${snap.error}'));
                         }
                         if (!snap.hasData) {
                           return const Center(
@@ -224,13 +228,13 @@ class _EmptyChat extends StatelessWidget {
   const _EmptyChat();
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(32),
+        padding: const EdgeInsets.all(32),
         child: Text(
-          'Sohbet burada başlayacak.\nİlk mesajını yaz veya fotoğraf gönder.',
+          AppL10n.of(context).chatEmpty,
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.inkSoft),
+          style: const TextStyle(color: AppColors.inkSoft),
         ),
       ),
     );
@@ -327,6 +331,7 @@ class _Composer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppL10n.of(context);
     return SafeArea(
       top: false,
       child: Container(
@@ -341,7 +346,7 @@ class _Composer extends StatelessWidget {
           children: [
             IconButton(
               onPressed: sending ? null : onAttach,
-              tooltip: 'Fotoğraf gönder',
+              tooltip: l.sendPhoto,
               icon: const Icon(Icons.attach_file, color: AppColors.sageDark),
             ),
             Expanded(
@@ -350,8 +355,8 @@ class _Composer extends StatelessWidget {
                 minLines: 1,
                 maxLines: 5,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(
-                  hintText: 'Mesaj yaz…',
+                decoration: InputDecoration(
+                  hintText: l.typeMessage,
                   border: InputBorder.none,
                 ),
                 onSubmitted: sending ? null : (_) => onSend(),

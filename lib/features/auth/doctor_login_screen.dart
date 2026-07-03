@@ -46,7 +46,7 @@ class _DoctorLoginScreenState extends State<DoctorLoginScreen> {
       setState(() => _errorMessage = e.message);
     } catch (_) {
       if (!mounted) return;
-      setState(() => _errorMessage = 'Bağlantı hatası.');
+      setState(() => _errorMessage = AppL10n.of(context).connectionError);
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -75,9 +75,9 @@ class _DoctorLoginScreenState extends State<DoctorLoginScreen> {
             children: [
               TextFormField(
                 controller: _email,
-                decoration: const InputDecoration(
-                  labelText: 'Kullanıcı adı veya e-posta',
-                  hintText: 'örn: doktor',
+                decoration: InputDecoration(
+                  labelText: l.usernameOrEmail,
+                  hintText: l.hintDoctor,
                 ),
                 keyboardType: TextInputType.emailAddress,
                 autofillHints: const [AutofillHints.username],
@@ -86,7 +86,7 @@ class _DoctorLoginScreenState extends State<DoctorLoginScreen> {
               const SizedBox(height: 12),
               TextFormField(
                 controller: _password,
-                decoration: const InputDecoration(labelText: 'Şifre'),
+                decoration: InputDecoration(labelText: l.password),
                 obscureText: true,
                 autofillHints: const [AutofillHints.password],
                 validator: (v) => (v == null || v.length < 6) ? '—' : null,

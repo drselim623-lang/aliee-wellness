@@ -12,6 +12,16 @@ class PwaInstall {
 
   static JSObject? _pendingPrompt;
   static bool _listenerAttached = false;
+  static final List<void Function()> _onInstalled = [];
+
+  static void addInstalledListener(void Function() cb) {
+    _attachListener();
+    _onInstalled.add(cb);
+  }
+
+  static void removeInstalledListener(void Function() cb) {
+    _onInstalled.remove(cb);
+  }
 
   static void _attachListener() {
     if (_listenerAttached) return;
@@ -21,6 +31,16 @@ class PwaInstall {
       ((web.Event event) {
         event.preventDefault();
         _pendingPrompt = event as JSObject;
+      }).toJS,
+    );
+    web.window.addEventListener(
+      'appinstalled',
+      ((web.Event event) {
+        for (final cb in List.of(_onInstalled)) {
+          try {
+            cb();
+          } catch (_) {}
+        }
       }).toJS,
     );
   }
