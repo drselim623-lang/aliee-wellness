@@ -58,8 +58,12 @@ class _CategoryList extends StatelessWidget {
     final services =
         kServicesSeed.where((s) => s.category == category).toList();
 
-    // IV & Longevity sekmesi görsel grid olarak sunulur.
-    if (category == ServiceCategory.iv) {
+    // IV & Longevity ve Medikal Estetik sekmeleri görsel grid olarak sunulur.
+    if (category == ServiceCategory.iv ||
+        category == ServiceCategory.aesthetics) {
+      final fallbackIcon = category == ServiceCategory.iv
+          ? Icons.water_drop_outlined
+          : Icons.auto_awesome_outlined;
       return GridView.builder(
         padding: const EdgeInsets.all(16),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -74,7 +78,7 @@ class _CategoryList extends StatelessWidget {
           return ImageTile(
             imagePath: 'assets/images/${s.id}.jpg',
             title: isTr ? s.nameTr : s.nameEn,
-            fallbackIcon: Icons.water_drop_outlined,
+            fallbackIcon: fallbackIcon,
             onTap: () => context.push(
               AppRoutes.guestServiceDetail.replaceFirst(':serviceId', s.id),
             ),
