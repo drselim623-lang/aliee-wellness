@@ -1,7 +1,8 @@
 enum ServiceCategory {
+  // Sıralama tab sırasını belirler — IV & Longevity ilk açılan sekme.
+  iv('iv', 'IV & Longevity', 'IV & Longevity'),
   tests('tests', 'Testler & Görüntüleme', 'Tests & Imaging'),
   panels('panels', 'OM AGE Panelleri', 'OM AGE Panels'),
-  iv('iv', 'IV & Longevity', 'IV & Longevity'),
   aesthetics('aesthetics', 'Medikal Estetik', 'Medical Aesthetics');
 
   final String id;

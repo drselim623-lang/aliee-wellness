@@ -7,6 +7,7 @@ import '../../../core/models/service.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/botanical_scaffold.dart';
+import '../../../core/widgets/image_tile.dart';
 
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({super.key});
@@ -56,6 +57,32 @@ class _CategoryList extends StatelessWidget {
     final isTr = Localizations.localeOf(context).languageCode == 'tr';
     final services =
         kServicesSeed.where((s) => s.category == category).toList();
+
+    // IV & Longevity sekmesi görsel grid olarak sunulur.
+    if (category == ServiceCategory.iv) {
+      return GridView.builder(
+        padding: const EdgeInsets.all(16),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 220,
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          childAspectRatio: 0.95,
+        ),
+        itemCount: services.length,
+        itemBuilder: (_, i) {
+          final s = services[i];
+          return ImageTile(
+            imagePath: 'assets/images/${s.id}.jpg',
+            title: isTr ? s.nameTr : s.nameEn,
+            fallbackIcon: Icons.water_drop_outlined,
+            onTap: () => context.push(
+              AppRoutes.guestServiceDetail.replaceFirst(':serviceId', s.id),
+            ),
+          );
+        },
+      );
+    }
+
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: services.length,
